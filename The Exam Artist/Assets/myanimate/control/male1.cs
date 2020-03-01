@@ -5,110 +5,33 @@ using UnityEngine;
 public class male1 : MonoBehaviour { 
 
     public Animator ani;
+    public Random ran = new Random();
 // Start is called before the first frame update
     void Start()
     {
-        
+        int index = Random.Range(1,3);
+        ani.SetInteger("animation_int", index);
     }
 
     // Update is called once per frame
     void Update()
     {
-    if (Input.GetKeyDown(KeyCode.Alpha0))
-
-    {
-
-        idle();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha1))
-    {
-
-            dance();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha2))
-
-    {
-
-        write1();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha3))
-
-    {
-
-        write2();
-
-    }
-    if (Input.GetKeyDown(KeyCode.Alpha4))
-
-    {
-
-        write3();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha5))
-
-        {
-
-            walk();
-
-        }
-
-
-
-
-    }
-    private void idle()
-
-    {
-
+        int index = Random.Range(1,3);
+    if (Input.GetKeyDown(KeyCode.Alpha0)){
         ani.SetInteger("animation_int", 0);
-
-    }
-
-
-    private void dance()
-    {
-
-        ani.SetInteger("animation_int", 1);
-
-    }
-
-
-    private void write1()
-
-    {
-
-        ani.SetInteger("animation_int", 2);
-
-    }
-
-    private void write2()
-
-    {
-
-        ani.SetInteger("animation_int", 3);
-
-    }
-
-    private void write3()
-
-    {
-
+        }
+    if (Input.GetKeyDown(KeyCode.Alpha1)){
+        ani.SetInteger("animation_int", index);
+        }
+    if (Input.GetKeyDown(KeyCode.Alpha2)){
         ani.SetInteger("animation_int", 4);
-
-    }
-    private void walk()
-
-    {
-
+        }
+    if (Input.GetKeyDown(KeyCode.Alpha3)){
         ani.SetInteger("animation_int", 5);
+        }
+    
+
 
     }
+    
 }
