@@ -533,7 +533,7 @@ ModelImporter:
     second: hips|T_Pose
   - first:
       74: 7400004
-    second: mixamo.com
+    second: sit3
   - first:
       95: 9500000
     second: //RootNode
@@ -605,7 +605,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
+      name: sit3
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
