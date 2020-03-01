@@ -11,7 +11,7 @@ public class student : MonoBehaviour {
     void Start()
     {
         //control default status
-        int index = Random.Range(7,8);
+        int index = Random.Range(7,10);
         ani.SetInteger("animation_int", index);
     }
 
@@ -31,6 +31,10 @@ public class student : MonoBehaviour {
         }
     if (Input.GetKeyDown(KeyCode.Alpha3)){
         ani.SetInteger("animation_int", 6);//dance
+        }
+    if (Input.GetKeyDown(KeyCode.Alpha4)){
+        int index = Random.Range(7,10);
+        ani.SetInteger("animation_int", index);//sit
         }
  
     }
