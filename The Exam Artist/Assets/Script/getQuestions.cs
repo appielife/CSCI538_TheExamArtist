@@ -58,6 +58,16 @@ public class getQuestions
         return (JObject)ques[current];
     }
 
+    public string getQuestionId(int idx)
+    {
+        return (string)ques[idx]["id"];
+    }
+
+    public string getQuestionCorrectAns(int idx)
+    {
+        return (string)ques[idx]["correct_ans"];
+    }
+
     //Call this function to get your questions array in JArray format
     public void getQuestionsArray()
     {
