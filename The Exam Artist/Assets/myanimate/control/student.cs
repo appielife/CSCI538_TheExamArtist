@@ -11,7 +11,7 @@ public class student : MonoBehaviour {
     void Start()
     {
         //control default status
-        int index = Random.Range(7,9);
+        int index = Random.Range(7,8);
         ani.SetInteger("animation_int", index);
     }
 
