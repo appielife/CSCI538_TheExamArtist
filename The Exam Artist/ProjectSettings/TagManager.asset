@@ -6,6 +6,7 @@ TagManager:
   tags:
   - teacher
   - backgroundmusic
+  - student
   layers:
   - Default
   - TransparentFX
