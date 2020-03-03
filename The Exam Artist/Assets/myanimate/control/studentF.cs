@@ -34,7 +34,9 @@ public class studentF : MonoBehaviour {
         int index = Random.Range(6,9);
         ani.SetInteger("animation_int", index);//sit
         }
-
+    // if (Input.GetKeyDown(KeyCode.Alpha5)){
+    //     ani.SetInteger("animation_int", 9);//thumbup
+    //     }
     }
 
     
