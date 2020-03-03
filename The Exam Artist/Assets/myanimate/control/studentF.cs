@@ -27,9 +27,9 @@ public class studentF : MonoBehaviour {
     if (Input.GetKeyDown(KeyCode.Alpha2)){
         ani.SetInteger("animation_int", 5);//depress
         }
-    if (Input.GetKeyDown(KeyCode.Alpha3)){
-        ani.SetInteger("animation_int", 4);//dance
-        }
+    // if (Input.GetKeyDown(KeyCode.Alpha3)){
+    //     ani.SetInteger("animation_int", 4);//dance
+    //     }
     if (Input.GetKeyDown(KeyCode.Alpha4)){
         int index = Random.Range(6,9);
         ani.SetInteger("animation_int", index);//sit
