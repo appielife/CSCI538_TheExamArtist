@@ -30,7 +30,7 @@ public class TestPaperBehavior : MonoBehaviour
         question.readQuestionFromJson();
         quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
         scoreTrack = new int[question.getQuesCount()];
-        for (int i = 0; i< question.getQuesCount(); i++)
+        for (int i = 0; i < question.getQuesCount(); i++)
         {
             scoreTrack[i] = 0;
         }

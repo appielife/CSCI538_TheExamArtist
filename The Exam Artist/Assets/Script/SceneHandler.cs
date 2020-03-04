@@ -11,7 +11,7 @@ public class SceneHandler : MonoBehaviour
     public SteamVR_LaserPointer laserPointer;
 
     private string clicked = "";
-
+    
     void Awake()
     {
         laserPointer.PointerIn += PointerInside;

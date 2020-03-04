@@ -35,7 +35,7 @@ public class MultipleChoiceBehavior
     public void showQuestion(GameObject questionTextObj, GameObject[] choices, int questionNum)
     {
         //questionTextObj.SetActive(false);
-        TextMesh qText = questionTextObj.GetComponent<TextMesh>();
+        Text qText = questionTextObj.GetComponentInChildren<Text>();
         
         qText.text = (questionNum+1).ToString() + ". " + questionText;
         for (int i = 0; i < 4; i++)
