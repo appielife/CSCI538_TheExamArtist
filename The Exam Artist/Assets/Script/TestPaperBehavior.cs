@@ -17,6 +17,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceC;
     public GameObject choiceD;
     private getQuestions question = new getQuestions();
+    private calculateScore calculateScore = new calculateScore();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
@@ -185,7 +186,7 @@ public class TestPaperBehavior : MonoBehaviour
         D.colors = cb;
     }
 
-    public void selectA()
+     public void selectA()
     {
         reset();
         quesTrack[tempQuestion].select(choiceA, 0);
@@ -204,5 +205,15 @@ public class TestPaperBehavior : MonoBehaviour
     {
         reset();
         quesTrack[tempQuestion].select(choiceD, 3);
+    }
+   
+   // fucntion to calulate all the scores
+    public void showScore()
+    {
+        scoreObject a = calculateScore.getScore();
+        Debug.Log(a.unans_count);
+        Debug.Log(a.correct_ans);
+        Debug.Log(a.total_count);       
+        
     }
 }
