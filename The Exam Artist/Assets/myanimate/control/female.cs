@@ -8,7 +8,7 @@ public class female: MonoBehaviour {
 // Start is called before the first frame update
     void Start()
     {
-        
+        dance();
     }
 
     // Update is called once per frame
