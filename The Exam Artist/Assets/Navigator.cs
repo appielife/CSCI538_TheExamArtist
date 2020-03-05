@@ -28,7 +28,7 @@ public class Navigator : MonoBehaviour
                 GameObject D = e.target.parent.parent.GetChild(1).GetChild(3).gameObject;
                 A.GetComponentInChildren<Text>().text = "blablablabla";
 
-                selectHandler.GetComponent<MultipleChoiceBehavior>().reset();
+                //selectHandler.GetComponent<MultipleChoiceBehavior>().reset();
             }
             else
             {
