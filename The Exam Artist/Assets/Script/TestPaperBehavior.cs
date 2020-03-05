@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
@@ -7,6 +8,8 @@ using Newtonsoft.Json.Linq;
 
 public class TestPaperBehavior : MonoBehaviour
 {
+    public GameObject testPage;
+    public GameObject submitPage;
     public GameObject scoreObj;
     public GameObject questionTextObj;
     public GameObject choiceA;
@@ -14,6 +17,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceC;
     public GameObject choiceD;
     private getQuestions question = new getQuestions();
+    private calculateScore calculateScore = new calculateScore();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
@@ -21,10 +25,12 @@ public class TestPaperBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        testPage.SetActive(true);
+        submitPage.SetActive(false);
         question.readQuestionFromJson();
         quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
         scoreTrack = new int[question.getQuesCount()];
-        for (int i = 0; i< question.getQuesCount(); i++)
+        for (int i = 0; i < question.getQuesCount(); i++)
         {
             scoreTrack[i] = 0;
         }
@@ -62,7 +68,7 @@ public class TestPaperBehavior : MonoBehaviour
             quesTrack[tempQuestion].pushQuestion(Q);
         }
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
-        quesTrack[tempQuestion].showQuestion(questionTextObj, choices);
+        quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
     }
 
     public void previous()
@@ -92,11 +98,78 @@ public class TestPaperBehavior : MonoBehaviour
         if (quesTrack[tempQuestion] == null)
         {
             quesTrack[tempQuestion] = new MultipleChoiceBehavior();
-            JObject Q = question.getNextQuestion();
+            JObject Q = question.getPrevQuestion();
             quesTrack[tempQuestion].pushQuestion(Q);
         }
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
-        quesTrack[tempQuestion].showQuestion(questionTextObj, choices);
+        quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
+    }
+
+    public void submit()
+    {
+        /*questionTextObj.SetActive(false);
+        choiceA.SetActive(false);
+        choiceB.SetActive(false);
+        choiceC.SetActive(false);
+        choiceD.SetActive(false);*/
+        Button submit = testPage.GetComponentsInChildren<Button>()[6];
+        ColorBlock cb = submit.colors;
+        cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        submit.colors = cb;
+
+        testPage.SetActive(false);
+        submitPage.SetActive(true);
+    }
+
+    public void backToTest()
+    {
+        Button no = submitPage.GetComponentsInChildren<Button>()[1];
+        ColorBlock cb = no.colors;
+        cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        no.colors = cb;
+
+        submitPage.SetActive(false);
+        testPage.SetActive(true);
+    }
+
+    public void writeAnsToJson()
+    {
+        char[] abcd = { 'A', 'B', 'C', 'D' };
+        using (StreamWriter file = File.CreateText(@Application.dataPath + "/GameData/answers.json"))
+
+        using (JsonWriter writer = new JsonTextWriter(file))
+        {
+            writer.Formatting = Formatting.Indented;
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("Answers");
+            writer.WriteStartArray();
+            for (int i = 0; i < question.getQuesCount(); i++)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("id");
+                writer.WriteValue(question.getQuestionId(i));
+                writer.WritePropertyName("YourAns");
+                //Debug.Log(i);
+                //Debug.Log(quesTrack.Length);
+                if (quesTrack[i] == null || quesTrack[i].choice == -1) writer.WriteValue("NA");
+                else writer.WriteValue(abcd[quesTrack[i].choice]);
+                writer.WritePropertyName("MyAns");
+                Debug.Log(question.getQuestionCorrectAns(i));
+                writer.WriteValue(question.getQuestionCorrectAns(i));
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+            /*writer.WriteValue("500W");
+            writer.WritePropertyName("Drives");
+            writer.WriteStartArray();
+            writer.WriteValue("DVD read/writer");
+            writer.WriteComment("(broken)");
+            writer.WriteValue("500 gigabyte hard drive");
+            writer.WriteValue("200 gigabyte hard drive");
+            writer.WriteEnd();*/
+            writer.WriteEndObject();
+        }
     }
 
     public void reset()
@@ -113,7 +186,7 @@ public class TestPaperBehavior : MonoBehaviour
         D.colors = cb;
     }
 
-    public void selectA()
+     public void selectA()
     {
         reset();
         quesTrack[tempQuestion].select(choiceA, 0);
@@ -132,5 +205,15 @@ public class TestPaperBehavior : MonoBehaviour
     {
         reset();
         quesTrack[tempQuestion].select(choiceD, 3);
+    }
+   
+   // fucntion to calulate all the scores
+    public void showScore()
+    {
+        scoreObject a = calculateScore.getScore();
+        Debug.Log(a.unans_count);
+        Debug.Log(a.correct_ans);
+        Debug.Log(a.total_count);       
+        
     }
 }
