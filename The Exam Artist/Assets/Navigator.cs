@@ -19,7 +19,7 @@ public class Navigator : MonoBehaviour
     {
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
-            if (e.target.name == "Next")
+            if (e.target.name == "PLAY")
             {
                 GameObject question = e.target.parent.parent.GetChild(0).gameObject;
                 GameObject A = e.target.parent.parent.GetChild(1).GetChild(0).gameObject;
