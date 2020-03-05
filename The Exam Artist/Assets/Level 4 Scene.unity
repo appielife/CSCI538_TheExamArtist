@@ -2197,7 +2197,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866962848}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c608be6f965434dbfbb212e0aaf626, type: 3}
   m_Name: 
@@ -2245,12 +2245,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teacher: {fileID: 866962852}
   student: {fileID: 828081662}
+  ani: {fileID: 866962850}
   destination: {x: 0, y: 0, z: 0}
-  wayPoints:
-  - {fileID: 910082331}
-  - {fileID: 21260948}
-  - {fileID: 1785373806}
-  - {fileID: 1632902175}
   behaviour: 0
   speed: 8
   text: {fileID: 947182042}

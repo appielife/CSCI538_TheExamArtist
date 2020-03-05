@@ -10,11 +10,11 @@ public class PlayerController : MonoBehaviour
 
 	public NavMeshAgent teacher;
 	public NavMeshAgent student;
-    
+	public Animator ani;
+
 	// public Transform target; 
 	public Vector3 destination;
 	GameObject target;
-	public Transform[] wayPoints;
 	public int behaviour = 0; // moving
 	public float speed = 2.0f;
 	float minDistance = 10000f;
@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
 		teacher.speed = speed;
 		target = GameObject.Find("target1");
+		ani.SetInteger("animation_int", 1);
 		//Debug.Log(target.transform.position);
 	}
 
@@ -54,34 +55,13 @@ public class PlayerController : MonoBehaviour
             //behaviour = 1;
         }
 
-		Vector3 teaPos = teacher.transform.position;
-		Vector3 stuPos = student.transform.position;
-		float distance = Vector3.Distance(teaPos, stuPos);
-		Vector3 srcLocalVect = stuPos - teaPos;
-		srcLocalVect.y = 0;
-		Vector3 forwardLocalPos = teacher.transform.forward * 1 + teaPos;
-		Vector3 forwardLocalVect = forwardLocalPos - teaPos;
-		forwardLocalVect.y = 0;
-		float angle = Vector3.Angle(srcLocalVect, forwardLocalVect);
-		//Debug.Log(angle.ToString() + distance.ToString());
-		string debug = "teacher pos" + teaPos + "student pos" + stuPos +angle.ToString() + "and" + distance.ToString();
-
-		if (distance < minDistance && angle < minAngle / 2)
-		{
-            
-            text.text = "in eyesight";
-			//Debug.Log("in eyesight");
-
-		}
-		else
-        {
-			text.text = "not in eyesight";
-			//Debug.Log("out of eyesight");
-		}
+		eyesightCheck();
+		
 	}
 
 	void Moving()
 	{
+		ani.SetInteger("animation_int", 1);
 		if (target.GetComponent<PointFind>().nextPos)
 		{
 			Transform destination = target.transform;
@@ -99,8 +79,37 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void eyesightCheck()
+	{
+		Vector3 teaPos = teacher.transform.position;
+		Vector3 stuPos = student.transform.position;
+		float distance = Vector3.Distance(teaPos, stuPos);
+		Vector3 srcLocalVect = stuPos - teaPos;
+		srcLocalVect.y = 0;
+		Vector3 forwardLocalPos = teacher.transform.forward * 1 + teaPos;
+		Vector3 forwardLocalVect = forwardLocalPos - teaPos;
+		forwardLocalVect.y = 0;
+		float angle = Vector3.Angle(srcLocalVect, forwardLocalVect);
+		//Debug.Log(angle.ToString() + distance.ToString());
+		string debug = "teacher pos" + teaPos + "student pos" + stuPos + angle.ToString() + "and" + distance.ToString();
+
+		if (distance < minDistance && angle < minAngle / 2)
+		{
+
+			text.text = "in eyesight";
+			//Debug.Log("in eyesight");
+
+		}
+		else
+		{
+			text.text = "not in eyesight";
+			//Debug.Log("out of eyesight");
+		}
+	}
+
 	IEnumerator Pausing()
     {
+		ani.SetInteger("animation_int", 2);
 		Debug.Log("Before Waiting 3 seconds");
 		
 		teacher.transform.Rotate(new Vector3(0, 60 * Time.deltaTime, 0));
