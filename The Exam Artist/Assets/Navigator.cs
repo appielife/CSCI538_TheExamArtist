@@ -33,6 +33,7 @@ public class Navigator : MonoBehaviour
             if (e.target.name == "Left")
             {
                 SceneManager.LoadScene(2);
+
             }
 
             if (e.target.name == "Right")
