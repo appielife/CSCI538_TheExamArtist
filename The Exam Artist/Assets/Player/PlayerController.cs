@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 	float minDistance = 10000f;
 	float minAngle = 120f;
 	public Text text;
+	public Random ran = new Random();
+
 
 
 	void Start()
@@ -72,8 +74,9 @@ public class PlayerController : MonoBehaviour
 			{
 				teacher.ResetPath();
 				behaviour = 3;
-				//Debug.Log(destination.position);
+				Debug.Log(destination.position);
 				//Debug.Log(behaviour);
+
 				target = target.GetComponent<PointFind>().nextPos;  // target赋值为下一个点的坐标
 			}
 		}
@@ -109,10 +112,11 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator Pausing()
     {
-		ani.SetInteger("animation_int", 2);
+		int index = Random.Range(2,3);
+		ani.SetInteger("animation_int", index);
 		Debug.Log("Before Waiting 3 seconds");
 		
-		teacher.transform.Rotate(new Vector3(0, 60 * Time.deltaTime, 0));
+		teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
 		yield return new WaitForSeconds(3);
 		
         Debug.Log("After Waiting 3 Seconds");
