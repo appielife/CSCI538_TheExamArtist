@@ -37,6 +37,16 @@ public class TestPaperBehavior : MonoBehaviour
         next();
     }
 
+    public int getCurrentQuesNum()
+    {
+        return tempQuestion;
+    }
+
+    public int getCurrentQuesAns()
+    {
+        return quesTrack[tempQuestion].correctAns;
+    }
+    
     public void next()
     {
         if (tempQuestion != -1)
