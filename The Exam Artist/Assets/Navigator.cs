@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR.Extras;
+using UnityEngine.SceneManagement;
 public class Navigator : MonoBehaviour
 {
     public SteamVR_LaserPointer laserPointerL; 
@@ -23,6 +24,22 @@ public class Navigator : MonoBehaviour
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             b.onClick.Invoke();
+
+            if (e.target.name == "Play")
+            {
+                SceneManager.LoadScene(1);
+            }
+
+            if (e.target.name == "Left")
+            {
+                SceneManager.LoadScene(2);
+
+            }
+
+            if (e.target.name == "Right")
+            {
+                SceneManager.LoadScene(2);
+            }
         }
     }
     public void PointerInside(object sender, PointerEventArgs e)
