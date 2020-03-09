@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
 
 	public NavMeshAgent teacher;
-	public NavMeshAgent student;
+	public GameObject student;
 	public Animator ani;
 
 	// public Transform target; 
@@ -23,11 +23,11 @@ public class PlayerController : MonoBehaviour
 	public Random ran = new Random();
 
 
-
+	
 	void Start()
 	{
 		// Cache agent component and destination
-		teacher = GetComponent<NavMeshAgent>();
+		//teacher = GetComponent<NavMeshAgent>();
         //student = GetComponent<NavMeshAgent>();
 
 		teacher.speed = speed;
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 			{
 				teacher.ResetPath();
 				behaviour = 3;
-				Debug.Log(destination.position);
+				//Debug.Log(destination.position);
 				//Debug.Log(behaviour);
 
 				target = target.GetComponent<PointFind>().nextPos;  // target赋值为下一个点的坐标
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
 	void eyesightCheck()
 	{
-		Vector3 teaPos = teacher.transform.position;
+		Vector3 teaPos = transform.position;
 		Vector3 stuPos = student.transform.position;
 		float distance = Vector3.Distance(teaPos, stuPos);
 		Vector3 srcLocalVect = stuPos - teaPos;
@@ -114,12 +114,12 @@ public class PlayerController : MonoBehaviour
     {
 		int index = Random.Range(2,3);
 		ani.SetInteger("animation_int", index);
-		Debug.Log("Before Waiting 3 seconds");
+		//Debug.Log("Before Waiting 3 seconds");
 		
 		teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
 		yield return new WaitForSeconds(3);
 		
-        Debug.Log("After Waiting 3 Seconds");
+        //Debug.Log("After Waiting 3 Seconds");
 		behaviour = 1;
  
 

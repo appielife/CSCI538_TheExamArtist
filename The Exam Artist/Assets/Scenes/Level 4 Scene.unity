@@ -2471,7 +2471,7 @@ MonoBehaviour:
   ani: {fileID: 866962850}
   destination: {x: 0, y: 0, z: 0}
   behaviour: 0
-  speed: 5
+  speed: 2
   text: {fileID: 947182042}
 --- !u!1 &910082330
 GameObject:

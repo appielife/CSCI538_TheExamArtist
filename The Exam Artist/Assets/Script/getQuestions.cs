@@ -72,7 +72,12 @@ public class getQuestions
     public void getQuestionsArray()
     {
         ques = (JArray)ques_obj["questions"];
-        Shuffle(ques);
+        JArray temp = new JArray();
+        for (int i = 0; i < 5; i++) {
+            temp.Add(ques[i]);
+        }
+        ques = temp;
+        //Shuffle(ques);
     }
 
     public int getQuesCount()

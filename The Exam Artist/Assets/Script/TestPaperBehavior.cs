@@ -37,6 +37,16 @@ public class TestPaperBehavior : MonoBehaviour
         next();
     }
 
+    public int getCurrentQuesNum()
+    {
+        return tempQuestion;
+    }
+
+    public int getCurrentQuesAns()
+    {
+        return quesTrack[tempQuestion].correctAns;
+    }
+    
     public void next()
     {
         if (tempQuestion != -1)
@@ -51,8 +61,8 @@ public class TestPaperBehavior : MonoBehaviour
 
         reset();
 
-        TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
-        scoreText.text = total_score.ToString();
+        //TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
+        //scoreText.text = total_score.ToString();
         if (tempQuestion < question.getQuesCount() - 1)
         {
             tempQuestion += 1;
