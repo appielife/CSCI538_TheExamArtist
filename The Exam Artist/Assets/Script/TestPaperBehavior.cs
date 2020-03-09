@@ -61,8 +61,8 @@ public class TestPaperBehavior : MonoBehaviour
 
         reset();
 
-        TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
-        scoreText.text = total_score.ToString();
+        //TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
+        //scoreText.text = total_score.ToString();
         if (tempQuestion < question.getQuesCount() - 1)
         {
             tempQuestion += 1;
