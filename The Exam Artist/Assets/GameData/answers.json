@@ -2,18 +2,28 @@
   "Answers": [
     {
       "id": "0",
-      "YourAns": "NA",
-      "MyAns": "C"
-    },
-    {
-      "id": "2",
-      "YourAns": "NA",
-      "MyAns": "C"
+      "YourAns": "A",
+      "MyAns": "A"
     },
     {
       "id": "1",
-      "YourAns": "NA",
+      "YourAns": "D",
       "MyAns": "D"
+    },
+    {
+      "id": "2",
+      "YourAns": "C",
+      "MyAns": "C"
+    },
+    {
+      "id": "3",
+      "YourAns": "C",
+      "MyAns": "B"
+    },
+    {
+      "id": "4",
+      "YourAns": "C",
+      "MyAns": "B"
     }
   ]
 }

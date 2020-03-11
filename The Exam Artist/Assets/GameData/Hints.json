@@ -1,0 +1,35 @@
+{
+	"questions": [
+		{
+		"id": 0,
+		"hints": [
+			"Look at the wall to the right"
+		]
+		},
+		{
+		"id": 1,
+		"hints": [
+			"Look at the ceiling"
+		]
+		},
+		{
+		"id": 2,
+		"hints": [
+			"Look at the lower right of the board"
+		]
+		},
+		{
+		"id": 3,
+		"hints": [
+			"Look at the back of the teacher"
+		]
+		},
+		{
+		"id": 4,
+		"hints": [
+			"Look in your desk drawer"
+		]
+		}
+	]
+}
+				

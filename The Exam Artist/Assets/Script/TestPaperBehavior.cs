@@ -10,7 +10,6 @@ public class TestPaperBehavior : MonoBehaviour
 {
     public GameObject testPage;
     public GameObject submitPage;
-    public GameObject scoreObj;
     public GameObject questionTextObj;
     public GameObject choiceA;
     public GameObject choiceB;
@@ -42,6 +41,11 @@ public class TestPaperBehavior : MonoBehaviour
         return tempQuestion;
     }
 
+    public int getCurrentQuesId()
+    {
+        return int.Parse(question.getQuestionId(tempQuestion));
+    }
+
     public int getCurrentQuesAns()
     {
         return quesTrack[tempQuestion].correctAns;
@@ -61,8 +65,6 @@ public class TestPaperBehavior : MonoBehaviour
 
         reset();
 
-        //TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
-        //scoreText.text = total_score.ToString();
         if (tempQuestion < question.getQuesCount() - 1)
         {
             tempQuestion += 1;
@@ -95,8 +97,6 @@ public class TestPaperBehavior : MonoBehaviour
 
         reset();
 
-        TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
-        scoreText.text = total_score.ToString();
         if (tempQuestion > 0)
         {
             tempQuestion -= 1;

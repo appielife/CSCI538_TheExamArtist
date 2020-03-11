@@ -54,6 +54,22 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Hint",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/HideAndShowSkills",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/NextQuestion",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PrevQuestion",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

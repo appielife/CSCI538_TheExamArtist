@@ -23,9 +23,9 @@ public class IllegalMoveHandler : MonoBehaviour
         float positionZ = playerCam.transform.localPosition.z;
 
         //Debug.Log(positionZ);
-        illegal = ((degreeY >= 45 && degreeY <= 330) || 
-            (positionZ >= 0.8) || 
-            (positionZ <= 0.6 && degreeX >= 50)) ? true : false; 
+        illegal = ((degreeY >= 30 && degreeY <= 330) || 
+            (positionZ >= 0.8) || (positionZ < 0.1) ||
+            (positionZ <= 0.6 && degreeX >= 50 && degreeX <= 330)) ? true : false; 
     }
 
     void Update()
@@ -34,7 +34,7 @@ public class IllegalMoveHandler : MonoBehaviour
         if (illegal && !soundOn)
         {
             sound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
-            sound[2].PlayOneShot(wow, 0.05f);
+            sound[2].PlayOneShot(wow, 0.3f);
             //Debug.Log("illegal");
             debugText.text = "Illegal";
             soundOn = true;
