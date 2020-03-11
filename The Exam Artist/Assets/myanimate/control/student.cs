@@ -9,7 +9,6 @@ public class student : MonoBehaviour {
     private AudioSource[] source;
     private AudioSource[] teacher;
     public Random ran = new Random();
-    public AudioClip dance;
 // Start is called before the first frame update
     void Start()
     {

@@ -12,8 +12,10 @@ public class MultipleChoiceBehavior
     private string questionText;
     private string[] optionText = new string[4];
     private string[] trueOrFalse = new string[4];
+    public int correctAns = -1;
     public int isCorrect = 0;
     public int choice = -1;
+    public string quesId = "";
 
     public void pushQuestion(JObject Q)
     {
@@ -21,17 +23,21 @@ public class MultipleChoiceBehavior
         //JObject Q = question.getNextQuestion();
         questionText = (string)Q["question_txt"];
         JArray options = (JArray)Q["options"];
+        quesId = (string)Q["id"];
         for (int i = 0; i < 4; i++)
         {
             optionText[i] = (string)((JObject)options[i])["option_txt"];
             trueOrFalse[i] = (string)((JObject)options[i])["isCorrect"];
+            if (trueOrFalse[i] == "True") correctAns = i;
         }
     }
 
-    public void showQuestion(GameObject questionTextObj, GameObject[] choices)
+    public void showQuestion(GameObject questionTextObj, GameObject[] choices, int questionNum)
     {
-        TextMesh qText = questionTextObj.GetComponent<TextMesh>();
-        qText.text = questionText;
+        //questionTextObj.SetActive(false);
+        Text qText = questionTextObj.GetComponentInChildren<Text>();
+        
+        qText.text = (questionNum+1).ToString() + ". " + questionText;
         for (int i = 0; i < 4; i++)
         {
             TextMesh Text = choices[i].GetComponentInChildren<TextMesh>();
