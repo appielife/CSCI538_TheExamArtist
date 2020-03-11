@@ -28,6 +28,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
 
     void Update()
     {
+
        if (coolDownCounter > 0 && used == true)
         {
             coolDownCounter -= Time.deltaTime;

@@ -8,9 +8,11 @@ public class IllegalMoveHandler : MonoBehaviour
     public GameObject playerCam;
     public AudioClip wow;
     private AudioSource[] sound;
-    private bool illegal = false;
+    public bool illegal = false;
     private bool soundOn = false;
-    public Text debugText;
+    //public Text debugText;
+    public bool isIllegal;
+
     void OnTriggerEnter(Collider col)
     {
         Debug.Log("GameObject Hit: " + col.gameObject.name);
@@ -36,13 +38,14 @@ public class IllegalMoveHandler : MonoBehaviour
             sound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
             sound[2].PlayOneShot(wow, 0.3f);
             //Debug.Log("illegal");
-            debugText.text = "Illegal";
+            //debugText.text = "Illegal";
             soundOn = true;
         }
         if (!illegal)
         {
-            debugText.text = "Legal";
+            //debugText.text = "Legal";
             soundOn = false;
+
         }
     }
 }

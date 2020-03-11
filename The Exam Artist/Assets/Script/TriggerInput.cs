@@ -26,6 +26,37 @@ public class TriggerInput : MonoBehaviour
 
     void Start()
     {
+        /*MagicCheatSheetBehavior MCS = GameObject.Find("SkillScript").GetComponent<MagicCheatSheetBehavior>();
+        GodOfWashroomBehavior GOW = GameObject.Find("SkillScript").GetComponent<GodOfWashroomBehavior>();
+        MCS.imgCoolDown = GameObject.FindGameObjectsWithTag("skill")[0].GetComponentsInChildren<Image>()[0];
+        MCS.imgExist = GameObject.FindGameObjectsWithTag("skill")[0].GetComponentsInChildren<Image>()[1];
+        MCS.textCoolDown = GameObject.FindGameObjectsWithTag("skill")[0].GetComponentInChildren<Text>();
+        GOW.imgCoolDown = GameObject.FindGameObjectsWithTag("skill")[1].GetComponentInChildren<Image>();
+        GOW.textCoolDown = GameObject.FindGameObjectsWithTag("skill")[1].GetComponentInChildren<Text>();*/
+        GameObject Playerer = GameObject.FindGameObjectWithTag("Player");
+        IllegalMoveHandler illegal = Playerer.AddComponent<IllegalMoveHandler>();
+        illegal.playerCam = GameObject.Find("VRCamera");
+        illegal.wow = (AudioClip)Resources.Load("tindeck_1");
+        //illegal.debugText = GameObject.FindGameObjectWithTag("IllegalText").GetComponent<Text>();
+
+        MagicCheatSheetBehavior mcsb = Playerer.GetComponentInChildren<MagicCheatSheetBehavior>();
+
+        mcsb.enabled = true;
+
+        mcsb.testPaper = GameObject.Find("SelectHandler");
+        mcsb.loadHint();
+
+        mcsb.hintObj = GameObject.Find("Hints");
+
+        Playerer.GetComponentInChildren<GodOfWashroomBehavior>().enabled = true;
+
+        hns = GameObject.Find("SkillsScript").GetComponent<HideAndShowSkills>();
+        hint = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>();
+        washroom = GameObject.Find("SkillsScript").GetComponent<GodOfWashroomBehavior>();
+
+
+
+
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
         Spressed.AddOnStateUpListener(TriggerUpS, left);

@@ -27,24 +27,30 @@ public class Navigator : MonoBehaviour
 
             if (e.target.name == "Play")
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(2);
             }
 
             if (e.target.name == "Left")
             {
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene(3);
 
             }
 
             if (e.target.name == "Right")
             {
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene(3);
             }
+
+            if (e.target.name == "TryAgain")
+            {
+                SceneManager.LoadScene(1);
+            }
+
         }
     }
     public void PointerInside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null)
+        if (e.target.gameObject.GetComponent<Button>() != null && e.target.name == "Menu")
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;
@@ -54,7 +60,7 @@ public class Navigator : MonoBehaviour
     }
     public void PointerOutside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null)
+        if (e.target.gameObject.GetComponent<Button>() != null && e.target.name == "Menu")
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;

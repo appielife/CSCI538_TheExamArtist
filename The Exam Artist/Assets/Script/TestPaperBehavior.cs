@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class TestPaperBehavior : MonoBehaviour
 {
@@ -180,6 +181,8 @@ public class TestPaperBehavior : MonoBehaviour
             writer.WriteEnd();*/
             writer.WriteEndObject();
         }
+
+        SceneManager.LoadScene(4);
     }
 
     public void reset()

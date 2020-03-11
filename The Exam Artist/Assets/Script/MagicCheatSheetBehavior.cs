@@ -15,24 +15,18 @@ public class MagicCheatSheetBehavior : MonoBehaviour
     public Text textCoolDown;
     
     private float coolDown = 5.0f, coolDownCounter = 5.0f;
-    private float existTime = 5.0f, existTimeCounter = 5.0f;
+    private float existTime = 8.0f, existTimeCounter = 8.0f;
     private bool exist = false,  used = false;
     private Text tempHintShow;
 
     static string[] choices = { "A", "B", "C", "D" };
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
         hintObj.GetComponentInChildren<Text>().text = "";
-        using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/hints.json"))
-        using (JsonTextReader reader = new JsonTextReader(file))
-        {
-            hintArray = (JArray)((JObject)JToken.ReadFrom(reader))["questions"];
-            //Debug.Log(hintArray);
-        }
     }
     void Update()
     {
@@ -71,7 +65,8 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         if (exist == false && used == false)
         {
             int temp_ques_id = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesId();
-            //Debug.Log(temp_ques_id);
+            Debug.Log(temp_ques_id);
+            Debug.Log(hintArray);
             //Debug.Log((JObject)hintArray[temp_ques_id]);
             string hintStr = (string)((JArray)((JObject)hintArray[temp_ques_id])["hints"])[0];
             hintObj.GetComponentsInChildren<Text>()[0].text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " +
@@ -106,6 +101,16 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         else
         {
             Debug.Log("Your skill need to be cooled down");
+        }
+    }
+
+    public void loadHint()
+    {
+        using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/hints.json"))
+        using (JsonTextReader reader = new JsonTextReader(file))
+        {
+            hintArray = (JArray)((JObject)JToken.ReadFrom(reader))["questions"];
+            Debug.Log(hintArray);
         }
     }
 }

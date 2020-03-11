@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
     public Text timerText;
     public float timeLeft;
+
     private bool timesUp = false;
     void Start()
     {
         timeLeft += 1;
+        GameObject.FindObjectOfType<GodOfWashroomBehavior>().timer = gameObject;
     }
     void Update()
     {
@@ -27,6 +30,7 @@ public class Timer : MonoBehaviour
         {
             Debug.Log("Game Over");
             timesUp = true;
+            SceneManager.LoadScene(4);
         }
     }
 
