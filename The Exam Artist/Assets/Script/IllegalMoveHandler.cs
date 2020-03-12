@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class IllegalMoveHandler : MonoBehaviour
 {
     public GameObject playerCam;
-    public AudioClip wow;
+    //public AudioClip wow;
     private AudioSource[] sound;
-    private bool illegal = false;
+    public bool illegal = false;
     private bool soundOn = false;
     public Text debugText;
     void OnTriggerEnter(Collider col)
@@ -33,14 +33,22 @@ public class IllegalMoveHandler : MonoBehaviour
         HorizontalMove();
         if (illegal && !soundOn)
         {
-            sound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
-            sound[2].PlayOneShot(wow, 0.3f);
+            sound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
+            if (!sound[2].isPlaying)
+            {
+                sound[2].Play();
+            }
+            else
+            {
+                sound[2].UnPause();
+            }
             //Debug.Log("illegal");
             debugText.text = "Illegal";
             soundOn = true;
         }
         if (!illegal)
         {
+            sound[2].Pause();
             debugText.text = "Legal";
             soundOn = false;
         }

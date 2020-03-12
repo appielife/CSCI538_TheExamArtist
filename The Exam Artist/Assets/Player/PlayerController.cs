@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Valve.VR;
 
 
 public class PlayerController : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
 	// public Transform target; 
 	public Vector3 destination;
+	public GameObject gameoverTarget;
 	GameObject target;
 	public int behaviour = 0; // moving
 	public float speed = 2.0f;
@@ -21,9 +23,18 @@ public class PlayerController : MonoBehaviour
 	float minAngle = 120f;
 	public Text text;
 	public Random ran = new Random();
+	public bool inEyesight = false;
+	public GameObject mv;
+	private IllegalMoveHandler new_mv = null;
+	private float angle;
+	private bool gameover = false;
+	private GameObject temp;
+	private AudioSource[] studentsound;
+	private AudioSource[] teachersound;
+	public AudioClip wow;
 
 
-	
+
 	void Start()
 	{
 		// Cache agent component and destination
@@ -34,6 +45,10 @@ public class PlayerController : MonoBehaviour
 		target = GameObject.Find("target1");
 		ani.SetInteger("animation_int", 1);
 		//Debug.Log(target.transform.position);
+
+		new_mv = mv.GetComponent<IllegalMoveHandler>();
+		studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
+		teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
 	}
 
 	void Update()
@@ -56,28 +71,66 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(Pausing());
             //behaviour = 1;
         }
+		else if(behaviour == 4)
+		{
+			teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+			behaviour = 2;
+			FadeIn();
+			Invoke("FadeOut", 2.0f);
+		}
 
-		eyesightCheck();
+		if (!gameover)
+		{
+			eyesightCheck();
+		}
 		
 	}
 
 	void Moving()
 	{
-		ani.SetInteger("animation_int", 1);
-		if (target.GetComponent<PointFind>().nextPos)
+		if (!teachersound[1].isPlaying)
 		{
-			Transform destination = target.transform;
-			//Debug.Log("now destination:"+destination.position);
-			teacher.SetDestination(destination.position);
-
-			if (Vector3.Distance(teacher.transform.position, destination.position) < 1.0f)
+			teachersound[1].Play();
+		}
+		else {
+			teachersound[1].UnPause();
+		}
+		Transform destination = target.transform;
+		ani.SetInteger("animation_int", 1);
+		if (gameover)
+		{
+			teacher.SetDestination(gameoverTarget.transform.position);
+			if (Vector3.Distance(teacher.transform.position, teacher.destination) < 1.0f)
 			{
+				int index = Random.Range(5, 7);
+				ani.SetInteger("animation_int", index);
 				teacher.ResetPath();
-				behaviour = 3;
-				//Debug.Log(destination.position);
-				//Debug.Log(behaviour);
+				behaviour = 4;
+			}
+		}
+		else
+		{
+			if(new_mv.illegal && inEyesight)
+			{
+				teachersound[2].PlayOneShot(wow, 0.3f);
+				gameover = true;
+				teacher.SetDestination(gameoverTarget.transform.position);
+			}
+			else
+			{
+				teacher.SetDestination(destination.position);
+			}
+			if(target.GetComponent<PointFind>().nextPos && !(new_mv.illegal && inEyesight))
+			{
+				if (Vector3.Distance(teacher.transform.position, destination.position) < 1.0f)
+				{
+					teacher.ResetPath();
+					behaviour = 3;
+					//Debug.Log(destination.position);
+					//Debug.Log(behaviour);
 
-				target = target.GetComponent<PointFind>().nextPos;  // target赋值为下一个点的坐标
+					target = target.GetComponent<PointFind>().nextPos;  // target赋值为下一个点的坐标
+				}
 			}
 		}
 	}
@@ -101,28 +154,55 @@ public class PlayerController : MonoBehaviour
 
 			text.text = "in eyesight";
 			//Debug.Log("in eyesight");
+			inEyesight = true;
+			if (new_mv.illegal)
+			{
+				behaviour = 3;
+			}
 
 		}
 		else
 		{
 			text.text = "not in eyesight";
 			//Debug.Log("out of eyesight");
+			inEyesight = false;
 		}
 	}
 
 	IEnumerator Pausing()
     {
-		int index = Random.Range(2,3);
-		ani.SetInteger("animation_int", index);
-		//Debug.Log("Before Waiting 3 seconds");
-		
-		teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
-		yield return new WaitForSeconds(3);
-		
-        //Debug.Log("After Waiting 3 Seconds");
-		behaviour = 1;
- 
+		teachersound[1].Pause();
+
+		if (new_mv.illegal && inEyesight)
+		{
+			int index = Random.Range(5, 7);
+			ani.SetInteger("animation_int", index);
+			yield return new WaitForSeconds(3);
+		}
+		else 
+		{
+			int index = Random.Range(2, 3);
+			ani.SetInteger("animation_int", index);
+			//Debug.Log("Before Waiting 3 seconds");
+
+			teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
+			yield return new WaitForSeconds(3);
+
+			//Debug.Log("After Waiting 3 Seconds");
+			behaviour = 1;
+		}
 
     }
+
+	private void FadeIn()
+	{
+		SteamVR_Fade.Start(Color.clear, 0.0f);
+		SteamVR_Fade.Start(Color.black, 2.0f);
+	}
+	private void FadeOut()
+	{
+		SteamVR_Fade.Start(Color.black, 0.0f);
+		SteamVR_Fade.Start(Color.clear, 2.0f);
+	}
 
 }
