@@ -8,30 +8,38 @@ using Newtonsoft.Json.Linq;
 
 public class TestPaperAuto : MonoBehaviour
 {
-    public GameObject testPage;
+    private GameObject testPage;
     public GameObject questionTextObj;
     public GameObject choiceA;
     public GameObject choiceB;
     public GameObject choiceC;
     public GameObject choiceD;
-    private getQuestions question = new getQuestions();
+    private getQuestions question;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     // Start is called before the first frame update
 
     public float frequency = 0;
     private float startTime = 0;
+    private GameObject mainTestPaper;
 
     void Start()
     {
-        question.readQuestionFromJson();
-        quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
+        mainTestPaper = GameObject.FindGameObjectWithTag("MainTestPaper");
+       
         startTime = Time.time;
-        next();
+        
     }
 
     void Update()
     {
+        if (question == null)
+        {
+            question = mainTestPaper.GetComponentInChildren<TestPaperBehavior>().question.copy();
+            /*question.readQuestionFromJson();*/
+            quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
+            next();
+        }
         float t = Time.time - startTime;
         if (t > frequency)
         {
@@ -85,7 +93,7 @@ public class TestPaperAuto : MonoBehaviour
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
     }*/
 
-    public void writeAnsToJson()
+    /*public void writeAnsToJson()
     {
         char[] abcd = { 'A', 'B', 'C', 'D' };
         using (StreamWriter file = File.CreateText(@Application.dataPath + "/GameData/answers.json"))
@@ -113,17 +121,17 @@ public class TestPaperAuto : MonoBehaviour
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
-            /*writer.WriteValue("500W");
+            writer.WriteValue("500W");
             writer.WritePropertyName("Drives");
             writer.WriteStartArray();
             writer.WriteValue("DVD read/writer");
             writer.WriteComment("(broken)");
             writer.WriteValue("500 gigabyte hard drive");
             writer.WriteValue("200 gigabyte hard drive");
-            writer.WriteEnd();*/
+            writer.WriteEnd();
             writer.WriteEndObject();
         }
-    }
+    }*/
 
     public void reset()
     {

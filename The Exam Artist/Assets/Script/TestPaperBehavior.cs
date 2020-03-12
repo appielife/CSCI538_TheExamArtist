@@ -15,7 +15,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceB;
     public GameObject choiceC;
     public GameObject choiceD;
-    private getQuestions question = new getQuestions();
+    public getQuestions question = new getQuestions();
     private calculateScore calculateScore = new calculateScore();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
@@ -27,6 +27,7 @@ public class TestPaperBehavior : MonoBehaviour
         testPage.SetActive(true);
         submitPage.SetActive(false);
         question.readQuestionFromJson();
+        Debug.Log(question.ques);
         quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
         scoreTrack = new int[question.getQuesCount()];
         for (int i = 0; i < question.getQuesCount(); i++)
@@ -53,7 +54,7 @@ public class TestPaperBehavior : MonoBehaviour
     
     public void next()
     {
-        if (tempQuestion != -1)
+        /*if (tempQuestion != -1)
         {
             if (quesTrack[tempQuestion].isCorrect != scoreTrack[tempQuestion])
             {
@@ -61,7 +62,7 @@ public class TestPaperBehavior : MonoBehaviour
                 else total_score -= 1;
                 scoreTrack[tempQuestion] = quesTrack[tempQuestion].isCorrect;
             }
-        }
+        }*/
 
         reset();
 
@@ -73,12 +74,15 @@ public class TestPaperBehavior : MonoBehaviour
         {
             tempQuestion = 0;
         }
+        //Debug.Log(tempQuestion);
         if (quesTrack[tempQuestion] == null)
         {
             quesTrack[tempQuestion] = new MultipleChoiceBehavior();
             JObject Q = question.getNextQuestion();
+            //Debug.Log(Q);
             quesTrack[tempQuestion].pushQuestion(Q);
         }
+        question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
     }
@@ -111,6 +115,7 @@ public class TestPaperBehavior : MonoBehaviour
             JObject Q = question.getPrevQuestion();
             quesTrack[tempQuestion].pushQuestion(Q);
         }
+        question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
     }

@@ -9,10 +9,18 @@ public class getQuestions
 {
     private string jsonString;
     private JObject ques_obj;
-    private JArray ques;
+    public JArray ques;
     static System.Random _random = new System.Random();
     public int current = -1;
 
+    public getQuestions copy()
+    {
+        getQuestions res = new getQuestions();
+        res.jsonString = jsonString;
+        res.ques_obj = ques_obj;
+        res.ques = ques;
+        return res;
+    }
 
     // Start is called before the first frame update
     public void readQuestionFromJson()
@@ -55,7 +63,13 @@ public class getQuestions
         {
             current = ques.Count - 1;
         }
+        Debug.Log(current);
         return (JObject)ques[current];
+    }
+
+    public void updateQuesNum(int n)
+    {
+        current = n;
     }
 
     public string getQuestionId(int idx)
@@ -72,12 +86,12 @@ public class getQuestions
     public void getQuestionsArray()
     {
         ques = (JArray)ques_obj["questions"];
+        Shuffle(ques);
         JArray temp = new JArray();
         for (int i = 0; i < 5; i++) {
             temp.Add(ques[i]);
         }
         ques = temp;
-        //Shuffle(ques);
     }
 
     public int getQuesCount()
