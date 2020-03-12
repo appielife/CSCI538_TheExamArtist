@@ -10,6 +10,8 @@ TagManager:
   - teacher
   - backgroundmusic
   - Hint
+  - MainTestPaper
+  - MainPlayer
   layers:
   - Default
   - TransparentFX

@@ -40,6 +40,12 @@ public class Navigator : MonoBehaviour
             {
                 SceneManager.LoadScene(2);
             }
+
+            if (e.target.name == "TryAgain")
+            {
+                Destroy(GameObject.FindGameObjectWithTag("MainPlayer"));
+                SceneManager.LoadScene(2);
+            }
         }
     }
     public void PointerInside(object sender, PointerEventArgs e)

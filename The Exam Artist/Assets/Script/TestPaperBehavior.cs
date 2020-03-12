@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class TestPaperBehavior : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class TestPaperBehavior : MonoBehaviour
         testPage.SetActive(true);
         submitPage.SetActive(false);
         question.readQuestionFromJson();
-        Debug.Log(question.ques);
+        //Debug.Log(question.ques);
         quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
         scoreTrack = new int[question.getQuesCount()];
         for (int i = 0; i < question.getQuesCount(); i++)
@@ -185,6 +186,8 @@ public class TestPaperBehavior : MonoBehaviour
             writer.WriteEnd();*/
             writer.WriteEndObject();
         }
+        Destroy(GameObject.FindGameObjectWithTag("MainPlayer"));
+        SceneManager.LoadScene(3);
     }
 
     public void reset()

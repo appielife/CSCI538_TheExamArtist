@@ -26,6 +26,8 @@ public class TriggerInput : MonoBehaviour
 
     void Start()
     {
+        
+
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
         Spressed.AddOnStateUpListener(TriggerUpS, left);

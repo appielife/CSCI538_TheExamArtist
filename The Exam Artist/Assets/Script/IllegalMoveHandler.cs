@@ -31,9 +31,9 @@ public class IllegalMoveHandler : MonoBehaviour
     void Update()
     {
         HorizontalMove();
+        sound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
         if (illegal && !soundOn)
         {
-            sound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
             if (!sound[2].isPlaying)
             {
                 sound[2].Play();

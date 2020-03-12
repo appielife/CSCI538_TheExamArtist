@@ -71,68 +71,6 @@ public class TestPaperAuto : MonoBehaviour
         quesTrack[tempQuestion].select(choices[correctAns], correctAns);
     }
 
-    /*public void previous()
-    {
-
-        reset();
-        if (tempQuestion > 0)
-        {
-            tempQuestion -= 1;
-        }
-        else
-        {
-            tempQuestion = question.getQuesCount() - 1;
-        }
-        if (quesTrack[tempQuestion] == null)
-        {
-            quesTrack[tempQuestion] = new MultipleChoiceBehavior();
-            JObject Q = question.getPrevQuestion();
-            quesTrack[tempQuestion].pushQuestion(Q);
-        }
-        GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
-        quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
-    }*/
-
-    /*public void writeAnsToJson()
-    {
-        char[] abcd = { 'A', 'B', 'C', 'D' };
-        using (StreamWriter file = File.CreateText(@Application.dataPath + "/GameData/answers.json"))
-
-        using (JsonWriter writer = new JsonTextWriter(file))
-        {
-            writer.Formatting = Formatting.Indented;
-
-            writer.WriteStartObject();
-            writer.WritePropertyName("Answers");
-            writer.WriteStartArray();
-            for (int i = 0; i < question.getQuesCount(); i++)
-            {
-                writer.WriteStartObject();
-                writer.WritePropertyName("id");
-                writer.WriteValue(question.getQuestionId(i));
-                writer.WritePropertyName("YourAns");
-                //Debug.Log(i);
-                //Debug.Log(quesTrack.Length);
-                if (quesTrack[i] == null || quesTrack[i].choice == -1) writer.WriteValue("NA");
-                else writer.WriteValue(abcd[quesTrack[i].choice]);
-                writer.WritePropertyName("MyAns");
-                Debug.Log(question.getQuestionCorrectAns(i));
-                writer.WriteValue(question.getQuestionCorrectAns(i));
-                writer.WriteEndObject();
-            }
-            writer.WriteEndArray();
-            writer.WriteValue("500W");
-            writer.WritePropertyName("Drives");
-            writer.WriteStartArray();
-            writer.WriteValue("DVD read/writer");
-            writer.WriteComment("(broken)");
-            writer.WriteValue("500 gigabyte hard drive");
-            writer.WriteValue("200 gigabyte hard drive");
-            writer.WriteEnd();
-            writer.WriteEndObject();
-        }
-    }*/
-
     public void reset()
     {
         Button A = choiceA.GetComponentInChildren<Button>();

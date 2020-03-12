@@ -33,6 +33,18 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             hintArray = (JArray)((JObject)JToken.ReadFrom(reader))["questions"];
             //Debug.Log(hintArray);
         }
+
+        JArray temp = new JArray();
+        int j = 0;
+        for (int i = 0; i < 31; i++)
+        {
+            temp.Add(hintArray[j]);
+            temp[i]["id"] = i.ToString();
+            if(j == 4) { j = 0; }
+            else { j++; }
+        }
+        hintArray = temp;
+        Debug.Log(hintArray);
     }
     void Update()
     {
