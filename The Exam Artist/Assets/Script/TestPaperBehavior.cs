@@ -17,7 +17,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceC;
     public GameObject choiceD;
     public getQuestions question = new getQuestions();
-    private CalculateScore calculateScore = new CalculateScore();
+    private ScoreCalculate calculateScore = new ScoreCalculate();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;

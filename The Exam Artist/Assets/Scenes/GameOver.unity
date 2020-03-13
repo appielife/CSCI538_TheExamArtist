@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 50006135}
   - component: {fileID: 50006134}
   m_Layer: 0
-  m_Name: CaculateScore
+  m_Name: ScoreCalculate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 50006133}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a27b0c953fee024fb9200a38539e7d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a52e1898ca533a43ba0cf6edf2f4a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 1626616664}

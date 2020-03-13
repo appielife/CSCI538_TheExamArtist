@@ -6,22 +6,20 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine.UI;
 
-
-
-
-public class scoreObject {
+public class scoreObject
+{
     //  count of correct answered
     public int correct_ans;
     // count of unanswered questions
     public int unans_count;
     // count of total questions
     public int total_count;
-
 }
-public class CalculateScore : MonoBehaviour
+
+public class ScoreCalculate : MonoBehaviour
 {
-    public Text score; 
-    private JObject ans_obj;    
+    public Text score;
+    private JObject ans_obj;
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();
 
@@ -33,14 +31,15 @@ public class CalculateScore : MonoBehaviour
     }
 
 
-    public scoreObject getScore() {
+    public scoreObject getScore()
+    {
         ans_arr = readAnswersFromJson();
         scoreObj.total_count = ans_arr.Count;
         scoreObj.correct_ans = getCorrectAnswersCount();
         scoreObj.unans_count = getUnansweredCount();
         //Debug.Log(scoreObj.correct_ans);
-        return scoreObj;    
-    
+        return scoreObj;
+
     }
 
     public JArray readAnswersFromJson()
@@ -91,6 +90,6 @@ public class CalculateScore : MonoBehaviour
             }
         }
         return count;
-    }      
+    }
 
 }
