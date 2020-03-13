@@ -50,6 +50,26 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Washroom",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Hint",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/HideAndShowSkills",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/NextQuestion",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PrevQuestion",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -81,6 +101,26 @@
       "name": "/actions/mixedreality/in/ExternalCamera",
       "type": "pose",
       "requirement": "optional"
+    },
+    {
+      "name": "/actions/exam/in/Washroom",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/Hint",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/HideAndShowSkills",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/NextQuestion",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/PrevQuestion",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -98,6 +138,10 @@
     },
     {
       "name": "/actions/mixedreality",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/exam",
       "usage": "single"
     }
   ],
