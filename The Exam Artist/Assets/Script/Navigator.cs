@@ -9,6 +9,16 @@ public class Navigator : MonoBehaviour
     public SteamVR_LaserPointer laserPointerL; 
     public SteamVR_LaserPointer laserPointerR;
 
+    void Start()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
+        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
+        GameObject LeftHand = SteamVRObjects.transform.Find("LeftHand").gameObject;
+        GameObject RightHand = SteamVRObjects.transform.Find("RightHand").gameObject;
+        laserPointerL = LeftHand.GetComponent<SteamVR_LaserPointer>();
+        laserPointerR = RightHand.GetComponent<SteamVR_LaserPointer>();
+    }
+
     void Awake()
     {
         laserPointerL.PointerIn += PointerInside;
