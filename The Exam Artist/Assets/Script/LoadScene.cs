@@ -7,6 +7,7 @@ public class LoadScene : MonoBehaviour
 {
     public void SceneLoader(int sceneIndex)
     {
+        Destroy(GameObject.FindGameObjectWithTag("MainPlayer"));
         SceneManager.LoadScene(sceneIndex);
     }
 }

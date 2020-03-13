@@ -4,6 +4,8 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.UI;
+
 
 
 
@@ -16,12 +18,19 @@ public class scoreObject {
     public int total_count;
 
 }
-public class calculateScore : MonoBehaviour
+public class CalculateScore : MonoBehaviour
 {
-
+    public Text score; 
     private JObject ans_obj;    
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();
+
+
+    private void Start()
+    {
+        scoreObj = getScore();
+        score.text = scoreObj.correct_ans.ToString() + " / " + scoreObj.total_count.ToString();
+    }
 
 
     public scoreObject getScore() {
@@ -29,7 +38,7 @@ public class calculateScore : MonoBehaviour
         scoreObj.total_count = ans_arr.Count;
         scoreObj.correct_ans = getCorrectAnswersCount();
         scoreObj.unans_count = getUnansweredCount();
-        Debug.Log(scoreObj);
+        //Debug.Log(scoreObj.correct_ans);
         return scoreObj;    
     
     }

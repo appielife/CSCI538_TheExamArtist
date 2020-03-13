@@ -5,19 +5,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class TestPaperBehavior : MonoBehaviour
 {
     public GameObject testPage;
     public GameObject submitPage;
-    public GameObject scoreObj;
     public GameObject questionTextObj;
     public GameObject choiceA;
     public GameObject choiceB;
     public GameObject choiceC;
     public GameObject choiceD;
-    private getQuestions question = new getQuestions();
-    private calculateScore calculateScore = new calculateScore();
+    public getQuestions question = new getQuestions();
+    private CalculateScore calculateScore = new CalculateScore();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
@@ -28,6 +28,7 @@ public class TestPaperBehavior : MonoBehaviour
         testPage.SetActive(true);
         submitPage.SetActive(false);
         question.readQuestionFromJson();
+        //Debug.Log(question.ques);
         quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
         scoreTrack = new int[question.getQuesCount()];
         for (int i = 0; i < question.getQuesCount(); i++)
@@ -42,6 +43,11 @@ public class TestPaperBehavior : MonoBehaviour
         return tempQuestion;
     }
 
+    public int getCurrentQuesId()
+    {
+        return int.Parse(question.getQuestionId(tempQuestion));
+    }
+
     public int getCurrentQuesAns()
     {
         return quesTrack[tempQuestion].correctAns;
@@ -49,20 +55,9 @@ public class TestPaperBehavior : MonoBehaviour
     
     public void next()
     {
-        if (tempQuestion != -1)
-        {
-            if (quesTrack[tempQuestion].isCorrect != scoreTrack[tempQuestion])
-            {
-                if (scoreTrack[tempQuestion] == 0) total_score += 1;
-                else total_score -= 1;
-                scoreTrack[tempQuestion] = quesTrack[tempQuestion].isCorrect;
-            }
-        }
 
         reset();
 
-        //TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
-        //scoreText.text = total_score.ToString();
         if (tempQuestion < question.getQuesCount() - 1)
         {
             tempQuestion += 1;
@@ -71,12 +66,15 @@ public class TestPaperBehavior : MonoBehaviour
         {
             tempQuestion = 0;
         }
+        //Debug.Log(tempQuestion);
         if (quesTrack[tempQuestion] == null)
         {
             quesTrack[tempQuestion] = new MultipleChoiceBehavior();
             JObject Q = question.getNextQuestion();
+            //Debug.Log(Q);
             quesTrack[tempQuestion].pushQuestion(Q);
         }
+        question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
     }
@@ -95,8 +93,6 @@ public class TestPaperBehavior : MonoBehaviour
 
         reset();
 
-        TextMesh scoreText = scoreObj.GetComponent<TextMesh>();
-        scoreText.text = total_score.ToString();
         if (tempQuestion > 0)
         {
             tempQuestion -= 1;
@@ -111,17 +107,13 @@ public class TestPaperBehavior : MonoBehaviour
             JObject Q = question.getPrevQuestion();
             quesTrack[tempQuestion].pushQuestion(Q);
         }
+        question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
     }
 
     public void submit()
     {
-        /*questionTextObj.SetActive(false);
-        choiceA.SetActive(false);
-        choiceB.SetActive(false);
-        choiceC.SetActive(false);
-        choiceD.SetActive(false);*/
         Button submit = testPage.GetComponentsInChildren<Button>()[6];
         ColorBlock cb = submit.colors;
         cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -170,16 +162,10 @@ public class TestPaperBehavior : MonoBehaviour
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
-            /*writer.WriteValue("500W");
-            writer.WritePropertyName("Drives");
-            writer.WriteStartArray();
-            writer.WriteValue("DVD read/writer");
-            writer.WriteComment("(broken)");
-            writer.WriteValue("500 gigabyte hard drive");
-            writer.WriteValue("200 gigabyte hard drive");
-            writer.WriteEnd();*/
             writer.WriteEndObject();
         }
+        Destroy(GameObject.FindGameObjectWithTag("MainPlayer"));
+        SceneManager.LoadScene(2);
     }
 
     public void reset()

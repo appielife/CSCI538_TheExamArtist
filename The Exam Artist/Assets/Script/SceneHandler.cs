@@ -8,12 +8,25 @@ using Valve.VR.Extras;
 public class SceneHandler : MonoBehaviour
 {
 
-    public SteamVR_LaserPointer laserPointer;
+    private SteamVR_LaserPointer laserPointer;
 
     private string clicked = "";
     
-    void Awake()
+    void Start()
     {
+        Settings setting = null;
+        if (GameObject.Find("Settings"))
+        {
+            setting = GameObject.Find("Settings").GetComponent<Settings>();
+        }
+        string hand = (setting != null) ? setting.getHand() : "LeftHand";
+
+        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
+        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
+        GameObject Hand = SteamVRObjects.transform.Find(hand).gameObject;
+
+        laserPointer = Hand.GetComponent<SteamVR_LaserPointer>();
+
         laserPointer.PointerIn += PointerInside;
         laserPointer.PointerOut += PointerOutside;
         laserPointer.PointerClick += PointerClick;
@@ -34,6 +47,7 @@ public class SceneHandler : MonoBehaviour
     }
     public void PointerInside(object sender, PointerEventArgs e)
     {
+        //Debug.Log(e.target.name);
         if (e.target.gameObject.GetComponent<Button>() != null && clicked != e.target.name)
         {
             laserPointer.thickness = 0.002f;
