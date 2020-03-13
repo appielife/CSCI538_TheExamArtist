@@ -12,6 +12,8 @@ TagManager:
   - Hint
   - MainTestPaper
   - MainPlayer
+  - MainMenu
+  - HandSelectMenu
   layers:
   - Default
   - TransparentFX

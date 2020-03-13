@@ -18,7 +18,7 @@ public class scoreObject {
     public int total_count;
 
 }
-public class calculateScore : MonoBehaviour
+public class CalculateScore : MonoBehaviour
 {
     public Text score; 
     private JObject ans_obj;    
@@ -38,7 +38,7 @@ public class calculateScore : MonoBehaviour
         scoreObj.total_count = ans_arr.Count;
         scoreObj.correct_ans = getCorrectAnswersCount();
         scoreObj.unans_count = getUnansweredCount();
-        Debug.Log(scoreObj);
+        //Debug.Log(scoreObj.correct_ans);
         return scoreObj;    
     
     }

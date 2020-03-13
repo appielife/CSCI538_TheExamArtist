@@ -17,7 +17,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceC;
     public GameObject choiceD;
     public getQuestions question = new getQuestions();
-    private calculateScore calculateScore = new calculateScore();
+    private CalculateScore calculateScore = new CalculateScore();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
@@ -55,15 +55,6 @@ public class TestPaperBehavior : MonoBehaviour
     
     public void next()
     {
-        /*if (tempQuestion != -1)
-        {
-            if (quesTrack[tempQuestion].isCorrect != scoreTrack[tempQuestion])
-            {
-                if (scoreTrack[tempQuestion] == 0) total_score += 1;
-                else total_score -= 1;
-                scoreTrack[tempQuestion] = quesTrack[tempQuestion].isCorrect;
-            }
-        }*/
 
         reset();
 
@@ -123,11 +114,6 @@ public class TestPaperBehavior : MonoBehaviour
 
     public void submit()
     {
-        /*questionTextObj.SetActive(false);
-        choiceA.SetActive(false);
-        choiceB.SetActive(false);
-        choiceC.SetActive(false);
-        choiceD.SetActive(false);*/
         Button submit = testPage.GetComponentsInChildren<Button>()[6];
         ColorBlock cb = submit.colors;
         cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -176,18 +162,10 @@ public class TestPaperBehavior : MonoBehaviour
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
-            /*writer.WriteValue("500W");
-            writer.WritePropertyName("Drives");
-            writer.WriteStartArray();
-            writer.WriteValue("DVD read/writer");
-            writer.WriteComment("(broken)");
-            writer.WriteValue("500 gigabyte hard drive");
-            writer.WriteValue("200 gigabyte hard drive");
-            writer.WriteEnd();*/
             writer.WriteEndObject();
         }
         Destroy(GameObject.FindGameObjectWithTag("MainPlayer"));
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
     }
 
     public void reset()

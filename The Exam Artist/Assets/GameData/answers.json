@@ -1,29 +1,29 @@
 {
   "Answers": [
     {
-      "id": "26",
-      "YourAns": "A",
-      "MyAns": "A"
-    },
-    {
-      "id": "22",
-      "YourAns": "C",
-      "MyAns": "C"
-    },
-    {
-      "id": "24",
-      "YourAns": "A",
+      "id": "1",
+      "YourAns": "NA",
       "MyAns": "D"
     },
     {
-      "id": "8",
-      "YourAns": "B",
+      "id": "16",
+      "YourAns": "NA",
+      "MyAns": "C"
+    },
+    {
+      "id": "12",
+      "YourAns": "NA",
+      "MyAns": "D"
+    },
+    {
+      "id": "4",
+      "YourAns": "NA",
       "MyAns": "B"
     },
     {
-      "id": "17",
-      "YourAns": "C",
-      "MyAns": "C"
+      "id": "23",
+      "YourAns": "NA",
+      "MyAns": "A"
     }
   ]
 }

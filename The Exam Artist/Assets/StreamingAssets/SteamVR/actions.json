@@ -101,6 +101,26 @@
       "name": "/actions/mixedreality/in/ExternalCamera",
       "type": "pose",
       "requirement": "optional"
+    },
+    {
+      "name": "/actions/exam/in/Washroom",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/Hint",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/HideAndShowSkills",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/NextQuestion",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/exam/in/PrevQuestion",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -118,6 +138,10 @@
     },
     {
       "name": "/actions/mixedreality",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/exam",
       "usage": "single"
     }
   ],

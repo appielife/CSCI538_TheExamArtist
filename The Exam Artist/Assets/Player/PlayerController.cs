@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource[] studentsound;
     private AudioSource[] teachersound;
     public AudioClip wow;
+    public TestPaperBehavior test;
 
 
     private float timeLeft = 5.0f;
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log(behaviour);
+            //Debug.Log(behaviour);
             if (behaviour == 0) // start status, set status as 1 to moving
             {
                 behaviour = 1;
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour
             {
                 teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
                 behaviour = 2;
+                test.writeAnsToJson();
                 FadeIn();
                 Invoke("FadeOut", 2.0f);
             }
@@ -218,9 +220,7 @@ public class PlayerController : MonoBehaviour
     {
         SteamVR_Fade.Start(Color.black, 0.0f);
         SteamVR_Fade.Start(Color.clear, 2.0f);
-        Debug.Log(GameObject.FindGameObjectWithTag("MainPlayer").name);
-        Destroy(GameObject.FindGameObjectWithTag("MainPlayer"));
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
     }
 
 }

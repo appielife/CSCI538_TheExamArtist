@@ -11,9 +11,13 @@ public class IllegalMoveHandler : MonoBehaviour
     public bool illegal = false;
     private bool soundOn = false;
     public Text debugText;
-    void OnTriggerEnter(Collider col)
+
+    void Start()
     {
-        Debug.Log("GameObject Hit: " + col.gameObject.name);
+        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
+        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
+        playerCam = SteamVRObjects.transform.Find("VRCamera").gameObject;
+        debugText = playerCam.transform.Find("Debug").gameObject.GetComponentInChildren<Text>();
     }
 
     void HorizontalMove()
@@ -42,7 +46,6 @@ public class IllegalMoveHandler : MonoBehaviour
             {
                 sound[2].UnPause();
             }
-            //Debug.Log("illegal");
             debugText.text = "Illegal";
             soundOn = true;
         }

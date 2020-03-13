@@ -24,9 +24,27 @@ public class TriggerInput : MonoBehaviour
 
     private bool show = false;
 
+    void OnDestroy()
+    {
+        Ypressed.RemoveOnStateDownListener(TriggerDownY, left);
+        Xpressed.RemoveOnStateDownListener(TriggerDownX, left);
+        Spressed.RemoveOnStateUpListener(TriggerUpS, left);
+        Spressed.RemoveOnStateDownListener(TriggerDownS, left);
+        Spressed.RemoveOnStateUpListener(TriggerUpS, right);
+        Spressed.RemoveOnStateDownListener(TriggerDownS, right);
+        LeftEast.RemoveOnStateDownListener(TriggerDownR, left);
+        LeftWest.RemoveOnStateDownListener(TriggerDownL, left);
+        RightEast.RemoveOnStateDownListener(TriggerDownR, right);
+        RightWest.RemoveOnStateDownListener(TriggerDownL, right);
+    }
+
     void Start()
     {
-        
+        washroom = GameObject.Find("SkillsScript").GetComponent<GodOfWashroomBehavior>();
+        hint = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>();
+        hns = GameObject.Find("SkillsScript").GetComponent<HideAndShowSkills>();
+        GameObject playerTest = GameObject.Find("TestAndScore");
+        test = playerTest.transform.Find("SelectHandler").gameObject.GetComponent<TestPaperBehavior>();
 
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
@@ -34,11 +52,11 @@ public class TriggerInput : MonoBehaviour
         Spressed.AddOnStateDownListener(TriggerDownS, left);
         Spressed.AddOnStateUpListener(TriggerUpS, right);
         Spressed.AddOnStateDownListener(TriggerDownS, right);
-
         LeftEast.AddOnStateDownListener(TriggerDownR, left);
         LeftWest.AddOnStateDownListener(TriggerDownL, left);
         RightEast.AddOnStateDownListener(TriggerDownR, right);
         RightWest.AddOnStateDownListener(TriggerDownL, right);
+
 
     }
     public void TriggerDownY(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -51,12 +69,12 @@ public class TriggerInput : MonoBehaviour
     }
     public void TriggerUpS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if(show) hns.Hide();
+        if (show) hns.Hide();
         show = false;
     }
     public void TriggerDownS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if(!show) hns.Show();
+        if (!show) hns.Show();
         show = true;
     }
     public void TriggerDownL(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)

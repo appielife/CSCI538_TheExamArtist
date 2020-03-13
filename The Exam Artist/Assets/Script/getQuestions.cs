@@ -63,7 +63,7 @@ public class getQuestions
         {
             current = ques.Count - 1;
         }
-        Debug.Log(current);
+        //Debug.Log(current);
         return (JObject)ques[current];
     }
 

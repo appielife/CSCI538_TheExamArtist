@@ -17,10 +17,22 @@ public class GodOfWashroomBehavior : MonoBehaviour
     private bool used = false;
     private int limit = 5;
     private float duration = 2.0f;
-
-    // Start is called before the first frame update
-    void Start()
+    private void loadResources()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
+        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
+        GameObject VRCamera = SteamVRObjects.transform.Find("VRCamera").gameObject;
+        GameObject SkillsOverlay = VRCamera.transform.Find("SkillsOverlay").gameObject;
+        GameObject SkillCoolDown = SkillsOverlay.transform.Find("SkillCoolDown").gameObject;
+        GameObject skill = SkillCoolDown.transform.Find("GodOfWashroom").gameObject;
+        GameObject resources = skill.transform.Find("Image").gameObject;
+
+        imgCoolDown = resources.transform.Find("CDImg").gameObject.GetComponent<Image>();
+        textCoolDown = resources.transform.Find("CDText").gameObject.GetComponent<Text>();
+    }
+    void Awake()
+    {
+        loadResources();
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
         imgCoolDown.fillAmount = 0.0f;
         textCoolDown.text = "";
@@ -62,7 +74,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
 
                 int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
                 sound[0].PlayOneShot(washroomAudioClips[correctAns], 1.0f);
-                Debug.Log("The correct answer is " + correctAns.ToString());
+                //Debug.Log("The correct answer is " + correctAns.ToString());
                 limit -= 1;
 
             }

@@ -40,8 +40,9 @@ public class MultipleChoiceBehavior
         qText.text = (questionNum+1).ToString() + ". " + questionText;
         for (int i = 0; i < 4; i++)
         {
-            TextMesh Text = choices[i].GetComponentInChildren<TextMesh>();
-            Text.text = optionText[i];
+            GameObject current = choices[i].transform.Find("choice").gameObject;
+            Text txt= current.GetComponentInChildren<Text>();
+            txt.text = optionText[i];
         }
         if (choice > -1)
         {

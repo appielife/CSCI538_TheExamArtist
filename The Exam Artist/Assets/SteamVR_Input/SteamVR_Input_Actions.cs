@@ -65,6 +65,16 @@ namespace Valve.VR
         
         private static SteamVR_Action_Pose p_mixedreality_ExternalCamera;
         
+        private static SteamVR_Action_Boolean p_exam_Washroom;
+        
+        private static SteamVR_Action_Boolean p_exam_Hint;
+        
+        private static SteamVR_Action_Boolean p_exam_HideAndShowSkills;
+        
+        private static SteamVR_Action_Boolean p_exam_NextQuestion;
+        
+        private static SteamVR_Action_Boolean p_exam_PrevQuestion;
+        
         public static SteamVR_Action_Boolean default_InteractUI
         {
             get
@@ -257,6 +267,46 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean exam_Washroom
+        {
+            get
+            {
+                return SteamVR_Actions.p_exam_Washroom.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean exam_Hint
+        {
+            get
+            {
+                return SteamVR_Actions.p_exam_Hint.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean exam_HideAndShowSkills
+        {
+            get
+            {
+                return SteamVR_Actions.p_exam_HideAndShowSkills.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean exam_NextQuestion
+        {
+            get
+            {
+                return SteamVR_Actions.p_exam_NextQuestion.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean exam_PrevQuestion
+        {
+            get
+            {
+                return SteamVR_Actions.p_exam_PrevQuestion.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
@@ -283,7 +333,12 @@ namespace Valve.VR
                     SteamVR_Actions.buggy_Throttle,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset,
-                    SteamVR_Actions.mixedreality_ExternalCamera};
+                    SteamVR_Actions.mixedreality_ExternalCamera,
+                    SteamVR_Actions.exam_Washroom,
+                    SteamVR_Actions.exam_Hint,
+                    SteamVR_Actions.exam_HideAndShowSkills,
+                    SteamVR_Actions.exam_NextQuestion,
+                    SteamVR_Actions.exam_PrevQuestion};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.default_InteractUI,
                     SteamVR_Actions.default_Teleport,
@@ -307,7 +362,12 @@ namespace Valve.VR
                     SteamVR_Actions.buggy_Throttle,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset,
-                    SteamVR_Actions.mixedreality_ExternalCamera};
+                    SteamVR_Actions.mixedreality_ExternalCamera,
+                    SteamVR_Actions.exam_Washroom,
+                    SteamVR_Actions.exam_Hint,
+                    SteamVR_Actions.exam_HideAndShowSkills,
+                    SteamVR_Actions.exam_NextQuestion,
+                    SteamVR_Actions.exam_PrevQuestion};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
@@ -330,7 +390,12 @@ namespace Valve.VR
                     SteamVR_Actions.default_PrevQuestion,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Brake,
-                    SteamVR_Actions.buggy_Reset};
+                    SteamVR_Actions.buggy_Reset,
+                    SteamVR_Actions.exam_Washroom,
+                    SteamVR_Actions.exam_Hint,
+                    SteamVR_Actions.exam_HideAndShowSkills,
+                    SteamVR_Actions.exam_NextQuestion,
+                    SteamVR_Actions.exam_PrevQuestion};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.buggy_Throttle};
@@ -360,7 +425,12 @@ namespace Valve.VR
                     SteamVR_Actions.buggy_Steering,
                     SteamVR_Actions.buggy_Throttle,
                     SteamVR_Actions.buggy_Brake,
-                    SteamVR_Actions.buggy_Reset};
+                    SteamVR_Actions.buggy_Reset,
+                    SteamVR_Actions.exam_Washroom,
+                    SteamVR_Actions.exam_Hint,
+                    SteamVR_Actions.exam_HideAndShowSkills,
+                    SteamVR_Actions.exam_NextQuestion,
+                    SteamVR_Actions.exam_PrevQuestion};
         }
         
         private static void PreInitActions()
@@ -389,6 +459,11 @@ namespace Valve.VR
             SteamVR_Actions.p_buggy_Brake = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/buggy/in/Brake")));
             SteamVR_Actions.p_buggy_Reset = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/buggy/in/Reset")));
             SteamVR_Actions.p_mixedreality_ExternalCamera = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/mixedreality/in/ExternalCamera")));
+            SteamVR_Actions.p_exam_Washroom = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/exam/in/Washroom")));
+            SteamVR_Actions.p_exam_Hint = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/exam/in/Hint")));
+            SteamVR_Actions.p_exam_HideAndShowSkills = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/exam/in/HideAndShowSkills")));
+            SteamVR_Actions.p_exam_NextQuestion = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/exam/in/NextQuestion")));
+            SteamVR_Actions.p_exam_PrevQuestion = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/exam/in/PrevQuestion")));
         }
     }
 }

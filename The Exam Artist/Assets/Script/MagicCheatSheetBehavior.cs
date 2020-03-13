@@ -20,9 +20,25 @@ public class MagicCheatSheetBehavior : MonoBehaviour
     private Text tempHintShow;
 
     static string[] choices = { "A", "B", "C", "D" };
-    // Start is called before the first frame update
-    void Start()
+
+    private void loadResources()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
+        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
+        GameObject VRCamera = SteamVRObjects.transform.Find("VRCamera").gameObject;
+        GameObject SkillsOverlay = VRCamera.transform.Find("SkillsOverlay").gameObject;
+        GameObject SkillCoolDown = SkillsOverlay.transform.Find("SkillCoolDown").gameObject;
+        GameObject skill = SkillCoolDown.transform.Find("MagicCheatSheet").gameObject;
+        GameObject resources = skill.transform.Find("Image").gameObject;
+
+        imgCoolDown = resources.transform.Find("CDImg").gameObject.GetComponent<Image>();
+        imgExist = resources.transform.Find("exsiting").gameObject.GetComponent<Image>();
+        textCoolDown = resources.transform.Find("CDText").gameObject.GetComponent<Text>();
+    }
+    void Awake()
+    {
+        loadResources();
+
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
@@ -44,7 +60,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             else { j++; }
         }
         hintArray = temp;
-        Debug.Log(hintArray);
+        //Debug.Log(hintArray);
     }
     void Update()
     {
