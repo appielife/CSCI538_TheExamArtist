@@ -87,8 +87,8 @@ public class PlayerController : MonoBehaviour
                 teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
                 behaviour = 2;
                 test.writeAnsToJson();
-                FadeIn();
-                Invoke("FadeOut", 2.0f);
+                //FadeIn();
+                //Invoke("FadeOut", 2.0f);
             }
             if (!gameover)
             {
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void FadeIn()
+   /* private void FadeIn()
     {
         SteamVR_Fade.Start(Color.clear, 0.0f);
         SteamVR_Fade.Start(Color.black, 2.0f);
@@ -221,6 +221,6 @@ public class PlayerController : MonoBehaviour
         SteamVR_Fade.Start(Color.black, 0.0f);
         SteamVR_Fade.Start(Color.clear, 2.0f);
         SceneManager.LoadScene(2);
-    }
+    }*/
 
 }

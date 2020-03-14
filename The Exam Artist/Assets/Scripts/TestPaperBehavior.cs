@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine.SceneManagement;
+using Valve.VR;
 
 public class TestPaperBehavior : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceB;
     public GameObject choiceC;
     public GameObject choiceD;
-    public getQuestions question = new getQuestions();
-    private CalculateScore calculateScore = new CalculateScore();
+    public GetQuestion question = new GetQuestion();
+    private ScoreCalculate calculateScore;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
@@ -157,15 +158,15 @@ public class TestPaperBehavior : MonoBehaviour
                 if (quesTrack[i] == null || quesTrack[i].choice == -1) writer.WriteValue("NA");
                 else writer.WriteValue(abcd[quesTrack[i].choice]);
                 writer.WritePropertyName("MyAns");
-                Debug.Log(question.getQuestionCorrectAns(i));
+                //Debug.Log(question.getQuestionCorrectAns(i));
                 writer.WriteValue(question.getQuestionCorrectAns(i));
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        Destroy(GameObject.FindGameObjectWithTag("MainPlayer"));
-        SceneManager.LoadScene(2);
+        FadeIn();
+        Invoke("FadeOut", 2.0f);
     }
 
     public void reset()
@@ -210,6 +211,17 @@ public class TestPaperBehavior : MonoBehaviour
         Debug.Log(a.unans_count);
         Debug.Log(a.correct_ans);
         Debug.Log(a.total_count);       
-        
+    }
+
+    private void FadeIn()
+    {
+        SteamVR_Fade.Start(Color.clear, 0.0f);
+        SteamVR_Fade.Start(Color.black, 2.0f);
+    }
+    private void FadeOut()
+    {
+        SteamVR_Fade.Start(Color.black, 0.0f);
+        SteamVR_Fade.Start(Color.clear, 2.0f);
+        SceneManager.LoadScene(2);
     }
 }

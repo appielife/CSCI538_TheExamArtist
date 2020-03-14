@@ -25,6 +25,8 @@ public class SceneHandler : MonoBehaviour
         GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
         GameObject Hand = SteamVRObjects.transform.Find(hand).gameObject;
 
+        Hand.transform.Find("Pencil").gameObject.SetActive(true);
+
         laserPointer = Hand.GetComponent<SteamVR_LaserPointer>();
 
         laserPointer.PointerIn += PointerInside;
@@ -47,7 +49,6 @@ public class SceneHandler : MonoBehaviour
     }
     public void PointerInside(object sender, PointerEventArgs e)
     {
-        //Debug.Log(e.target.name);
         if (e.target.gameObject.GetComponent<Button>() != null && clicked != e.target.name)
         {
             laserPointer.thickness = 0.002f;
@@ -56,7 +57,7 @@ public class SceneHandler : MonoBehaviour
             cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             b.colors = cb;
         }
-        if(e.target.name == "TestPaper")
+        if(e.target.name == "TestPaper" )
         {
             laserPointer.thickness = 0.002f;
         }

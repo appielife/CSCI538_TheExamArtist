@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 
 [System.Serializable]
-public class getQuestions
+public class GetQuestion
 {
     private string jsonString;
     private JObject ques_obj;
@@ -13,9 +13,9 @@ public class getQuestions
     static System.Random _random = new System.Random();
     public int current = -1;
 
-    public getQuestions copy()
+    public GetQuestion copy()
     {
-        getQuestions res = new getQuestions();
+        GetQuestion res = new GetQuestion();
         res.jsonString = jsonString;
         res.ques_obj = ques_obj;
         res.ques = ques;
@@ -26,7 +26,7 @@ public class getQuestions
     public void readQuestionFromJson()
     {
         //Debug.Log(Application.dataPath);
-        
+
         // read JSON directly from a file
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/questions.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
@@ -42,7 +42,7 @@ public class getQuestions
 
     public JObject getNextQuestion()
     {
-        if (current < ques.Count-1)
+        if (current < ques.Count - 1)
         {
             current += 1;
         }
@@ -88,7 +88,8 @@ public class getQuestions
         ques = (JArray)ques_obj["questions"];
         Shuffle(ques);
         JArray temp = new JArray();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             temp.Add(ques[i]);
         }
         ques = temp;
