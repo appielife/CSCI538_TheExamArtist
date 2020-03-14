@@ -9,8 +9,7 @@ using Newtonsoft.Json.Linq;
 public class MagicCheatSheetBehavior : MonoBehaviour
 {
     private JArray hintArray;
-    public GameObject testPaper;
-    public GameObject hintObj;
+    public GameObject testPaper, hintObj;
     public Image imgCoolDown, imgExist;
     public Text textCoolDown;
     

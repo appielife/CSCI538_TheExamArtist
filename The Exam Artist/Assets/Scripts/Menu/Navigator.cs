@@ -10,6 +10,7 @@ public class Navigator : MonoBehaviour
     private SteamVR_LaserPointer laserPointerL;
     private SteamVR_LaserPointer laserPointerR;
     private Settings hand;
+    private Volume volume;
 
     void Start()
     {
@@ -33,17 +34,36 @@ public class Navigator : MonoBehaviour
 
         hand = (GameObject.Find("Settings")) ? GameObject.Find("Settings").GetComponent<Settings>() : null;
 
+        volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
+
     }
     public void PointerClick(object sender, PointerEventArgs e)
     {
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
+            GameObject blackboard = GameObject.Find("BlackBoard");
             switch (e.target.name)
             {
                 case "Play":
-                    GameObject blackboard = GameObject.Find("BlackBoard");
                     blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
                     blackboard.transform.Find("HandSelect").gameObject.SetActive(true);
+                    break;
+                case "Options":
+                    blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
+                    blackboard.transform.Find("OptionMenu").gameObject.SetActive(true);
+                    break;
+                case "Quit":
+                    Application.Quit(0);
+                    break;
+                case "ToneDown":
+                    volume.ToneDown();
+                    break;
+                case "ToneUp":
+                    volume.ToneUp();
+                    break;
+                case "Return":
+                    blackboard.transform.Find("OptionMenu").gameObject.SetActive(false);
+                    blackboard.transform.Find("MainMenu").gameObject.SetActive(true);
                     break;
                 case "Left":
                     if (hand != null) { hand.setHand("LeftHand"); }
@@ -56,7 +76,8 @@ public class Navigator : MonoBehaviour
                     Invoke("FadeOut", 5.0f);
                     break;
                 case "TryAgain":
-                    SceneManager.LoadScene(1);
+                    FadeIn();
+                    Invoke("FadeOut", 5.0f);
                     break;
                 default:
                     break;
@@ -92,7 +113,7 @@ public class Navigator : MonoBehaviour
     private void FadeOut()
     {
         SteamVR_Fade.Start(Color.black, 0.0f);
-        SteamVR_Fade.Start(Color.clear, 2.0f);
         SceneManager.LoadScene(1);
+        SteamVR_Fade.Start(Color.clear, 2.0f);
     }
 }

@@ -7,11 +7,13 @@ using Newtonsoft.Json.Linq;
 [System.Serializable]
 public class GetQuestion
 {
+    public JArray ques;
+    public int current = -1;
+
     private string jsonString;
     private JObject ques_obj;
-    public JArray ques;
+
     static System.Random _random = new System.Random();
-    public int current = -1;
 
     public GetQuestion copy()
     {
@@ -21,18 +23,16 @@ public class GetQuestion
         res.ques = ques;
         return res;
     }
-
-    // Start is called before the first frame update
+    
     public void readQuestionFromJson()
     {
-        //Debug.Log(Application.dataPath);
-
         // read JSON directly from a file
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/questions.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
             ques_obj = (JObject)JToken.ReadFrom(reader);
         }
+
         // Now all our data is on ques_obj
         // IMPORTANT : THIS INE WILL PRINT YOUR RESULT
         getQuestionsArray();
@@ -42,14 +42,15 @@ public class GetQuestion
 
     public JObject getNextQuestion()
     {
-        if (current < ques.Count - 1)
+        current = (current < ques.Count - 1) ? (++current) : 0;
+        /*if (current < ques.Count - 1)
         {
             current += 1;
         }
         else
         {
             current = 0;
-        }
+        }*/
         return (JObject)ques[current];
     }
 

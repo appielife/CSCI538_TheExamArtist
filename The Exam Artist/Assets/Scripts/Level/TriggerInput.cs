@@ -56,8 +56,6 @@ public class TriggerInput : MonoBehaviour
         LeftWest.AddOnStateDownListener(TriggerDownL, left);
         RightEast.AddOnStateDownListener(TriggerDownR, right);
         RightWest.AddOnStateDownListener(TriggerDownL, right);
-
-
     }
     public void TriggerDownY(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {

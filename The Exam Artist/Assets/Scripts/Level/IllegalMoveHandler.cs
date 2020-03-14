@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class IllegalMoveHandler : MonoBehaviour
 {
     public GameObject playerCam;
-    //public AudioClip wow;
     private AudioSource[] sound;
     public bool illegal = false;
     private bool soundOn = false;
