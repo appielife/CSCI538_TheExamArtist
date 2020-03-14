@@ -8,8 +8,13 @@ public class Timer : MonoBehaviour
     public Text timerText;
     public float timeLeft;
     private bool timesUp = false;
+    private TestPaperBehavior test;
+
     void Start()
     {
+        GameObject player = GameObject.Find("TestAndScore");
+        test = player.transform.Find("SelectHandler").gameObject.GetComponent<TestPaperBehavior>();
+        Debug.Log(test);
         timeLeft += 1;
     }
     void Update()
@@ -25,7 +30,8 @@ public class Timer : MonoBehaviour
         }
         else if (timeLeft < 0 && !timesUp)
         {
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
+            test.writeAnsToJson();
             timesUp = true;
         }
     }

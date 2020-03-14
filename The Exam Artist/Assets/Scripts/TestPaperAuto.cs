@@ -14,7 +14,7 @@ public class TestPaperAuto : MonoBehaviour
     public GameObject choiceB;
     public GameObject choiceC;
     public GameObject choiceD;
-    private getQuestions question;
+    private GetQuestion question;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     // Start is called before the first frame update

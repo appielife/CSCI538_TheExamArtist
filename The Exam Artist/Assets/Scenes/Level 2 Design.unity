@@ -1919,7 +1919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 494584, guid: cb6660833624c77429f9edeeea466028, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 494584, guid: cb6660833624c77429f9edeeea466028, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3081,7 +3081,7 @@ MonoBehaviour:
   clickColor: {r: 0.9433962, g: 0.47599727, b: 0.3693485, a: 1}
   holder: {fileID: 0}
   pointer: {fileID: 0}
-  addRigidBody: 1
+  addRigidBody: 0
   reference: {fileID: 0}
 --- !u!1001 &150113798
 PrefabInstance:
@@ -22622,7 +22622,7 @@ MonoBehaviour:
   clickColor: {r: 0.9433962, g: 0.47599727, b: 0.3693485, a: 1}
   holder: {fileID: 0}
   pointer: {fileID: 0}
-  addRigidBody: 1
+  addRigidBody: 0
   reference: {fileID: 0}
 --- !u!1 &1197865622
 GameObject:

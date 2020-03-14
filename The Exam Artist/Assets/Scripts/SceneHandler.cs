@@ -19,7 +19,7 @@ public class SceneHandler : MonoBehaviour
         {
             setting = GameObject.Find("Settings").GetComponent<Settings>();
         }
-        string hand = (setting != null) ? setting.getHand() : "LeftHand";
+        string hand = (setting != null) ? setting.getHand() : "RightHand";
 
         GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
         GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
@@ -49,7 +49,6 @@ public class SceneHandler : MonoBehaviour
     }
     public void PointerInside(object sender, PointerEventArgs e)
     {
-        Debug.Log(e.target.name);
         if (e.target.gameObject.GetComponent<Button>() != null && clicked != e.target.name)
         {
             laserPointer.thickness = 0.002f;
@@ -58,7 +57,7 @@ public class SceneHandler : MonoBehaviour
             cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             b.colors = cb;
         }
-        if(e.target.name == "TestPaper" || e.target.name == "Cube")
+        if(e.target.name == "TestPaper" )
         {
             laserPointer.thickness = 0.002f;
         }
@@ -73,7 +72,7 @@ public class SceneHandler : MonoBehaviour
             cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             b.colors = cb;
         }
-        if (e.target.name == "TestPaper" || e.target.name == "Cube")
+        if (e.target.name == "TestPaper")
         {
             laserPointer.thickness = 0.0f;
         }
