@@ -19,7 +19,7 @@ public class SceneHandler : MonoBehaviour
         {
             setting = GameObject.Find("Settings").GetComponent<Settings>();
         }
-        string hand = (setting != null) ? setting.getHand() : "RightHand";
+        string hand = (setting != null) ? setting.getHand() : "LeftHand";
 
         GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
         GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
