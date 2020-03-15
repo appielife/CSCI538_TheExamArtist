@@ -6,16 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-<<<<<<< HEAD
-    path: Assets/Scenes/blackboardMenu.unity
-    guid: 70ad48b8895637a4f98f3b9d6904040d
-  - enabled: 1
-    path: Assets/Scenes/ChooseHandControl.unity
-    guid: 563792314c201ee4fa19db3f39711f90
-  - enabled: 1
-    path: Assets/Scenes/Level 2 Design.unity
-    guid: 24bf801ddd17746259e1c7f55b658f2f
-=======
     path: Assets/Scenes/Menu.unity
     guid: 70ad48b8895637a4f98f3b9d6904040d
   - enabled: 1
@@ -24,5 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 0b4db8438f8cdc84d8cedc0cf480103e
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
   m_configObjects: {}

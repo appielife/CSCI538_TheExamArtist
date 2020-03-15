@@ -41,8 +41,6 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_Washroom;
         
-<<<<<<< HEAD
-=======
         private static SteamVR_Action_Boolean p_default_Hint;
         
         private static SteamVR_Action_Boolean p_default_HideAndShowSkills;
@@ -51,7 +49,6 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_PrevQuestion;
         
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         private static SteamVR_Action_Vector2 p_platformer_Move;
@@ -174,8 +171,6 @@ namespace Valve.VR
             }
         }
         
-<<<<<<< HEAD
-=======
         public static SteamVR_Action_Boolean default_Hint
         {
             get
@@ -208,7 +203,6 @@ namespace Valve.VR
             }
         }
         
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
         public static SteamVR_Action_Vibration default_Haptic
         {
             get
@@ -328,13 +322,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Washroom,
-<<<<<<< HEAD
-=======
                     SteamVR_Actions.default_Hint,
                     SteamVR_Actions.default_HideAndShowSkills,
                     SteamVR_Actions.default_NextQuestion,
                     SteamVR_Actions.default_PrevQuestion,
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
@@ -361,13 +352,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Washroom,
-<<<<<<< HEAD
-=======
                     SteamVR_Actions.default_Hint,
                     SteamVR_Actions.default_HideAndShowSkills,
                     SteamVR_Actions.default_NextQuestion,
                     SteamVR_Actions.default_PrevQuestion,
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -396,13 +384,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Washroom,
-<<<<<<< HEAD
-=======
                     SteamVR_Actions.default_Hint,
                     SteamVR_Actions.default_HideAndShowSkills,
                     SteamVR_Actions.default_NextQuestion,
                     SteamVR_Actions.default_PrevQuestion,
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset,
@@ -431,13 +416,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Washroom,
-<<<<<<< HEAD
-=======
                     SteamVR_Actions.default_Hint,
                     SteamVR_Actions.default_HideAndShowSkills,
                     SteamVR_Actions.default_NextQuestion,
                     SteamVR_Actions.default_PrevQuestion,
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -465,13 +447,10 @@ namespace Valve.VR
             SteamVR_Actions.p_default_SnapTurnLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SnapTurnLeft")));
             SteamVR_Actions.p_default_SnapTurnRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SnapTurnRight")));
             SteamVR_Actions.p_default_Washroom = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Washroom")));
-<<<<<<< HEAD
-=======
             SteamVR_Actions.p_default_Hint = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Hint")));
             SteamVR_Actions.p_default_HideAndShowSkills = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/HideAndShowSkills")));
             SteamVR_Actions.p_default_NextQuestion = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/NextQuestion")));
             SteamVR_Actions.p_default_PrevQuestion = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/PrevQuestion")));
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_platformer_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/platformer/in/Move")));
             SteamVR_Actions.p_platformer_Jump = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/platformer/in/Jump")));

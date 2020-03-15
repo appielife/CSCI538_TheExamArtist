@@ -113,8 +113,6 @@ namespace Valve.VR
             }
         }
         
-<<<<<<< HEAD
-=======
         public virtual SteamVR_Action_Boolean Hint
         {
             get
@@ -147,7 +145,6 @@ namespace Valve.VR
             }
         }
         
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

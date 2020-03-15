@@ -54,8 +54,6 @@
       "type": "boolean"
     },
     {
-<<<<<<< HEAD
-=======
       "name": "/actions/default/in/Hint",
       "type": "boolean"
     },
@@ -72,7 +70,6 @@
       "type": "boolean"
     },
     {
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

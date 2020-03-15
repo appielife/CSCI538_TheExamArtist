@@ -8,19 +8,11 @@ using Valve.VR.Extras;
 public class SceneHandler : MonoBehaviour
 {
 
-<<<<<<< HEAD:The Exam Artist/Assets/Script/SceneHandler.cs
-    public SteamVR_LaserPointer laserPointer;
-
-    private string clicked = "";
-    
-    void Awake()
-=======
     private SteamVR_LaserPointer laserPointer;
 
     private string clicked = "";
     
     void Start()
->>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559:The Exam Artist/Assets/Scripts/Level/SceneHandler.cs
     {
         Settings setting = null;
         if (GameObject.Find("Settings"))
