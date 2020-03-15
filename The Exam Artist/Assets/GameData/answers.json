@@ -1,6 +1,7 @@
 {
   "Answers": [
     {
+<<<<<<< HEAD
       "id": "0",
       "YourAns": "NA",
       "MyAns": "C"
@@ -14,6 +15,31 @@
       "id": "1",
       "YourAns": "NA",
       "MyAns": "D"
+=======
+      "id": "25",
+      "YourAns": "NA",
+      "MyAns": "B"
+    },
+    {
+      "id": "13",
+      "YourAns": "NA",
+      "MyAns": "A"
+    },
+    {
+      "id": "9",
+      "YourAns": "NA",
+      "MyAns": "D"
+    },
+    {
+      "id": "24",
+      "YourAns": "NA",
+      "MyAns": "D"
+    },
+    {
+      "id": "15",
+      "YourAns": "NA",
+      "MyAns": "A"
+>>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
     }
   ]
 }

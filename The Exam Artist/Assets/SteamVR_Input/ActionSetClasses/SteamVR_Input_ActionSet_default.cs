@@ -113,6 +113,41 @@ namespace Valve.VR
             }
         }
         
+<<<<<<< HEAD
+=======
+        public virtual SteamVR_Action_Boolean Hint
+        {
+            get
+            {
+                return SteamVR_Actions.default_Hint;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean HideAndShowSkills
+        {
+            get
+            {
+                return SteamVR_Actions.default_HideAndShowSkills;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean NextQuestion
+        {
+            get
+            {
+                return SteamVR_Actions.default_NextQuestion;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean PrevQuestion
+        {
+            get
+            {
+                return SteamVR_Actions.default_PrevQuestion;
+            }
+        }
+        
+>>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

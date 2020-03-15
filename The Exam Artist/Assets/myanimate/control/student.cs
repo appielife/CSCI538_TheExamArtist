@@ -9,6 +9,11 @@ public class student : MonoBehaviour {
     private AudioSource[] source;
     private AudioSource[] teacher;
     public Random ran = new Random();
+<<<<<<< HEAD
+=======
+    public GameObject character;
+    private bool notMoved = true;
+>>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
 // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +36,15 @@ public class student : MonoBehaviour {
         ani.SetInteger("animation_int", index);//sit
         }
     if (Input.GetKeyDown(KeyCode.Alpha2)){
+<<<<<<< HEAD
+=======
+            if(character != null && notMoved)
+            {
+                Debug.Log(character.transform.localPosition);
+                character.transform.localPosition += new Vector3(0.7f, 0.0f, 0.0f);
+                notMoved = false;
+            }
+>>>>>>> 3e4a7def4b33fe39b56bc27272105f6517cd6559
         int index = Random.Range(1,3);
         ani.SetInteger("animation_int", index);//write
         }
