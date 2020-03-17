@@ -28,12 +28,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
+        teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
+
         teacher.speed = speed;
         target = GameObject.Find("target1");
         ani.SetInteger("animation_int", 0);
         
-        studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
-        teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
     }
 
     void Update()
