@@ -11,7 +11,7 @@ public class student : MonoBehaviour {
     public Random ran = new Random();
     public GameObject character;
     private bool notMoved = true;
-    private float timeLeft = 5.0f;
+    private float timeLeft = 15.0f;
 // Start is called before the first frame update
     void Start()
     {

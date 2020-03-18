@@ -8,7 +8,7 @@ public class studentF : MonoBehaviour {
     private AudioSource[] source;
     private AudioSource[] teacher;
     public Random ran = new Random();
-    private float timeLeft = 5.0f;
+    private float timeLeft = 15.0f;
 
 // Start is called before the first frame update
     void Start()

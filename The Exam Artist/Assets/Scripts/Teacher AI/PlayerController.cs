@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource[] studentsound, teachersound;
 
 
-    private float timeLeft = 5.0f;
+    private float timeLeft = 15.0f;
 
     void Start()
     {
@@ -33,7 +33,8 @@ public class PlayerController : MonoBehaviour
 
         teacher.speed = speed;
         target = GameObject.Find("target1");
-        ani.SetInteger("animation_int", 0);
+        
+
         
     }
 
@@ -41,6 +42,10 @@ public class PlayerController : MonoBehaviour
     {
         if (timeLeft > 0)
         {
+            if(timeLeft < 13 && timeLeft > 12){
+                ani.SetInteger("animation_int", 9);
+                teachersound[0].Play();
+            }
             timeLeft -= Time.deltaTime;
         }
         else
