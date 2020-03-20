@@ -24,22 +24,29 @@ public class PlayerController : MonoBehaviour
     private AudioSource[] studentsound, teachersound;
 
 
-    private float timeLeft = 5.0f;
+    private float timeLeft = 15.0f;
 
     void Start()
     {
-        teacher.speed = speed;
-        target = GameObject.Find("target1");
-        ani.SetInteger("animation_int", 0);
-        
         studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
         teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
+
+        teacher.speed = speed;
+        target = GameObject.Find("target1");
+
+
+
     }
 
     void Update()
     {
         if (timeLeft > 0)
         {
+            if (timeLeft < 13 && timeLeft > 12)
+            {
+                ani.SetInteger("animation_int", 9);
+                teachersound[0].Play();
+            }
             timeLeft -= Time.deltaTime;
         }
         else
