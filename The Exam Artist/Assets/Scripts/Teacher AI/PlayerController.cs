@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour
         teacher.speed = speed;
         target = GameObject.Find("target1");
 
-
-
     }
 
     void Update()
