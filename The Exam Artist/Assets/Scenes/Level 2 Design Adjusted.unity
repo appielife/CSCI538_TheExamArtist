@@ -30654,6 +30654,7 @@ MonoBehaviour:
   choiceD: {fileID: 1370105815}
   question:
     current: -1
+  JSON_file: questions.json
   total_score: 0
 --- !u!4 &1584472029
 Transform:
