@@ -107,7 +107,7 @@
                 },
                 {
                     "option_txt": "Lumpsucker",
-                    "isCorrect": "True"
+                    "isCorrect": "False"
                 },
                 {
                     "option_txt": "Goblin and Tasseled Wobbegon",
@@ -484,7 +484,7 @@
             ]
         },
         {
-            "id": 20,
+            "id": 21,
             "question_txt": "上课铃声东响了，却没有一个同学在教室里，怎么回事？",
             "correct_ans": "A",
 			"options": [
@@ -507,7 +507,7 @@
             ]
         },
         {
-            "id": 21,
+            "id": 22,
             "question_txt": "你跟豬站在一起?",
             "correct_ans": "A",
 			"options": [
@@ -530,7 +530,7 @@
             ]
         },
         {
-            "id": 22,
+            "id": 23,
             "question_txt": "ヒロアカHero tooの作詞?",
             "correct_ans": "C",
 			"options": [
@@ -553,7 +553,7 @@
             ]
         },
         {
-            "id": 23,
+            "id": 24,
             "question_txt": "Naruto XXX",
             "correct_ans": "D",
 			"options": [
@@ -576,7 +576,7 @@
             ]
         },
         {
-            "id": 24,
+            "id": 25,
             "question_txt": "天天說?",
             "correct_ans": "A",
 			"options": [
@@ -599,7 +599,7 @@
             ]
         },
         {
-            "id": 25,
+            "id": 26,
             "question_txt": "小明为什么天天去男科医院?",
             "correct_ans": "D",
 			"options": [
@@ -622,7 +622,7 @@
             ]
         },
         {
-            "id": 26,
+            "id": 27,
             "question_txt": "貴方の猫の名前はなに?",
             "correct_ans": "B",
 			"options": [
@@ -645,7 +645,7 @@
             ]
         },
         {
-            "id": 27,
+            "id": 28,
             "question_txt": "What is the professor's name?",
             "correct_ans": "A",
 			"options": [
@@ -666,7 +666,7 @@
                     "isCorrect": "False"
                 }
             ]
-        },
+        }
         
     ]
 }
