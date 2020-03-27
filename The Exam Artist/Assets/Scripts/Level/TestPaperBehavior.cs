@@ -18,6 +18,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceC;
     public GameObject choiceD;
     public GetQuestion question = new GetQuestion();
+    public string JSON_file;
     private ScoreCalculate calculateScore;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
@@ -28,7 +29,7 @@ public class TestPaperBehavior : MonoBehaviour
     {
         testPage.SetActive(true);
         submitPage.SetActive(false);
-        question.readQuestionFromJson();
+        question.readQuestionFromJson(JSON_file);
         //Debug.Log(question.ques);
         quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
         scoreTrack = new int[question.getQuesCount()];

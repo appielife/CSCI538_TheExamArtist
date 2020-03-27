@@ -33,16 +33,15 @@ public class PlayerController : MonoBehaviour
 
         teacher.speed = speed;
         target = GameObject.Find("target1");
-        
 
-        
     }
 
     void Update()
     {
         if (timeLeft > 0)
         {
-            if(timeLeft < 13 && timeLeft > 12){
+            if (timeLeft < 13 && timeLeft > 12)
+            {
                 ani.SetInteger("animation_int", 9);
                 teachersound[0].Play();
             }

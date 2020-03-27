@@ -24,10 +24,10 @@ public class GetQuestion
         return res;
     }
     
-    public void readQuestionFromJson()
+    public void readQuestionFromJson(string data)
     {
         // read JSON directly from a file
-        using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/questions.json"))
+        using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/" + data))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
             ques_obj = (JObject)JToken.ReadFrom(reader);
