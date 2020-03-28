@@ -1,114 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class male1 : MonoBehaviour { 
 
     public Animator ani;
+    public Random ran = new Random();
+    
+    //private float timeLeft = 15.0f;
 // Start is called before the first frame update
     void Start()
     {
+        ani.SetInteger("animation_int", 1);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-    if (Input.GetKeyDown(KeyCode.Alpha0))
+        
 
-    {
-
-        idle();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha1))
-    {
-
-            dance();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha2))
-
-    {
-
-        write1();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha3))
-
-    {
-
-        write2();
-
-    }
-    if (Input.GetKeyDown(KeyCode.Alpha4))
-
-    {
-
-        write3();
-
-    }
-
-    if (Input.GetKeyDown(KeyCode.Alpha5))
-
-        {
-
-            walk();
-
+        if(transform.position.z < 25){
+            transform.Translate(Vector3.forward * Time.deltaTime,Space.Self);
+            // int index = Random.Range(3, 7);
+            // if(index == 5){
+            //     StartCoroutine(Pausing());
+            // }
+        }
+        else{
+            var v = transform.localPosition;
+            v.z = -11;
+            transform.localPosition = v;
         }
 
+        
 
-
-
+ 
     }
-    private void idle()
+    IEnumerator Pausing(){
+        
+            ani.SetInteger("animation_int", 2);
+            yield return new WaitForSeconds(3);
+            ani.SetInteger("animation_int", 1);
 
-    {
-
-        ani.SetInteger("animation_int", 0);
-
-    }
-
-
-    private void dance()
-    {
-
-        ani.SetInteger("animation_int", 1);
-
-    }
-
-
-    private void write1()
-
-    {
-
-        ani.SetInteger("animation_int", 2);
-
-    }
-
-    private void write2()
-
-    {
-
-        ani.SetInteger("animation_int", 3);
-
-    }
-
-    private void write3()
-
-    {
-
-        ani.SetInteger("animation_int", 4);
-
-    }
-    private void walk()
-
-    {
-
-        ani.SetInteger("animation_int", 5);
-
-    }
+            //Debug.Log("Before Waiting 3 seconds");
+        }
 }
