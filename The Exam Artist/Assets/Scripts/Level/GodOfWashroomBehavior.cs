@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
+using UnityEngine.SceneManagement;
 
 public class GodOfWashroomBehavior : MonoBehaviour
 {
@@ -66,7 +67,6 @@ public class GodOfWashroomBehavior : MonoBehaviour
             {
                 FadeIn();
                 Invoke("FadeOut", duration);
-
                 timer.GetComponent<Timer>().timeLeft -= (120 - duration);
                 used = true;
 
@@ -75,6 +75,11 @@ public class GodOfWashroomBehavior : MonoBehaviour
                 //Debug.Log("The correct answer is " + correctAns.ToString());
                 limit -= 1;
 
+                LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+                setting.timeLeft = timer.GetComponent<Timer>().timeLeft;
+                setting.setWashroom();
+                setting.setQuestion();
+                SceneManager.LoadScene(3);
             }
         }
         else

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HideAndShowSkills : MonoBehaviour
 {
-    public GameObject skillCanvas;
+    private GameObject skillCanvas;
 
     void Awake()
     {

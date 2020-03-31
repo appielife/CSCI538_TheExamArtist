@@ -10,13 +10,8 @@ using Valve.VR;
 
 public class TestPaperBehavior : MonoBehaviour
 {
-    public GameObject testPage;
-    public GameObject submitPage;
-    public GameObject questionTextObj;
-    public GameObject choiceA;
-    public GameObject choiceB;
-    public GameObject choiceC;
-    public GameObject choiceD;
+    private GameObject testPage, submitPage, initialPage;
+    public GameObject questionTextObj, choiceA, choiceB, choiceC, choiceD;
     public GetQuestion question = new GetQuestion();
     public string JSON_file;
     private ScoreCalculate calculateScore;
@@ -24,20 +19,58 @@ public class TestPaperBehavior : MonoBehaviour
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
     public int total_score = 0;
-    // Start is called before the first frame update
+    private float offset;
+    private bool start = false;
+
     void Start()
     {
-        testPage.SetActive(true);
+        GameObject testPaper = GameObject.FindGameObjectWithTag("MainTestPaper");
+        testPage = testPaper.transform.Find("TestPage").gameObject;
+        submitPage = testPaper.transform.Find("SubmitPage").gameObject;
+        initialPage = testPaper.transform.Find("InitialPage").gameObject;
+        initialPage.SetActive(true);
+        testPage.SetActive(false);
         submitPage.SetActive(false);
-        question.readQuestionFromJson(JSON_file);
-        //Debug.Log(question.ques);
-        quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
-        scoreTrack = new int[question.getQuesCount()];
-        for (int i = 0; i < question.getQuesCount(); i++)
+
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        offset = setting.offset;
+        if(setting.question != null)
         {
-            scoreTrack[i] = 0;
+            question = setting.question;
+            quesTrack = setting.quesTrack;
+            scoreTrack = setting.scoreTrack;
+            tempQuestion = question.current - 1;
         }
-        next();
+        else
+        {
+            question.readQuestionFromJson(JSON_file);
+            //Debug.Log(question.ques);
+            quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
+            scoreTrack = new int[question.getQuesCount()];
+            for (int i = 0; i < question.getQuesCount(); i++)
+            {
+                scoreTrack[i] = 0;
+                next();
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (offset > 0)
+        {
+            offset -= Time.deltaTime;
+        }
+        else
+        {
+            if (!start)
+            {
+                initialPage.SetActive(false);
+                testPage.SetActive(true);
+                next();
+                start = true;
+            }
+        }
     }
 
     public int getCurrentQuesNum()
@@ -54,10 +87,10 @@ public class TestPaperBehavior : MonoBehaviour
     {
         return quesTrack[tempQuestion].correctAns;
     }
-    
+
     public void next()
     {
-
+    
         reset();
 
         if (tempQuestion < question.getQuesCount() - 1)
@@ -136,6 +169,32 @@ public class TestPaperBehavior : MonoBehaviour
         testPage.SetActive(true);
     }
 
+    public GetQuestion setQuestion()
+    {
+        return question;
+    }
+    public MultipleChoiceBehavior[] setQuesTrack()
+    {
+        return quesTrack;
+    }
+    public int[] setScoreTrack()
+    {
+        return scoreTrack;
+    }
+
+    public string[] getAllAnswer()
+    {
+        int size = question.getQuesCount();
+        string[] answer = new string[size];
+        char[] abcd = { 'A', 'B', 'C', 'D' };
+        for (int i = 0; i < size; i++)
+        {
+            char ans = abcd[question.getQuestionCorrectAns(i)];
+            answer[i] = (i + 1).ToString() + ": " + ans;
+        }
+        return answer;
+    }
+
     public void writeAnsToJson()
     {
         char[] abcd = { 'A', 'B', 'C', 'D' };
@@ -160,7 +219,7 @@ public class TestPaperBehavior : MonoBehaviour
                 else writer.WriteValue(abcd[quesTrack[i].choice]);
                 writer.WritePropertyName("MyAns");
                 //Debug.Log(question.getQuestionCorrectAns(i));
-                writer.WriteValue(question.getQuestionCorrectAns(i));
+                writer.WriteValue(abcd[question.getQuestionCorrectAns(i)]);
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();

@@ -8,13 +8,15 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 2.0f;
     public NavMeshAgent teacher;
-    public GameObject student, gameoverTarget;
+    public GameObject student, gameoverTarget, giftTarget;
     public Animator ani;
     public Text text;
     public Random ran = new Random();
     public AudioClip wow;
     public TestPaperBehavior test;
     public IllegalMoveHandler illegalmove;
+    public GiftBlindEyesBehavior giftSkillTrigger;
+    public ActLikeTheFlashBehavior flashSkillTrigger;
 
 
     private int behaviour = 0; // moving
@@ -22,18 +24,18 @@ public class PlayerController : MonoBehaviour
     private float minDistance = 10000f, minAngle = 120f, angle;
     private GameObject target;
     private AudioSource[] studentsound, teachersound;
-
-
-    private float timeLeft = 15.0f;
+    
+    private float timeLeft;
 
     void Start()
     {
         studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
         teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
 
+        timeLeft = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
+
         teacher.speed = speed;
         target = GameObject.Find("target1");
-
     }
 
     void Update()
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (behaviour == 2) // idle status
             {
-
+                
             }
             else if (behaviour == 3) // pausing and watching status
             {
@@ -72,6 +74,20 @@ public class PlayerController : MonoBehaviour
                 behaviour = 2;
                 teachersound[1].Pause();
                 test.writeAnsToJson();
+            }
+            else if (behaviour == 5)
+            {
+                if (giftSkillTrigger.isTrigger() == false)
+                {
+                    behaviour = 1;
+                    //teacher.speed = speed;
+                }
+                if (Vector3.Distance(teacher.transform.position, teacher.destination) < 1.0f)
+                {
+                    teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+                    ani.SetInteger("animation_int", 10);
+                }
+                    
             }
             if (!gameover)
             {
@@ -91,7 +107,15 @@ public class PlayerController : MonoBehaviour
             teachersound[1].UnPause();
         }
         Transform destination = target.transform;
-        ani.SetInteger("animation_int", 1);
+        if (flashSkillTrigger.isTrigger() == false)
+        {
+            ani.SetInteger("animation_int", 1);
+        }
+        else
+        {
+            ani.SetInteger("animation_int", 12);
+        }
+        
         if (gameover)
         {
             teacher.SetDestination(gameoverTarget.transform.position);
@@ -113,7 +137,16 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                teacher.SetDestination(destination.position);
+                if (giftSkillTrigger.isTrigger() == true)
+                {
+                    teacher.SetDestination(giftTarget.transform.position);
+                    //teacher.speed *= 2;
+                    behaviour = 5;
+                }
+                else
+                {
+                    teacher.SetDestination(destination.position);
+                } 
             }
 
             if (target.GetComponent<PointFind>().nextPos && !gameover)

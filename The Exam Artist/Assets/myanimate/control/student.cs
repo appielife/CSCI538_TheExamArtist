@@ -19,6 +19,10 @@ public class student : MonoBehaviour {
         teacher = GameObject.FindGameObjectWithTag ("teacher").GetComponents<AudioSource> ();
 
         ani.SetInteger("animation_int", 7);
+        if (GameObject.Find("LevelSetting").GetComponent<LevelSetting>().washroomed)
+        {
+            timeLeft = -1.0f;
+        }
     }
 
     // Update is called once per frame

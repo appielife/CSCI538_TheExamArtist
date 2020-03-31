@@ -116,4 +116,45 @@ public class Navigator : MonoBehaviour
         SceneManager.LoadScene(1);
         SteamVR_Fade.Start(Color.clear, 2.0f);
     }
+
+    public void Play()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
+        blackboard.transform.Find("HandSelect").gameObject.SetActive(true);
+    }
+    public void Options()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
+        blackboard.transform.Find("OptionMenu").gameObject.SetActive(true);
+    }
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+    public void Return()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("OptionMenu").gameObject.SetActive(false);
+        blackboard.transform.Find("MainMenu").gameObject.SetActive(true);
+    }
+    public void Left()
+    {
+        if (hand != null) { hand.setHand("LeftHand"); }
+        SceneManager.LoadScene(1);
+    }
+    public void Right()
+    {
+        if (hand != null) { hand.setHand("RightHand"); }
+        SceneManager.LoadScene(1);
+    }
+    public void TryAgain()
+    {
+        SceneManager.LoadScene(1);
+    }
 }
