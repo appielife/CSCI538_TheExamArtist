@@ -22,10 +22,8 @@ public class MagicCheatSheetBehavior : MonoBehaviour
 
     private void loadResources()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
-        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
-        GameObject VRCamera = SteamVRObjects.transform.Find("VRCamera").gameObject;
-        GameObject SkillsOverlay = VRCamera.transform.Find("SkillsOverlay").gameObject;
+        GameObject table = GameObject.Find("PlayerTable");
+        GameObject SkillsOverlay = table.transform.Find("SkillsOverlay").gameObject;
         GameObject SkillCoolDown = SkillsOverlay.transform.Find("SkillCoolDown").gameObject;
         GameObject skill = SkillCoolDown.transform.Find("MagicCheatSheet").gameObject;
         GameObject resources = skill.transform.Find("Image").gameObject;
