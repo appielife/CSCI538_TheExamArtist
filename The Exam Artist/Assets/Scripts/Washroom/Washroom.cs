@@ -11,16 +11,19 @@ public class Washroom : MonoBehaviour
     private GameObject paper;
     void Start()
     {
-        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-        paper = GameObject.Find("Paper");
-        int time = (int)(setting.timeLeft + 120.0f) / 60;
-        string text = "";
-
-        for (int i = 0; i < setting.answer.Length - time; i++)
+        if (GameObject.Find("LevelSetting") != null)
         {
-            text = text + setting.answer[i] + "\n";
+            setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+            paper = GameObject.Find("Paper");
+            int time = (int)(setting.timeLeft + 120.0f) / 60;
+            string text = "";
+
+            for (int i = 0; i < setting.answer.Length - time; i++)
+            {
+                text = text + setting.answer[i] + "\n";
+            }
+            paper.GetComponentInChildren<Text>().text = text;
         }
-        paper.GetComponentInChildren<Text>().text = text;
     }
 
     void Update()

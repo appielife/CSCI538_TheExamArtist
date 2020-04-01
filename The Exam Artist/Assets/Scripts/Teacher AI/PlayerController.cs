@@ -32,10 +32,19 @@ public class PlayerController : MonoBehaviour
         studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
         teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
 
-        timeLeft = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
-
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        timeLeft = setting.offset;
         teacher.speed = speed;
-        target = GameObject.Find("target1");
+        if (setting.washroomed)
+        {
+            int i = Random.Range(1, 12);
+            target = GameObject.Find("target" + i.ToString());
+            teacher.transform.position = target.transform.position;
+        }
+        else
+        {
+            target = GameObject.Find("target1");
+        }
     }
 
     void Update()

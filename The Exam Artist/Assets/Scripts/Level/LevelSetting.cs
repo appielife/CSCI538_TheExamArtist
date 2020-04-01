@@ -55,4 +55,13 @@ public class LevelSetting : MonoBehaviour
         scoreTrack = test.setScoreTrack();
     }
 
+    public void resetTemp()
+    {
+        question = null;
+        quesTrack = null;
+        scoreTrack = null;
+        washroomed = false;
+        timeLeft = -1.0f;
+    }
+
 }
