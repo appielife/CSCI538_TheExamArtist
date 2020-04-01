@@ -35,7 +35,6 @@ public class TestPaperBehavior : MonoBehaviour
         string[] files = { "", "2", "-Chemistry", "-Math" };
         int index = Random.Range(0, 3);
         JSON_file = "questions" + files[index] + ".json";
-        Debug.Log(index);
 
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         offset = setting.offset;

@@ -156,7 +156,7 @@ public class Navigator : MonoBehaviour
     public void TryAgain()
     {
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-        setting.resetQuestion();
+        setting.resetTemp() ;
         SceneManager.LoadScene(1);
     }
 }
