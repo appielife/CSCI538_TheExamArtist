@@ -8,16 +8,17 @@ public class TeacherController : MonoBehaviour
 {
     public float speed = 2.0f;
     public NavMeshAgent teacher;
-    public GameObject student, gameoverTarget;
+    public GameObject student, gameoverTarget, giftTarget;
     public Animator ani;
-    public Text text;
+    //public Text text;
     public Random ran = new Random();
     public AudioClip wow;
     public TestPaperBehavior test;
     public IllegalMoveHandler illegalmove;
-    
+    public GiftBlindEyesBehavior giftSkillTrigger;
+
     private int behaviour = 1; // moving
-    private bool inEyesight = false, gameover = false;
+    private bool inEyesight = false, gameover = false, play = false;
     private float minDistance = 10000f, minAngle = 120f, angle;
     private GameObject target;
     private AudioSource[] studentsound, teachersound;
@@ -50,10 +51,11 @@ public class TeacherController : MonoBehaviour
     {
         if (timeLeft > 0)
         {
-            if (timeLeft < 13 && timeLeft > 12)
+            if (timeLeft < 13 && !play)
             {
                 ani.SetInteger("animation_int", 9);
                 teachersound[0].Play();
+                play = true;
             }
             timeLeft -= Time.deltaTime;
         }
@@ -77,6 +79,9 @@ public class TeacherController : MonoBehaviour
                     teachersound[1].Pause();
                     test.writeAnsToJson();
                     break;
+                case 5:
+                    behavior5();
+                    break;
 
             }
             if (!gameover)
@@ -98,8 +103,7 @@ public class TeacherController : MonoBehaviour
         }
         Transform destination = target.transform;
         teacher.SetDestination(destination.position);
-        //teacher.ResetPath();
-        Debug.Log("back to move:" + " "+ destination.position);
+        //Debug.Log(destination.position);
         ani.SetInteger("animation_int", 1);
         if (gameover)
         {
@@ -122,13 +126,19 @@ public class TeacherController : MonoBehaviour
             }
             else
             {
-                teacher.SetDestination(destination.position);
-                Debug.Log("current destination:", destination);
+                if (giftSkillTrigger.isTrigger() == true)
+                {
+                    teacher.SetDestination(giftTarget.transform.position);
+                    behaviour = 5;
+                }
+                else
+                {
+                    teacher.SetDestination(destination.position);
+                }
             }
 
             if (target.GetComponent<PointFind>().nextPos && !gameover)
             {
-                Debug.Log(teacher.transform.position+ ";"+ destination.position);
                 if (Vector3.Distance(teacher.transform.position, destination.position) < 0.1f)
                 {
                     teacher.ResetPath();
@@ -151,62 +161,52 @@ public class TeacherController : MonoBehaviour
         Vector3 forwardLocalVect = forwardLocalPos - teaPos;
         forwardLocalVect.y = 0;
         float angle = Vector3.Angle(srcLocalVect, forwardLocalVect);
-
-        //Debug.Log(angle.ToString() + distance.ToString());
-        //string debug = "teacher pos" + teaPos + "student pos" + stuPos + angle.ToString() + "and" + distance.ToString();
-
-        //if (distance < minDistance && angle < minAngle / 2)
-        //{
-        //    text.text = "in eyesight";
-        //    inEyesight = true;
-        //    if (illegalmove.illegal)
-        //    {
-        //        behaviour = 3;
-        //    }
-        //}
-        //else
-        //{
-        //    text.text = "not in eyesight";
-        //    inEyesight = false;
-        //}
     }
 
     void Pausing()
     {
-
         timePaused += Time.deltaTime;
         teachersound[1].Pause();
         if (gameover)
         {
             //int index = Random.Range(5, 7);
             ani.SetInteger("animation_int", 3);
-     
             behaviour = 1;
         }
         else
         {
-            
             if (timePaused >= MaxPauseTime)
             {
-
                 behaviour = 1;
                 timePaused = 0.0f;
-                Debug.Log("end pause" + behaviour);
             }
             else
             {
-                //Debug.Log("still pause" + timePaused +","+ behaviour);
                 int index = Random.Range(2, 3);
                 ani.SetInteger("animation_int", index);
                 teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
                 teacher.SetDestination(teacher.transform.position);
                 //teacher.ResetPath();
-                
-  
-       
             }
-            Debug.Log(behaviour);
         }
+    }
 
+    void behavior5()
+    {
+        if (giftSkillTrigger.isTrigger() == false)
+        {
+            behaviour = 1;
+        }
+        if (Vector3.Distance(teacher.transform.position, teacher.destination) < 0.1f)
+        {
+            teachersound[1].Pause();
+            teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+            ani.SetInteger("animation_int", 10);
+        }
+    }
+
+    public void setTarget(GameObject t)
+    {
+        target = t;
     }
 }

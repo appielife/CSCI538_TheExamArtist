@@ -35,14 +35,7 @@ public class Timer : MonoBehaviour
         {
             if (timeLeft > 0)
             {
-                /*if (flashSkillTrigger.isTrigger() == true)
-                {
-                    timeLeft -= Time.deltaTime / 2;
-                }
-                else
-                {
-                    timeLeft -= Time.deltaTime;
-                }*/
+                timeLeft -= Time.deltaTime;
                 string minutes = ((int)timeLeft / 60).ToString();
                 string seconds = ((int)timeLeft % 60).ToString();
                 if ((int)timeLeft / 60 < 10) { minutes = "0" + minutes; }

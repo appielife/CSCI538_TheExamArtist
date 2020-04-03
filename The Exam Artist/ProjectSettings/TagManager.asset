@@ -17,6 +17,7 @@ TagManager:
   - StudentAction
   - TeacherAction
   - MainSelectHandler
+  - StudentPosition
   layers:
   - Default
   - TransparentFX

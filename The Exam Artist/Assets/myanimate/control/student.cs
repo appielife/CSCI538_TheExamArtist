@@ -9,7 +9,7 @@ public class student : MonoBehaviour {
     private AudioSource[] source;
     private AudioSource[] teacher;
     public Random ran = new Random();
-    public GameObject character;
+    //public GameObject character;
     private bool notMoved = true;
     private float timeLeft = 15.0f;
 // Start is called before the first frame update
