@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
+using UnityEngine.SceneManagement;
 
 public class GodOfWashroomBehavior : MonoBehaviour
 {
@@ -19,10 +20,8 @@ public class GodOfWashroomBehavior : MonoBehaviour
     private float duration = 2.0f;
     private void loadResources()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
-        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
-        GameObject VRCamera = SteamVRObjects.transform.Find("VRCamera").gameObject;
-        GameObject SkillsOverlay = VRCamera.transform.Find("SkillsOverlay").gameObject;
+        GameObject table = GameObject.Find("PlayerTable");
+        GameObject SkillsOverlay = table.transform.Find("SkillsOverlay").gameObject;
         GameObject SkillCoolDown = SkillsOverlay.transform.Find("SkillCoolDown").gameObject;
         GameObject skill = SkillCoolDown.transform.Find("GodOfWashroom").gameObject;
         GameObject resources = skill.transform.Find("Image").gameObject;
@@ -68,7 +67,6 @@ public class GodOfWashroomBehavior : MonoBehaviour
             {
                 FadeIn();
                 Invoke("FadeOut", duration);
-
                 timer.GetComponent<Timer>().timeLeft -= (120 - duration);
                 used = true;
 
@@ -77,6 +75,11 @@ public class GodOfWashroomBehavior : MonoBehaviour
                 //Debug.Log("The correct answer is " + correctAns.ToString());
                 limit -= 1;
 
+                LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+                setting.timeLeft = timer.GetComponent<Timer>().timeLeft;
+                setting.setWashroom();
+                setting.setQuestion();
+                SceneManager.LoadScene(3);
             }
         }
         else

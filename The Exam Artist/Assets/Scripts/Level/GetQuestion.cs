@@ -12,6 +12,7 @@ public class GetQuestion
 
     private string jsonString;
     private JObject ques_obj;
+    private int numQuestions = 5;
 
     static System.Random _random = new System.Random();
 
@@ -78,9 +79,18 @@ public class GetQuestion
         return (string)ques[idx]["id"];
     }
 
-    public string getQuestionCorrectAns(int idx)
+    public int getQuestionCorrectAns(int idx)
     {
-        return (string)ques[idx]["correct_ans"];
+        JArray options = (JArray)ques[idx]["options"];
+        for (int i = 0; i < options.Count; i++)
+        {
+            if ((string)((JObject)options[i])["isCorrect"] == "True")
+            {
+                return i;
+            }
+        }
+        Debug.Log("Error");
+        return -1;
     }
 
     //Call this function to get your questions array in JArray format
@@ -88,8 +98,14 @@ public class GetQuestion
     {
         ques = (JArray)ques_obj["questions"];
         Shuffle(ques);
+        for (int i = 0; i < ques.Count; i++)
+        {
+            JArray t = (JArray)ques[i]["options"];
+            Shuffle(t);
+            ques[i]["options"] = t;
+        }
         JArray temp = new JArray();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < numQuestions; i++)
         {
             temp.Add(ques[i]);
         }

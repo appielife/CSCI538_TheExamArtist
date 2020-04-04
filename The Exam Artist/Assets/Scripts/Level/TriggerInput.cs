@@ -23,6 +23,7 @@ public class TriggerInput : MonoBehaviour
     public TestPaperBehavior test;
 
     private bool show = false;
+    private float offset;
 
     void OnDestroy()
     {
@@ -46,6 +47,8 @@ public class TriggerInput : MonoBehaviour
         GameObject playerTest = GameObject.Find("TestAndScore");
         test = playerTest.transform.Find("SelectHandler").gameObject.GetComponent<TestPaperBehavior>();
 
+        offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
+
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
         Spressed.AddOnStateUpListener(TriggerUpS, left);
@@ -57,31 +60,56 @@ public class TriggerInput : MonoBehaviour
         RightEast.AddOnStateDownListener(TriggerDownR, right);
         RightWest.AddOnStateDownListener(TriggerDownL, right);
     }
+
+    void Update()
+    {
+        if (offset > 0)
+        {
+            offset -= Time.deltaTime;
+        }
+    }
+
     public void TriggerDownY(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        washroom.GodOfWashroom();
+        if (offset < 0) {
+            washroom.GodOfWashroom();
+        }
     }
     public void TriggerDownX(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        hint.MagicCheatSheet();
+        if (offset < 0) {
+            hint.MagicCheatSheet();
+        }
     }
     public void TriggerUpS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (show) hns.Hide();
-        show = false;
+        if (offset < 0)
+        {
+            if (show) hns.Hide();
+            show = false;
+        }
     }
     public void TriggerDownS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (!show) hns.Show();
-        show = true;
+        if (offset < 0)
+        {
+            if (!show) hns.Show();
+            show = true;
+        }
     }
     public void TriggerDownL(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        test.previous();
+        if (offset < 0)
+        {
+            test.previous();
+        }
     }
     public void TriggerDownR(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        test.next();
+        if (offset < 0)
+        {
+            test.next();
+        }
     }
 
 }

@@ -9,7 +9,7 @@ public class student : MonoBehaviour {
     private AudioSource[] source;
     private AudioSource[] teacher;
     public Random ran = new Random();
-    public GameObject character;
+    //public GameObject character;
     private bool notMoved = true;
     private float timeLeft = 15.0f;
 // Start is called before the first frame update
@@ -19,6 +19,10 @@ public class student : MonoBehaviour {
         teacher = GameObject.FindGameObjectWithTag ("teacher").GetComponents<AudioSource> ();
 
         ani.SetInteger("animation_int", 7);
+        if (GameObject.Find("LevelSetting").GetComponent<LevelSetting>().washroomed)
+        {
+            timeLeft = -1.0f;
+        }
     }
 
     // Update is called once per frame

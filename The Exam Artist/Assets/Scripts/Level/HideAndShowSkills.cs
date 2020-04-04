@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class HideAndShowSkills : MonoBehaviour
 {
-    public GameObject skillCanvas;
+    private GameObject skillCanvas;
 
     void Awake()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
-        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
-        GameObject VRCamera = SteamVRObjects.transform.Find("VRCamera").gameObject;
-        skillCanvas = VRCamera.transform.Find("SkillsOverlay").gameObject;
+        GameObject table = GameObject.Find("PlayerTable");
+        skillCanvas = table.transform.Find("SkillsOverlay").gameObject;
     }
     public void Hide()
     {

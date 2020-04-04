@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 public class TestPaperAuto : MonoBehaviour
 {
-    private GameObject testPage;
+    public GameObject testPaper;
     public GameObject questionTextObj;
     public GameObject choiceA;
     public GameObject choiceB;
@@ -17,34 +17,64 @@ public class TestPaperAuto : MonoBehaviour
     private GetQuestion question;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
-    // Start is called before the first frame update
 
-    public float frequency = 0;
-    private float startTime = 0;
-    private GameObject mainTestPaper;
+    public float frequency = 0.0f;
+    public bool slowDown = false;
+
+    private float timeChange = 0.0f;
+    private GameObject mainSelectHandler;
+    private GameObject testPage, initialPage;
+    private float offset;
+    private bool start = false;
 
     void Start()
     {
-        mainTestPaper = GameObject.FindGameObjectWithTag("MainTestPaper");
-       
-        startTime = Time.time;
-        
+        testPage = testPaper.transform.Find("TestPage").gameObject;
+        initialPage = testPaper.transform.Find("InitialPage").gameObject;
+
+        testPage.SetActive(false);
+        initialPage.SetActive(true);
+
+        offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
+
+        mainSelectHandler = GameObject.FindGameObjectWithTag("MainSelectHandler");
+        timeChange = frequency;
     }
 
     void Update()
     {
-        if (question == null)
+        if (offset > 0)
         {
-            question = mainTestPaper.GetComponentInChildren<TestPaperBehavior>().question.copy();
-            /*question.readQuestionFromJson();*/
-            quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
-            next();
+            offset -= Time.deltaTime;
         }
-        float t = Time.time - startTime;
-        if (t > frequency)
+        else
         {
-            startTime = Time.time;
-            next();
+            if (!start)
+            {
+                initialPage.SetActive(false);
+                testPage.SetActive(true);
+                if (question == null)
+                {
+                    question = mainSelectHandler.GetComponent<TestPaperBehavior>().question.copy();
+                    quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
+                    next();
+                }
+                start = true;
+            }
+            if (slowDown == true)
+            {
+                timeChange -= Time.deltaTime / 2;
+            }
+            else
+            {
+                timeChange -= Time.deltaTime;
+            }
+
+            if (timeChange <= 0)
+            {
+                timeChange = frequency;
+                next();
+            }
         }
     }
 
@@ -84,6 +114,8 @@ public class TestPaperAuto : MonoBehaviour
         C.colors = cb;
         D.colors = cb;
     }
+
+
 
     public void selectA()
     {

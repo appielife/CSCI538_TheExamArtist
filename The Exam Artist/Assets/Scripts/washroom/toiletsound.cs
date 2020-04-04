@@ -21,8 +21,8 @@ public class toiletsound : MonoBehaviour
     }
     // Update is called once per frame
     void Update () {
-        audioSource.volume = musicVolume;
-        if ((state == 1 && !audioSource.isPlaying)||(state == 2 && !audioSource.isPlaying) ||(state == 3 && !audioSource.isPlaying) ||(state == 4 && !audioSource.isPlaying)) { randomPlay(); }
+        // audioSource.volume = musicVolume;
+        // if ((state == 1 && !audioSource.isPlaying)||(state == 2 && !audioSource.isPlaying) ||(state == 3 && !audioSource.isPlaying) ||(state == 4 && !audioSource.isPlaying)) { randomPlay(); }
     }
     void randomPlay()
     {

@@ -14,7 +14,10 @@ TagManager:
   - MainPlayer
   - MainMenu
   - HandSelectMenu
-  - toilet
+  - StudentAction
+  - TeacherAction
+  - MainSelectHandler
+  - StudentPosition
   layers:
   - Default
   - TransparentFX
