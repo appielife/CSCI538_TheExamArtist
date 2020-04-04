@@ -16,7 +16,7 @@ public class toiletsound : MonoBehaviour
     public int state;
     // Use this for initialization
     void Start () {
-        musicVolume = 0.5f;
+        musicVolume = 0.2f;
         randomPlay();
     }
     // Update is called once per frame
@@ -26,6 +26,7 @@ public class toiletsound : MonoBehaviour
     }
     void randomPlay()
     {
+        audioSource.volume = musicVolume;
         randomNum = Random.Range(1.0f, 5.0f);
         if (randomNum >= 1.0f && randomNum < 2.0f) {state = 1; audioSource.clip = otherClip1; audioSource.Play(); }
         else if (randomNum >= 2.0f && randomNum < 3.0f) {state = 2; audioSource.clip = otherClip2; audioSource.Play(); }
