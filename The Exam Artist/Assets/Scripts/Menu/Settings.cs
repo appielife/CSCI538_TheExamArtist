@@ -6,6 +6,7 @@ public class Settings : MonoBehaviour
 {
     public GameObject setting;
     private string hand = "LeftHand";
+    private int volume = 50;
 
     void Start()
     {
@@ -19,5 +20,15 @@ public class Settings : MonoBehaviour
     public string getHand()
     {
         return hand;
+    }
+
+    public void setVolume(int volume)
+    {
+        this.volume = volume;
+    }
+
+    public int getVolume()
+    {
+        return volume;
     }
 }
