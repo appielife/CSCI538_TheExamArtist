@@ -12,12 +12,14 @@ public class LevelSetting : MonoBehaviour
     public GetQuestion question;
     public MultipleChoiceBehavior[] quesTrack;
     public int[] scoreTrack;
+    public Settings setting;
 
     private void Start()
     {
         timeLeft = -1.0f;
         question = null;
         DontDestroyOnLoad(GameObject.Find("LevelSetting"));
+        setting = GameObject.Find("Settings").GetComponent<Settings>();
     }
 
     private void Update()

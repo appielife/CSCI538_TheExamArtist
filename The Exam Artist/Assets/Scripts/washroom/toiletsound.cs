@@ -16,17 +16,16 @@ public class toiletsound : MonoBehaviour
     public int state;
     // Use this for initialization
     void Start () {
-        musicVolume = 0.2f;
+        musicVolume = 0.5f;
         randomPlay();
     }
     // Update is called once per frame
     void Update () {
-        // audioSource.volume = musicVolume;
-        // if ((state == 1 && !audioSource.isPlaying)||(state == 2 && !audioSource.isPlaying) ||(state == 3 && !audioSource.isPlaying) ||(state == 4 && !audioSource.isPlaying)) { randomPlay(); }
+        audioSource.volume = musicVolume;
+        if ((state == 1 && !audioSource.isPlaying)||(state == 2 && !audioSource.isPlaying) ||(state == 3 && !audioSource.isPlaying) ||(state == 4 && !audioSource.isPlaying)) { randomPlay(); }
     }
     void randomPlay()
     {
-        audioSource.volume = musicVolume;
         randomNum = Random.Range(1.0f, 5.0f);
         if (randomNum >= 1.0f && randomNum < 2.0f) {state = 1; audioSource.clip = otherClip1; audioSource.Play(); }
         else if (randomNum >= 2.0f && randomNum < 3.0f) {state = 2; audioSource.clip = otherClip2; audioSource.Play(); }

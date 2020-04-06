@@ -8,11 +8,13 @@ public class Volume : MonoBehaviour
     public Slider slider;
     public Text volumeText;
     public float volume;
+    private Settings setting;
 
     void Start()
     {
         slider.value = volume / 100.0f;
         volumeText.text = ((int)volume).ToString();
+        setting = GameObject.Find("Settings").GetComponent<Settings>();
     }
 
     public void ToneUp()
@@ -20,8 +22,9 @@ public class Volume : MonoBehaviour
         if (volume < 100)
         {
             volume++;
-            slider.value = volume / 100.0f;
+            //slider.value = volume / 100.0f;
             volumeText.text = ((int)volume).ToString();
+            setting.setVolume((int)volume);
         }
     }
 
@@ -30,8 +33,9 @@ public class Volume : MonoBehaviour
         if (volume > 0)
         {
             volume--;
-            slider.value = volume / 100.0f;
+            //slider.value = volume / 100.0f;
             volumeText.text = ((int)volume).ToString();
+            setting.setVolume((int)volume);
         }
     }
 }
