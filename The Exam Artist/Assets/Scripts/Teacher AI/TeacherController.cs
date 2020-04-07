@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -44,6 +45,7 @@ public class TeacherController : MonoBehaviour
         {
             target = GameObject.Find("target1");
         }
+        setBribeTarget();
 
     }
 
@@ -80,7 +82,7 @@ public class TeacherController : MonoBehaviour
                     test.writeAnsToJson();
                     break;
                 case 5:
-                    behavior5();
+                    bribeBehavior();
                     break;
 
             }
@@ -191,7 +193,7 @@ public class TeacherController : MonoBehaviour
         }
     }
 
-    void behavior5()
+    void bribeBehavior()
     {
         if (giftSkillTrigger.isTrigger() == false)
         {
@@ -208,5 +210,12 @@ public class TeacherController : MonoBehaviour
     public void setTarget(GameObject t)
     {
         target = t;
+    }
+
+    void setBribeTarget()
+    {
+        int index = Random.Range(1, 11);
+        string current = "Student" + index.ToString();
+        giftTarget = GameObject.Find(current).gameObject.transform.Find("Position").gameObject;
     }
 }

@@ -18,6 +18,8 @@ public class GodOfWashroomBehavior : MonoBehaviour
     private bool used = false;
     private int limit = 5;
     private float duration = 2.0f;
+    private LevelSetting setting;
+
     private void loadResources()
     {
         GameObject table = GameObject.Find("PlayerTable");
@@ -29,12 +31,18 @@ public class GodOfWashroomBehavior : MonoBehaviour
         imgCoolDown = resources.transform.Find("CDImg").gameObject.GetComponent<Image>();
         textCoolDown = resources.transform.Find("CDText").gameObject.GetComponent<Text>();
     }
-    void Awake()
+
+    void Start()
     {
         loadResources();
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
         imgCoolDown.fillAmount = 0.0f;
         textCoolDown.text = "";
+        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        if (setting.washroomed)
+        {
+            used = true;
+        }
     }
 
     void Update()
@@ -54,6 +62,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
             used = false;
         }
     }
+
     public void GodOfWashroom()
     {
         if (used == false && limit > 0)
@@ -61,7 +70,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
             if (timer.GetComponent<Timer>().timeLeft < 150)
             {
                 sound[0].PlayOneShot(washroomAudioClips[6], 1.0f);
-                Debug.Log("Not enough time to go to washroom!");
+                //Debug.Log("Not enough time to go to washroom!");
             }
             else
             {
@@ -71,11 +80,10 @@ public class GodOfWashroomBehavior : MonoBehaviour
                 used = true;
 
                 int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-                sound[0].PlayOneShot(washroomAudioClips[correctAns], 1.0f);
+                //sound[0].PlayOneShot(washroomAudioClips[correctAns], 1.0f);
                 //Debug.Log("The correct answer is " + correctAns.ToString());
                 limit -= 1;
 
-                LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
                 setting.timeLeft = timer.GetComponent<Timer>().timeLeft;
                 setting.setWashroom();
                 setting.setQuestion();
@@ -87,12 +95,12 @@ public class GodOfWashroomBehavior : MonoBehaviour
             if (limit == 0)
             {
                 sound[0].PlayOneShot(washroomAudioClips[5], 1.0f);
-                Debug.Log("You can just use this skill twice per test");
+                //Debug.Log("You can just use this skill twice per test");
             }
             else
             {
                 sound[0].PlayOneShot(washroomAudioClips[4], 1.0f);
-                Debug.Log("The skill is cooling down.");
+                //Debug.Log("The skill is cooling down.");
             }
         }
     }
@@ -102,6 +110,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
         SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
     }
+
     private void FadeOut()
     {
         SteamVR_Fade.Start(Color.black, 0f);

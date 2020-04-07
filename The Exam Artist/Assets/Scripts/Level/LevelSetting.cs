@@ -19,7 +19,10 @@ public class LevelSetting : MonoBehaviour
         timeLeft = -1.0f;
         question = null;
         DontDestroyOnLoad(GameObject.Find("LevelSetting"));
-        setting = GameObject.Find("Settings").GetComponent<Settings>();
+        if (GameObject.Find("Settings"))
+        {
+            setting = GameObject.Find("Settings").GetComponent<Settings>();
+        }
     }
 
     private void Update()
