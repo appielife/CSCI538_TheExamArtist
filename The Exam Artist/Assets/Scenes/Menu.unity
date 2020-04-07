@@ -2207,8 +2207,9 @@ GameObject:
   m_Component:
   - component: {fileID: 812333318}
   - component: {fileID: 812333317}
+  - component: {fileID: 812333319}
   m_Layer: 0
-  m_Name: sound
+  m_Name: Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2226,7 +2227,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a49d8a1d13dbd471da8e61b4e72b4b43, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2324,6 +2325,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &812333319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812333316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2cd9e8416489bb4f90e5092f42c3e23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setting: {fileID: 0}
 --- !u!1 &828897757
 GameObject:
   m_ObjectHideFlags: 0
@@ -3615,6 +3629,7 @@ MonoBehaviour:
   slider: {fileID: 187232012}
   volumeText: {fileID: 322163256}
   volume: 50
+  sound: {fileID: 0}
 --- !u!1 &1286801653
 GameObject:
   m_ObjectHideFlags: 0

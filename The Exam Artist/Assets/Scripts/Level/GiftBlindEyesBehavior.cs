@@ -23,8 +23,6 @@ public class GiftBlindEyesBehavior : MonoBehaviour
     public AudioClip[] giftAudioClip = new AudioClip[3];
     static System.Random songPlayer = new System.Random();
 
-    private GameObject bribee;
-    // Start is called before the first frame update
     void Start()
     {
         imgCoolDown.fillAmount = 0.0f;
@@ -33,7 +31,7 @@ public class GiftBlindEyesBehavior : MonoBehaviour
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (existTimeCounter > 0 && exist == true && used == false)
@@ -69,6 +67,7 @@ public class GiftBlindEyesBehavior : MonoBehaviour
     {
         return exist == true;
     }
+
     public void GiftBlindEyes()
     {
         if (exist == false && used == false)
@@ -76,10 +75,6 @@ public class GiftBlindEyesBehavior : MonoBehaviour
             exist = true;
             int n = songPlayer.Next(3);
             sound[0].PlayOneShot(giftAudioClip[n], 1.5f);
-        }
-        else
-        {
-            Debug.Log("Your skill need to be cooled down");
         }
     }
 }

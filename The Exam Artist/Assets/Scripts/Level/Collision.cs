@@ -16,18 +16,17 @@ public class Collision : MonoBehaviour
     {
         if (collision.collider.name == "Something")
         {
-            GameObject parent = gameObject.transform.parent.gameObject;
-            position = parent.transform.Find("Position").transform.position;
+            position = gameObject.transform.Find("Position").transform.position;
             obj = collision.collider.gameObject;
-            Debug.Log(position);
-            control.setTarget(parent.transform.Find("Position").gameObject);
+            //Debug.Log(position);
+            control.setTarget(gameObject.transform.Find("Position").gameObject);
             hit = true;
         }
     }
 
     private void Start()
     {
-        ani = gameObject.GetComponent<Animator>();
+        ani = gameObject.transform.Find("student").GetComponent<Animator>();
         control = GameObject.FindGameObjectWithTag("TeacherAction").GetComponent<TeacherController>();
     }
 
