@@ -145,6 +145,14 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean Bribe
+        {
+            get
+            {
+                return SteamVR_Actions.default_Bribe;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

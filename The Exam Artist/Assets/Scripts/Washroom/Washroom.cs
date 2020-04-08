@@ -28,13 +28,16 @@ public class Washroom : MonoBehaviour
 
     void Update()
     {
-        if (timer > 0)
+        if (GameObject.Find("LevelSetting") != null)
         {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            SceneManager.LoadScene(1);
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                SceneManager.LoadScene(1);
+            }
         }
     }
 }

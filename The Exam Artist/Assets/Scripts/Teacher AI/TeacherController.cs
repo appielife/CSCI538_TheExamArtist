@@ -35,17 +35,9 @@ public class TeacherController : MonoBehaviour
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
         teacher.speed = speed;
-        /*if (setting.washroomed)
-        {
-            int i = Random.Range(1, 12);
-            target = GameObject.Find("target" + i.ToString());
-            teacher.transform.position = target.transform.position;
-        }
-        else
-        {*/
-            target = GameObject.Find("target1");
-            target.transform.position = GetRandomPosition();
-        //}
+        target = GameObject.Find("target1");
+        target.transform.position = GetRandomPosition();
+        
         setBribeTarget();
 
     }
@@ -137,6 +129,11 @@ public class TeacherController : MonoBehaviour
                 else
                 {
                     teacher.SetDestination(destination.position);
+                    if (!teacher.hasPath)
+                    {
+                        target.transform.position = GetRandomPosition();
+                        teacher.SetDestination(destination.position);
+                    }
                 }
             }
 
@@ -144,7 +141,7 @@ public class TeacherController : MonoBehaviour
             {
                 if (Vector3.Distance(teacher.transform.position, destination.position) < 0.1f)
                 {
-                    Debug.Log(teacher.transform.position);
+                    //Debug.Log(teacher.transform.position);
                     teacher.ResetPath();
                     behaviour = 3;
                     target.transform.position = GetRandomPosition();
@@ -229,7 +226,7 @@ public class TeacherController : MonoBehaviour
         Vector3 point = Vector3.Lerp(navMeshData.vertices[navMeshData.indices[t]], navMeshData.vertices[navMeshData.indices[t + 1]], Random.value);
         point = Vector3.Lerp(point, navMeshData.vertices[navMeshData.indices[t + 2]], Random.value);
         //point = new Vector3(-4.2f, -0.8f, -0.7f);
-        Debug.Log("generate: " + point);
+        //Debug.Log("generate: " + point);
         return point;
     }
 }

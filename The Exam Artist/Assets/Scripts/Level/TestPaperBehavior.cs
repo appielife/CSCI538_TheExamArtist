@@ -32,7 +32,7 @@ public class TestPaperBehavior : MonoBehaviour
         testPage.SetActive(false);
         submitPage.SetActive(false);
 
-        string[] files = { "", "2", "-Chemistry", "-Math" };
+        string[] files = { "-World", "-Foreign", "-Chemistry", "-Math" };
         int index = Random.Range(0, 3);
         JSON_file = "questions" + files[index] + ".json";
 
