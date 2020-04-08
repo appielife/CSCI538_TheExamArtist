@@ -787,9 +787,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 560966871}
-        m_MethodName: hideReport
-        m_Mode: 1
+      - m_Target: {fileID: 1698909410}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -987,7 +987,7 @@ RectTransform:
   m_Children:
   - {fileID: 35696733}
   m_Father: {fileID: 1515213366}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1050,16 +1050,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 560966871}
-        m_MethodName: showReport
-        m_Mode: 1
+      - m_Target: {fileID: 1698909410}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &612030450
 MonoBehaviour:
@@ -1903,8 +1903,8 @@ RectTransform:
   - {fileID: 288181677}
   - {fileID: 1697872304}
   - {fileID: 737157268}
-  - {fileID: 1698909411}
   - {fileID: 612030447}
+  - {fileID: 1698909411}
   m_Father: {fileID: 1419056198}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2301,7 +2301,7 @@ RectTransform:
   - {fileID: 394796842}
   - {fileID: 616504488}
   m_Father: {fileID: 1515213366}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
