@@ -79,6 +79,12 @@ public class GetQuestion
         return (string)ques[idx]["id"];
     }
 
+    //to get question text using the idx
+    public string getQuestionTxt(int idx)
+    {
+        return (string)ques[idx]["question_txt"];
+    }
+
     public int getQuestionCorrectAns(int idx)
     {
         JArray options = (JArray)ques[idx]["options"];

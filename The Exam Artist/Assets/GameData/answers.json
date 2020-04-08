@@ -1,29 +1,34 @@
 {
   "Answers": [
     {
-      "id": "17",
-      "YourAns": "NA",
-      "MyAns": "D"
-    },
-    {
-      "id": "19",
-      "YourAns": "NA",
-      "MyAns": "D"
-    },
-    {
-      "id": "6",
-      "YourAns": "NA",
-      "MyAns": "B"
-    },
-    {
-      "id": "14",
-      "YourAns": "NA",
+      "id": "15",
+      "question_txt": "What is the first greek alphabet",
+      "YourAns": "C",
       "MyAns": "C"
     },
     {
-      "id": "26",
-      "YourAns": "NA",
+      "id": "16",
+      "question_txt": "Which of of these car manufacturer is Japanese",
+      "YourAns": "C",
+      "MyAns": "B"
+    },
+    {
+      "id": "27",
+      "question_txt": "What is the capital of Australia?",
+      "YourAns": "C",
       "MyAns": "D"
+    },
+    {
+      "id": "21",
+      "question_txt": "Who is not one of Three Musketeers?",
+      "YourAns": "C",
+      "MyAns": "D"
+    },
+    {
+      "id": "24",
+      "question_txt": "Which of these cities in US is the furthest West",
+      "YourAns": "C",
+      "MyAns": "B"
     }
   ]
 }

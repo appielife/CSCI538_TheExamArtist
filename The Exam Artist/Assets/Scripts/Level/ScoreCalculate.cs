@@ -19,6 +19,7 @@ public class scoreObject
 public class ScoreCalculate : MonoBehaviour
 {
     public Text score;
+    public Text report;
     private JObject ans_obj;
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();
@@ -28,6 +29,7 @@ public class ScoreCalculate : MonoBehaviour
     {
         scoreObj = getScore();
         score.text = scoreObj.correct_ans.ToString() + " / " + scoreObj.total_count.ToString();
+        report.text = getReport();
     }
 
 
@@ -41,6 +43,20 @@ public class ScoreCalculate : MonoBehaviour
         return scoreObj;
 
     }
+
+    // to get report 
+    public string getReport()
+    {
+        string final = "";
+        for (int i = 0; i < ans_arr.Count; i++)
+        {
+            final= final + "Question "+ (i+1).ToString() + " : " + ans_arr[i]["question_txt"].ToString() + "\n Correct Answer: " + ans_arr[i]["MyAns"].ToString() + "\n Your Answer: " + ans_arr[i]["YourAns"].ToString() + "\n\n\n";
+        }
+        return final;
+
+
+    }
+
 
     public JArray readAnswersFromJson()
     {

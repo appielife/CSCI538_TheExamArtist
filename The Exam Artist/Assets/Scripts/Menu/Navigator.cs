@@ -158,5 +158,5 @@ public class Navigator : MonoBehaviour
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         setting.resetTemp() ;
         SceneManager.LoadScene(1);
-    }
+    }  
 }

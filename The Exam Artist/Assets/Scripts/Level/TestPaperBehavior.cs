@@ -216,7 +216,10 @@ public class TestPaperBehavior : MonoBehaviour
                 writer.WriteStartObject();
                 writer.WritePropertyName("id");
                 writer.WriteValue(question.getQuestionId(i));
-                writer.WritePropertyName("YourAns");
+            // writing question_txt too, to the answers.json file
+                writer.WritePropertyName("question_txt");
+                writer.WriteValue(question.getQuestionTxt(i));
+                writer.WritePropertyName("YourAns");            
                 //Debug.Log(i);
                 //Debug.Log(quesTrack.Length);
                 if (quesTrack[i] == null || quesTrack[i].choice == -1) writer.WriteValue("NA");
