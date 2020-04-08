@@ -1467,6 +1467,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11401046, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: renderModelPrefab
+      value: 
+      objectReference: {fileID: 1000012617731570, guid: d78dcca15b2fd0c489e5a8bc7d8a63e8,
+        type: 3}
+    - target: {fileID: 11450312, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: renderModelPrefab
+      value: 
+      objectReference: {fileID: 1000011547835092, guid: 2bcedee83c9ceaf458a9f3e05350b25d,
+        type: 3}
     - target: {fileID: 114000012749712888, guid: dc06161b6d97feb419f45f03b62e14b9,
         type: 3}
       propertyPath: doNotDestroy
@@ -3629,7 +3639,6 @@ MonoBehaviour:
   slider: {fileID: 187232012}
   volumeText: {fileID: 322163256}
   volume: 50
-  sound: {fileID: 0}
 --- !u!1 &1286801653
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class Navigator : MonoBehaviour
     private SteamVR_LaserPointer laserPointerR;
     private Settings hand;
     private Volume volume;
+    private LevelSetting levelsetting;
 
     void Start()
     {
@@ -33,9 +34,10 @@ public class Navigator : MonoBehaviour
         laserPointerR.PointerClick += PointerClick;
 
         hand = (GameObject.Find("Settings")) ? GameObject.Find("Settings").GetComponent<Settings>() : null;
-
-        volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
-
+        if (GameObject.Find("VolumeHandler"))
+        {
+            volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
+        }
     }
     public void PointerClick(object sender, PointerEventArgs e)
     {
@@ -45,15 +47,13 @@ public class Navigator : MonoBehaviour
             switch (e.target.name)
             {
                 case "Play":
-                    blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
-                    blackboard.transform.Find("HandSelect").gameObject.SetActive(true);
+                    Play();
                     break;
                 case "Options":
-                    blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
-                    blackboard.transform.Find("OptionMenu").gameObject.SetActive(true);
+                    Options();
                     break;
                 case "Quit":
-                    Application.Quit(0);
+                    Quit();
                     break;
                 case "ToneDown":
                     volume.ToneDown();
@@ -62,8 +62,7 @@ public class Navigator : MonoBehaviour
                     volume.ToneUp();
                     break;
                 case "Return":
-                    blackboard.transform.Find("OptionMenu").gameObject.SetActive(false);
-                    blackboard.transform.Find("MainMenu").gameObject.SetActive(true);
+                    Return();
                     break;
                 case "Left":
                     if (hand != null) { hand.setHand("LeftHand"); }
@@ -76,6 +75,8 @@ public class Navigator : MonoBehaviour
                     Invoke("FadeOut", 5.0f);
                     break;
                 case "TryAgain":
+                    LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+                    setting.resetTemp();
                     FadeIn();
                     Invoke("FadeOut", 5.0f);
                     break;

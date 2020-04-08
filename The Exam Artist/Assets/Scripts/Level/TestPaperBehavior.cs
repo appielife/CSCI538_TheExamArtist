@@ -38,7 +38,7 @@ public class TestPaperBehavior : MonoBehaviour
 
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         offset = setting.offset;
-        if(setting.question != null)
+        if (setting.washroomed)
         {
             question = setting.question;
             quesTrack = setting.quesTrack;

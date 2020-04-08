@@ -57,7 +57,7 @@ public class SceneHandler : MonoBehaviour
             cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             b.colors = cb;
         }
-        if(e.target.name == "TestPaper" )
+        if(e.target.name == "TestPaper")
         {
             laserPointer.thickness = 0.002f;
         }

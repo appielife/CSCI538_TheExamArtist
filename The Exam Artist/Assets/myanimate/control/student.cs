@@ -12,7 +12,13 @@ public class student : MonoBehaviour {
     //public GameObject character;
     private bool notMoved = true;
     private float timeLeft = 15.0f;
-// Start is called before the first frame update
+    private int animationIndex = 2;
+
+    public void setAnimation(int i)
+    {
+        animationIndex = i;
+    }
+
     void Start()
     {
         source = GameObject.FindGameObjectWithTag ("student").GetComponents<AudioSource> ();
@@ -34,7 +40,7 @@ public class student : MonoBehaviour {
             timeLeft -= Time.deltaTime;
         }
         else{
-            ani.SetInteger("animation_int", 2);
+            ani.SetInteger("animation_int", animationIndex);
         }
     // if (Input.GetKeyDown(KeyCode.Alpha0)){
     //     ani.SetInteger("animation_int", 0);//idle

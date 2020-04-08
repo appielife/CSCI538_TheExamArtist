@@ -9,12 +9,14 @@ public class Collision : MonoBehaviour
     private TeacherController control;
     private Vector3 position;
     public Animator ani;
+    public student target;
+    public studentF targetF;
     private float timeLeft = 10.0f;
     private bool hit = false;
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (collision.collider.name == "Something")
+        if (collision.collider.name == "Something" || collision.collider.name == "eraser")
         {
             position = gameObject.transform.Find("Position").transform.position;
             obj = collision.collider.gameObject;
@@ -27,6 +29,11 @@ public class Collision : MonoBehaviour
     private void Start()
     {
         ani = gameObject.transform.Find("student").GetComponent<Animator>();
+        target = gameObject.transform.Find("student").GetComponent<student>();
+        if(target == null)
+        {
+            targetF = gameObject.transform.Find("student").GetComponent<studentF>();
+        }
         control = GameObject.FindGameObjectWithTag("TeacherAction").GetComponent<TeacherController>();
     }
 
@@ -42,7 +49,14 @@ public class Collision : MonoBehaviour
         }
         if (hit)
         {
-            ani.SetInteger("animation_int", 11);
+            if (target)
+            {
+                target.setAnimation(11);
+            }
+            else
+            {
+                targetF.setAnimation(11);
+            }
             if (timeLeft > 0)
             {
                 timeLeft -= Time.deltaTime;
@@ -50,6 +64,14 @@ public class Collision : MonoBehaviour
             else
             {
                 hit = false;
+                if (target)
+                {
+                    target.setAnimation(2);
+                }
+                else
+                {
+                    targetF.setAnimation(1);
+                }
             }
         }
     }

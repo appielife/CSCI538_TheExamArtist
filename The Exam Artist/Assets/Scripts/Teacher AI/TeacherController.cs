@@ -35,16 +35,17 @@ public class TeacherController : MonoBehaviour
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
         teacher.speed = speed;
-        if (setting.washroomed)
+        /*if (setting.washroomed)
         {
             int i = Random.Range(1, 12);
             target = GameObject.Find("target" + i.ToString());
             teacher.transform.position = target.transform.position;
         }
         else
-        {
+        {*/
             target = GameObject.Find("target1");
-        }
+            target.transform.position = GetRandomPosition();
+        //}
         setBribeTarget();
 
     }
@@ -139,13 +140,14 @@ public class TeacherController : MonoBehaviour
                 }
             }
 
-            if (target.GetComponent<PointFind>().nextPos && !gameover)
+            if (!gameover)
             {
                 if (Vector3.Distance(teacher.transform.position, destination.position) < 0.1f)
                 {
+                    Debug.Log(teacher.transform.position);
                     teacher.ResetPath();
                     behaviour = 3;
-                    target = target.GetComponent<PointFind>().nextPos;  // target赋值为下一个点的坐标
+                    target.transform.position = GetRandomPosition();
                 }
             }
         }
@@ -217,5 +219,17 @@ public class TeacherController : MonoBehaviour
         int index = Random.Range(1, 11);
         string current = "Student" + index.ToString();
         giftTarget = GameObject.Find(current).gameObject.transform.Find("Position").gameObject;
+    }
+
+    public Vector3 GetRandomPosition()
+    {
+        NavMeshTriangulation navMeshData = NavMesh.CalculateTriangulation();
+
+        int t = Random.Range(0, navMeshData.indices.Length - 3);
+        Vector3 point = Vector3.Lerp(navMeshData.vertices[navMeshData.indices[t]], navMeshData.vertices[navMeshData.indices[t + 1]], Random.value);
+        point = Vector3.Lerp(point, navMeshData.vertices[navMeshData.indices[t + 2]], Random.value);
+        //point = new Vector3(-4.2f, -0.8f, -0.7f);
+        Debug.Log("generate: " + point);
+        return point;
     }
 }

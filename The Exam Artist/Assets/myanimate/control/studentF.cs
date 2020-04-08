@@ -9,8 +9,13 @@ public class studentF : MonoBehaviour {
     private AudioSource[] teacher;
     public Random ran = new Random();
     private float timeLeft = 15.0f;
+    private int animationIndex = 1;
 
-// Start is called before the first frame update
+    public void setAnimation(int i)
+    {
+        animationIndex = i;
+    }
+
     void Start()
     {
         source = GameObject.FindGameObjectWithTag ("student").GetComponents<AudioSource> ();
@@ -24,7 +29,6 @@ public class studentF : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (timeLeft > 0)
@@ -32,7 +36,7 @@ public class studentF : MonoBehaviour {
             timeLeft -= Time.deltaTime;
         }
         else{
-            ani.SetInteger("animation_int", 1);
+            ani.SetInteger("animation_int", animationIndex);
         }
 
     // if (Input.GetKeyDown(KeyCode.Alpha0)){

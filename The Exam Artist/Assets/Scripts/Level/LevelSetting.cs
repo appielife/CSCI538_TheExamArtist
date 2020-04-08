@@ -62,11 +62,13 @@ public class LevelSetting : MonoBehaviour
 
     public void resetTemp()
     {
+        Debug.Log("reset");
         question = null;
         quesTrack = null;
         scoreTrack = null;
         washroomed = false;
         timeLeft = -1.0f;
+        offset = 15.0f;
     }
 
 }
