@@ -79,7 +79,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
                 timer.GetComponent<Timer>().timeLeft -= (120 - duration);
                 used = true;
 
-                int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
+                //int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
                 //sound[0].PlayOneShot(washroomAudioClips[correctAns], 1.0f);
                 //Debug.Log("The correct answer is " + correctAns.ToString());
                 limit -= 1;
@@ -102,6 +102,28 @@ public class GodOfWashroomBehavior : MonoBehaviour
                 sound[0].PlayOneShot(washroomAudioClips[4], 1.0f);
                 //Debug.Log("The skill is cooling down.");
             }
+        }
+    }
+
+    public bool isTrigger()
+    {
+        return used;
+    }
+
+    public float GetCoolDownCounter()
+    {
+        return coolDownCounter;
+    }
+
+    public void ReduceCoolDownCounter(float n)
+    {
+        if (n == -1)
+        {
+            coolDownCounter = coolDown;
+        }
+        else
+        {
+            coolDownCounter -= n;
         }
     }
 

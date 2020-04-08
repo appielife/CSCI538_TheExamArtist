@@ -74,6 +74,12 @@ public class Navigator : MonoBehaviour
                     FadeIn();
                     Invoke("FadeOut", 5.0f);
                     break;
+                case "Back":
+                    Back();
+                    break;
+                case "Continue":
+                    Continue();
+                    break;
                 case "TryAgain":
                     LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
                     setting.resetTemp();
@@ -154,10 +160,22 @@ public class Navigator : MonoBehaviour
         if (hand != null) { hand.setHand("RightHand"); }
         SceneManager.LoadScene(1);
     }
+    public void Back()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("HandSelect").gameObject.SetActive(false);
+        blackboard.transform.Find("MainMenu").gameObject.SetActive(true);
+    }
     public void TryAgain()
     {
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         setting.resetTemp() ;
         SceneManager.LoadScene(1);
+    }
+    public void Continue()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("ScoreMenu").gameObject.SetActive(false);
+        blackboard.transform.Find("DecideMenu").gameObject.SetActive(true);
     }
 }

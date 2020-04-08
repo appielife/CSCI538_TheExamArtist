@@ -8,15 +8,15 @@ public class Collision : MonoBehaviour
     private GameObject obj;
     private TeacherController control;
     private Vector3 position;
-    public Animator ani;
-    public student target;
-    public studentF targetF;
+    private Animator ani;
+    private student target;
+    private studentF targetF;
     private float timeLeft = 10.0f;
     private bool hit = false;
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (collision.collider.name == "Something" || collision.collider.name == "eraser")
+        if (collision.collider.name == "eraser")
         {
             position = gameObject.transform.Find("Position").transform.position;
             obj = collision.collider.gameObject;

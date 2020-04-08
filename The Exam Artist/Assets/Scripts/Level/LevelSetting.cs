@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSetting : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class LevelSetting : MonoBehaviour
     public MultipleChoiceBehavior[] quesTrack;
     public int[] scoreTrack;
     public Settings setting;
+    public string subject;
 
     private void Start()
     {
@@ -69,6 +71,17 @@ public class LevelSetting : MonoBehaviour
         washroomed = false;
         timeLeft = -1.0f;
         offset = 15.0f;
+    }
+
+    public void setSubject(string s)
+    {
+        subject = s;
+        GameObject.Find("Subject").GetComponent<Text>().text = s.ToUpper() + " QUIZ !";
+        GameObject[] test = GameObject.FindGameObjectsWithTag("Subject");
+        for(int i = 0; i< test.Length; i++)
+        {
+            test[i].GetComponent<Text>().text = s;
+        }
     }
 
 }

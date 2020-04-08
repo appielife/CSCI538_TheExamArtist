@@ -23,7 +23,9 @@ public class studentF : MonoBehaviour {
 
         //control default status
         ani.SetInteger("animation_int", 7);
-        if (GameObject.Find("LevelSetting").GetComponent<LevelSetting>().washroomed)
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        timeLeft = setting.offset;
+        if (setting.washroomed)
         {
             timeLeft = -1.0f;
         }

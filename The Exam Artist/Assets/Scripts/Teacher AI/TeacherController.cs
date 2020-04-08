@@ -17,14 +17,18 @@ public class TeacherController : MonoBehaviour
     public TestPaperBehavior test;
     public IllegalMoveHandler illegalmove;
     public GiftBlindEyesBehavior giftSkillTrigger;
+    public ClapBombBehavior clapBombTrigger;
 
     private int behaviour = 1; // moving
     private bool inEyesight = false, gameover = false, play = false;
-    private float minDistance = 10000f, minAngle = 120f, angle;
+    private float angle;
+    //private float minDistance = 10000f, minAngle = 120f
     private GameObject target;
     private AudioSource[] studentsound, teachersound;
-    float timePaused = 0.0f;
+    private float timePaused = 0.0f;
+    float timeChecked = 0.0f;
     public float MaxPauseTime = 3.0f;
+    public float MaxCheckTime = 5.5f;
 
     private float timeLeft = 15.0f;
 
@@ -46,7 +50,7 @@ public class TeacherController : MonoBehaviour
     {
         if (timeLeft > 0)
         {
-            if (timeLeft < 13 && !play)
+            if (!play)
             {
                 ani.SetInteger("animation_int", 9);
                 teachersound[0].Play();
@@ -76,6 +80,9 @@ public class TeacherController : MonoBehaviour
                     break;
                 case 5:
                     bribeBehavior();
+                    break;
+                case 6:
+                    checkStudentBehavior();
                     break;
 
             }
@@ -121,7 +128,12 @@ public class TeacherController : MonoBehaviour
             }
             else
             {
-                if (giftSkillTrigger.isTrigger() == true)
+                if (clapBombTrigger.targetStudentPos != null)
+                {
+                    teacher.SetDestination(clapBombTrigger.targetStudentPos.transform.position);
+                    behaviour = 6;
+                }
+                else if (giftSkillTrigger.isTrigger() == true)
                 {
                     teacher.SetDestination(giftTarget.transform.position);
                     behaviour = 5;
@@ -191,7 +203,7 @@ public class TeacherController : MonoBehaviour
             }
         }
     }
-
+    
     void bribeBehavior()
     {
         if (giftSkillTrigger.isTrigger() == false)
@@ -206,6 +218,36 @@ public class TeacherController : MonoBehaviour
         }
     }
 
+    void Checking()
+    {
+        timeChecked += Time.deltaTime;
+        teachersound[1].Pause();
+
+        //ani.SetInteger("animation_int", 11);
+        //Debug.Log("Before Waiting 3 seconds");
+
+        if (timeChecked >= MaxCheckTime)
+        {
+            behaviour = 1;
+            clapBombTrigger.targetStudentPos = null;
+            timeChecked = 0.0f;
+        }
+        else
+        {
+            ani.SetInteger("animation_int", 10);
+        }
+    }
+
+    void checkStudentBehavior()
+    {
+        if (Vector3.Distance(teacher.transform.position, teacher.destination) < 0.1f)
+        {
+            teachersound[1].Pause();
+            teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+            Checking();
+        }
+    }
+
     public void setTarget(GameObject t)
     {
         target = t;
@@ -214,8 +256,7 @@ public class TeacherController : MonoBehaviour
     void setBribeTarget()
     {
         int index = Random.Range(1, 11);
-        string current = "Student" + index.ToString();
-        giftTarget = GameObject.Find(current).gameObject.transform.Find("Position").gameObject;
+        giftTarget = GameObject.FindGameObjectsWithTag("StudentPosition")[index];
     }
 
     public Vector3 GetRandomPosition()

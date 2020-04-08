@@ -18,6 +18,8 @@ TagManager:
   - TeacherAction
   - MainSelectHandler
   - StudentPosition
+  - StudentCharacter
+  - Subject
   layers:
   - Default
   - TransparentFX
