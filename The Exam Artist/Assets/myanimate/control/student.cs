@@ -10,16 +10,24 @@ public class student : MonoBehaviour {
     private AudioSource[] teacher;
     public Random ran = new Random();
     //public GameObject character;
-    private bool notMoved = true;
+    //private bool notMoved = true;
     private float timeLeft = 15.0f;
-// Start is called before the first frame update
+    private int animationIndex = 2;
+
+    public void setAnimation(int i)
+    {
+        animationIndex = i;
+    }
+
     void Start()
     {
         source = GameObject.FindGameObjectWithTag ("student").GetComponents<AudioSource> ();
         teacher = GameObject.FindGameObjectWithTag ("teacher").GetComponents<AudioSource> ();
 
         ani.SetInteger("animation_int", 7);
-        if (GameObject.Find("LevelSetting").GetComponent<LevelSetting>().washroomed)
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        timeLeft = setting.offset;
+        if (setting.washroomed)
         {
             timeLeft = -1.0f;
         }
@@ -34,7 +42,7 @@ public class student : MonoBehaviour {
             timeLeft -= Time.deltaTime;
         }
         else{
-            ani.SetInteger("animation_int", 2);
+            ani.SetInteger("animation_int", animationIndex);
         }
     // if (Input.GetKeyDown(KeyCode.Alpha0)){
     //     ani.SetInteger("animation_int", 0);//idle

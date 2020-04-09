@@ -17,7 +17,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
     private float existTime = 5.0f, existTimeCounter = 5.0f;
     private bool exist = false,  used = false;
     private Text tempHintShow;
-
+    private Text cheatText;
     static string[] choices = { "A", "B", "C", "D" };
 
     private void loadResources()
@@ -31,6 +31,9 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         imgCoolDown = resources.transform.Find("CDImg").gameObject.GetComponent<Image>();
         imgExist = resources.transform.Find("exsiting").gameObject.GetComponent<Image>();
         textCoolDown = resources.transform.Find("CDText").gameObject.GetComponent<Text>();
+
+        GameObject cheatsheet = GameObject.Find("CheatSheet");
+        cheatText = cheatsheet.transform.Find("Hint").GetComponentInChildren<Text>();
     }
     void Awake()
     {
@@ -40,6 +43,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
         hintObj.GetComponentInChildren<Text>().text = "";
+        cheatText.text = "";
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/hints.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
@@ -73,6 +77,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             exist = false;
             imgExist.fillAmount = 0.0f;
             hintObj.GetComponentsInChildren<Text>()[0].text = "";
+            cheatText.text = "";
             tempHintShow.text = "";
             used = true; 
         }
@@ -99,8 +104,8 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             //Debug.Log(temp_ques_id);
             //Debug.Log((JObject)hintArray[temp_ques_id]);
             string hintStr = (string)((JArray)((JObject)hintArray[temp_ques_id])["hints"])[0];
-            hintObj.GetComponentsInChildren<Text>()[0].text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " +
-                hintStr;
+            hintObj.GetComponentsInChildren<Text>()[0].text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " + hintStr;
+            cheatText.text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " +  hintStr;
             exist = true;
             int tempAnsIdx = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
             switch (hintStr){
@@ -132,5 +137,27 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         {
             Debug.Log("Your skill need to be cooled down");
         }
+    }
+
+    public bool isTrigger()
+    {
+        return used == true || exist == true;
+    }
+
+    public void ResetSkill()
+    {
+        imgCoolDown.fillAmount = 0.0f;
+        imgExist.fillAmount = 0.0f;
+        textCoolDown.text = "";
+        hintObj.GetComponentInChildren<Text>().text = "";
+        if (tempHintShow)
+        {
+            tempHintShow.text = "";
+        }
+
+        coolDownCounter = coolDown;
+        existTimeCounter = existTime;
+        exist = false;
+        used = false;
     }
 }

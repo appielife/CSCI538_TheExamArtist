@@ -11,6 +11,8 @@ public class Navigator : MonoBehaviour
     private SteamVR_LaserPointer laserPointerR;
     private Settings hand;
     private Volume volume;
+    private LevelSetting levelsetting;
+    private ScoreCalculate report;
 
     void Start()
     {
@@ -33,8 +35,15 @@ public class Navigator : MonoBehaviour
         laserPointerR.PointerClick += PointerClick;
 
         hand = (GameObject.Find("Settings")) ? GameObject.Find("Settings").GetComponent<Settings>() : null;
+        if (GameObject.Find("VolumeHandler"))
+        {
+            volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
+        }
 
-        volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
+        if (GameObject.Find("ScoreCalculate"))
+        {
+            report = GameObject.Find("ScoreCalculate").GetComponent<ScoreCalculate>();
+        }
 
     }
     public void PointerClick(object sender, PointerEventArgs e)
@@ -45,15 +54,13 @@ public class Navigator : MonoBehaviour
             switch (e.target.name)
             {
                 case "Play":
-                    blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
-                    blackboard.transform.Find("HandSelect").gameObject.SetActive(true);
+                    Play();
                     break;
                 case "Options":
-                    blackboard.transform.Find("MainMenu").gameObject.SetActive(false);
-                    blackboard.transform.Find("OptionMenu").gameObject.SetActive(true);
+                    Options();
                     break;
                 case "Quit":
-                    Application.Quit(0);
+                    Quit();
                     break;
                 case "ToneDown":
                     volume.ToneDown();
@@ -62,8 +69,7 @@ public class Navigator : MonoBehaviour
                     volume.ToneUp();
                     break;
                 case "Return":
-                    blackboard.transform.Find("OptionMenu").gameObject.SetActive(false);
-                    blackboard.transform.Find("MainMenu").gameObject.SetActive(true);
+                    Return();
                     break;
                 case "Left":
                     if (hand != null) { hand.setHand("LeftHand"); }
@@ -75,9 +81,29 @@ public class Navigator : MonoBehaviour
                     FadeIn();
                     Invoke("FadeOut", 5.0f);
                     break;
+                case "Back":
+                    Back();
+                    break;
+                case "Continue":
+                    Continue();
+                    break;
                 case "TryAgain":
+                    LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+                    setting.resetTemp();
                     FadeIn();
                     Invoke("FadeOut", 5.0f);
+                    break;
+                case "ShowReport":
+                    ShowReport();
+                    break;
+                case "DecideBack":
+                    DecideBack();
+                    break;
+                case "PrevReport":
+                    PrevReport();
+                    break;
+                case "NextReport":
+                    NextReport();
                     break;
                 default:
                     break;
@@ -153,10 +179,47 @@ public class Navigator : MonoBehaviour
         if (hand != null) { hand.setHand("RightHand"); }
         SceneManager.LoadScene(1);
     }
+    public void Back()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("HandSelect").gameObject.SetActive(false);
+        blackboard.transform.Find("MainMenu").gameObject.SetActive(true);
+    }
     public void TryAgain()
     {
-        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-        setting.resetTemp() ;
+        if (GameObject.Find("LevelSetting"))
+        {
+            LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+            setting.resetTemp();
+        }
         SceneManager.LoadScene(1);
+    }
+    public void Continue()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("ScoreMenu").gameObject.SetActive(false);
+        blackboard.transform.Find("DecideMenu").gameObject.SetActive(true);
+    }
+    public void ShowReport()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("ScoreReport").gameObject.SetActive(true);
+        blackboard.transform.Find("ScoreMenu").gameObject.SetActive(false);
+        blackboard.transform.Find("Props").gameObject.SetActive(false);
+    }
+    public void DecideBack()
+    {
+        GameObject blackboard = GameObject.Find("BlackBoard");
+        blackboard.transform.Find("ScoreReport").gameObject.SetActive(false);
+        blackboard.transform.Find("ScoreMenu").gameObject.SetActive(true);
+        blackboard.transform.Find("Props").gameObject.SetActive(true);
+    }
+    public void PrevReport()
+    {
+        report.prevReport();
+    }
+    public void NextReport()
+    {
+        report.nextReport();
     }
 }

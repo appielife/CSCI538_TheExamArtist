@@ -14,7 +14,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject questionTextObj, choiceA, choiceB, choiceC, choiceD;
     public GetQuestion question = new GetQuestion();
     public string JSON_file;
-    private ScoreCalculate calculateScore;
+    //private ScoreCalculate calculateScore;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
@@ -32,13 +32,15 @@ public class TestPaperBehavior : MonoBehaviour
         testPage.SetActive(false);
         submitPage.SetActive(false);
 
-        string[] files = { "", "2", "-Chemistry", "-Math" };
-        int index = Random.Range(0, 3);
-        JSON_file = "questions" + files[index] + ".json";
+        string[] files = { "World", "Foreign", "Chemistry", "Math" };
+        int index = Random.Range(0, 4);
+        string filename = "questions-" + files[index] + ".json";
+        JSON_file = filename;
+        GameObject.Find("LevelSetting").GetComponent<LevelSetting>().setSubject(files[index]);
 
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         offset = setting.offset;
-        if(setting.question != null)
+        if (setting.washroomed)
         {
             question = setting.question;
             quesTrack = setting.quesTrack;
@@ -47,6 +49,7 @@ public class TestPaperBehavior : MonoBehaviour
         }
         else
         {
+            question.setNumQuestion(setting.numQuestion);
             question.readQuestionFromJson(JSON_file);
             //Debug.Log(question.ques);
             quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
@@ -94,7 +97,6 @@ public class TestPaperBehavior : MonoBehaviour
 
     public void next()
     {
-    
         reset();
 
         if (tempQuestion < question.getQuesCount() - 1)
@@ -216,6 +218,9 @@ public class TestPaperBehavior : MonoBehaviour
                 writer.WriteStartObject();
                 writer.WritePropertyName("id");
                 writer.WriteValue(question.getQuestionId(i));
+                // writing question_txt to the answers.json file
+                writer.WritePropertyName("question_txt");
+                writer.WriteValue(question.getQuestionTxt(i));
                 writer.WritePropertyName("YourAns");
                 //Debug.Log(i);
                 //Debug.Log(quesTrack.Length);
@@ -269,13 +274,13 @@ public class TestPaperBehavior : MonoBehaviour
     }
    
    // fucntion to calulate all the scores
-    public void showScore()
+    /*public void showScore()
     {
         scoreObject a = calculateScore.getScore();
         Debug.Log(a.unans_count);
         Debug.Log(a.correct_ans);
         Debug.Log(a.total_count);       
-    }
+    }*/
 
     private void FadeIn()
     {

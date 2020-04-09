@@ -68,6 +68,35 @@ public class GiftBlindEyesBehavior : MonoBehaviour
         return exist == true;
     }
 
+    public bool isCoolDown()
+    {
+        return used == true || exist == true;
+    }
+
+    public void ReduceCoolDownCounter(float n)
+    {
+        if (exist)
+        {
+            if (n > existTimeCounter)
+            {
+                n -= existTimeCounter;
+                existTimeCounter = existTime;
+                exist = false;
+            }
+            else
+            {
+                existTimeCounter -= n;
+                n = 0;
+            }
+        }
+        if (n > 0)
+        {
+            imgExist.fillAmount = 0.0f;
+            used = true;
+            coolDownCounter -= n;
+        }
+    }
+
     public void GiftBlindEyes()
     {
         if (exist == false && used == false)

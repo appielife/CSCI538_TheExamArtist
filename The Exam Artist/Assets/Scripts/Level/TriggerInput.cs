@@ -23,7 +23,7 @@ public class TriggerInput : MonoBehaviour
     public TestPaperBehavior test;
 
     private bool show = false;
-    private float offset;
+    public float offset;
 
     void OnDestroy()
     {

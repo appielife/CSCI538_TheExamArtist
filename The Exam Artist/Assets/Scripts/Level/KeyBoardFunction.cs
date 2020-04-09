@@ -6,6 +6,7 @@ public class KeyBoardFunction : MonoBehaviour
 {
     private HideAndShowSkills hns;
     private float offset;
+    private Transform originalPlace;
 
     private void Start()
     {
@@ -20,11 +21,11 @@ public class KeyBoardFunction : MonoBehaviour
         }
         else
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 hns.Show();
             }
-            else
+            else if(Input.GetKeyUp(KeyCode.Space))
             {
                 hns.Hide();
             }
