@@ -6,6 +6,7 @@ using System.Threading;
 public class student : MonoBehaviour { 
 
     public Animator ani;
+    private GameObject chair;
     private AudioSource[] source;
     private AudioSource[] teacher;
     public Random ran = new Random();
@@ -13,6 +14,8 @@ public class student : MonoBehaviour {
     //private bool notMoved = true;
     private float timeLeft = 15.0f;
     private int animationIndex = 2;
+    private bool writing = false;
+    private Vector3 original, chairOriginal;
 
     public void setAnimation(int i)
     {
@@ -21,6 +24,7 @@ public class student : MonoBehaviour {
 
     void Start()
     {
+        ani = gameObject.GetComponent<Animator>();
         source = GameObject.FindGameObjectWithTag ("student").GetComponents<AudioSource> ();
         teacher = GameObject.FindGameObjectWithTag ("teacher").GetComponents<AudioSource> ();
 
@@ -31,6 +35,9 @@ public class student : MonoBehaviour {
         {
             timeLeft = -1.0f;
         }
+        original = gameObject.transform.localPosition;
+        chair = gameObject.transform.parent.transform.Find("prop_sch_tablechair").transform.Find("prop_sch_chair").gameObject;
+        chairOriginal = chair.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -41,7 +48,13 @@ public class student : MonoBehaviour {
         {
             timeLeft -= Time.deltaTime;
         }
-        else{
+        else
+        {
+            if (!writing)
+            {
+                setPosition(new Vector3(0.5f, -0.05f, 0.0f));
+                writing = true;
+            }
             ani.SetInteger("animation_int", animationIndex);
         }
     // if (Input.GetKeyDown(KeyCode.Alpha0)){
@@ -76,5 +89,22 @@ public class student : MonoBehaviour {
     //     }
     
  
+    }
+
+    public void setPosition(Vector3 position)
+    {
+        gameObject.transform.localPosition += position;
+    }
+
+    public void setChairPosition(Vector3 position)
+    {
+        chair.transform.localPosition += position;
+    }
+
+    public void resetPosition()
+    {
+        gameObject.transform.localPosition = original;
+        chair.transform.localPosition = chairOriginal;
+        writing = false;
     }
 }

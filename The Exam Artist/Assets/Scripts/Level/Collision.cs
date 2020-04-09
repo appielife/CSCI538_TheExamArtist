@@ -10,9 +10,8 @@ public class Collision : MonoBehaviour
     private Vector3 position;
     private Animator ani;
     private student target;
-    private studentF targetF;
     private float timeLeft = 10.0f;
-    private bool hit = false;
+    private bool hit = false, moved = false;
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
@@ -26,20 +25,21 @@ public class Collision : MonoBehaviour
         }
     }
 
+    public bool isTrigger()
+    {
+        return hit;
+    }
+
     private void Start()
     {
         ani = gameObject.transform.Find("student").GetComponent<Animator>();
         target = gameObject.transform.Find("student").GetComponent<student>();
-        if(target == null)
-        {
-            targetF = gameObject.transform.Find("student").GetComponent<studentF>();
-        }
         control = GameObject.FindGameObjectWithTag("TeacherAction").GetComponent<TeacherController>();
     }
 
     private void Update()
     {
-        if(time > 0)
+        if (time > 0)
         {
             time -= Time.deltaTime;
         }
@@ -49,14 +49,14 @@ public class Collision : MonoBehaviour
         }
         if (hit)
         {
-            if (target)
+            if (!moved)
             {
-                target.setAnimation(11);
+                target.resetPosition();
+                target.setPosition(new Vector3(-0.3f, 0.45f, 0.0f));
+                target.setChairPosition(new Vector3(0.0f, 0.0f, -0.115f));
+                moved = true;
             }
-            else
-            {
-                targetF.setAnimation(11);
-            }
+            target.setAnimation(11);
             if (timeLeft > 0)
             {
                 timeLeft -= Time.deltaTime;
@@ -64,14 +64,9 @@ public class Collision : MonoBehaviour
             else
             {
                 hit = false;
-                if (target)
-                {
-                    target.setAnimation(2);
-                }
-                else
-                {
-                    targetF.setAnimation(1);
-                }
+                moved = false;
+                target.resetPosition();
+                target.setAnimation(2);
             }
         }
     }

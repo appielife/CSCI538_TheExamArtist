@@ -60,7 +60,6 @@ public class MeditationBehavior : MonoBehaviour
                 used = true;
 
                 GameObject skills = GameObject.Find("SkillsScript");
-                Debug.Log(skills);
                 GodOfWashroomBehavior gow = skills.GetComponent<GodOfWashroomBehavior>();
                 MagicCheatSheetBehavior mcs = skills.GetComponent<MagicCheatSheetBehavior>();
                 GiftBlindEyesBehavior gbe = skills.GetComponent<GiftBlindEyesBehavior>();

@@ -15,7 +15,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
     
     private float coolDown = 5.0f, coolDownCounter = 5.0f;
     private float existTime = 5.0f, existTimeCounter = 5.0f;
-    private bool exist = false,  used = false;
+    private bool exist = false, used = false, increased = false;
     private Text tempHintShow;
     private Text cheatText;
     static string[] choices = { "A", "B", "C", "D" };
@@ -35,7 +35,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         GameObject cheatsheet = GameObject.Find("CheatSheet");
         cheatText = cheatsheet.transform.Find("Hint").GetComponentInChildren<Text>();
     }
-    void Awake()
+    void Start()
     {
         loadResources();
 
@@ -50,19 +50,8 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             hintArray = (JArray)((JObject)JToken.ReadFrom(reader))["questions"];
             //Debug.Log(hintArray);
         }
-
-        JArray temp = new JArray();
-        int j = 0;
-        for (int i = 0; i < 31; i++)
-        {
-            temp.Add(hintArray[j]);
-            temp[i]["id"] = i.ToString();
-            if(j == 4) { j = 0; }
-            else { j++; }
-        }
-        hintArray = temp;
-        //Debug.Log(hintArray);
     }
+
     void Update()
     {
         if (existTimeCounter > 0 && exist == true && used == false)
@@ -96,8 +85,14 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             used = false;
         }
     }
+
     public void MagicCheatSheet()
     {
+        if (!increased)
+        {
+            IncreaseHint();
+            increased = true;
+        }
         if (exist == false && used == false)
         {
             int temp_ques_id = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesId();
@@ -122,12 +117,17 @@ public class MagicCheatSheetBehavior : MonoBehaviour
                     tempHintShow = hintObj.GetComponentsInChildren<Text>()[3];
                     break;
                 case "Look at the back of the teacher":
-                    GameObject.FindGameObjectsWithTag("Hint")[0].GetComponentInChildren<Text>().text = choices[tempAnsIdx];
-                    tempHintShow = GameObject.FindGameObjectsWithTag("Hint")[0].GetComponentInChildren<Text>();
+                    GameObject.FindGameObjectWithTag("TeacherHint").GetComponentInChildren<Text>().text = choices[tempAnsIdx];
+                    tempHintShow = GameObject.FindGameObjectWithTag("TeacherHint").GetComponentInChildren<Text>();
                     break;
                 case "Look in your desk drawer":
                     hintObj.GetComponentsInChildren<Text>()[4].text = choices[tempAnsIdx];
                     tempHintShow = hintObj.GetComponentsInChildren<Text>()[4];
+                    break;
+                case "Look outside!":
+                    GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().enabled = true;
+                    GameObject.FindGameObjectWithTag("ClipboardHint").GetComponentInChildren<Text>().text = choices[tempAnsIdx];
+                    tempHintShow = GameObject.FindGameObjectWithTag("ClipboardHint").GetComponentInChildren<Text>();
                     break;
                 default:
                     break;
@@ -159,5 +159,21 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         existTimeCounter = existTime;
         exist = false;
         used = false;
+    }
+
+    public void IncreaseHint()
+    {
+        int maxNum = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>().question.getNumFileQuestion();
+        Debug.Log(maxNum);
+        JArray temp = new JArray();
+        int j = 0;
+        for (int i = 0; i < maxNum; i++)
+        {
+            temp.Add(hintArray[j]);
+            temp[i]["id"] = i.ToString();
+            if (j == hintArray.Count - 1) { j = 0; }
+            else { j++; }
+        }
+        hintArray = temp;
     }
 }

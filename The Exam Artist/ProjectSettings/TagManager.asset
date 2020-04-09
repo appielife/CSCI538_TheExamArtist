@@ -20,6 +20,10 @@ TagManager:
   - StudentPosition
   - StudentCharacter
   - Subject
+  - ProjectileTestPosition
+  - Chair
+  - TeacherHint
+  - ClipboardHint
   layers:
   - Default
   - TransparentFX
