@@ -7,7 +7,7 @@ public class LevelSetting : MonoBehaviour
 {
     public bool start = false;
     public float offset;
-    public float timeLeft;
+    public float timeLeft = -1.0f, initialTime = 300.0f;
     public string[] answer;
     public bool washroomed = false;
     public GetQuestion question;
@@ -15,6 +15,7 @@ public class LevelSetting : MonoBehaviour
     public int[] scoreTrack;
     public Settings setting;
     public string subject;
+    public int numQuestion = 5;
 
     private void Start()
     {

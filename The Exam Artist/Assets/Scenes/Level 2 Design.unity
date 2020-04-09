@@ -27527,7 +27527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -33987,8 +33987,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: 0
-  offset: 0
-  timeLeft: 0
+  offset: 12
+  timeLeft: -1
+  initialTime: 300
   answer: []
   washroomed: 0
   question:
@@ -33997,6 +33998,7 @@ MonoBehaviour:
   scoreTrack: 
   setting: {fileID: 0}
   subject: 
+  numQuestion: 5
 --- !u!4 &1426615128
 Transform:
   m_ObjectHideFlags: 0
@@ -46383,7 +46385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5566038, g: 0.43279457, b: 0.28617838, a: 1}
+  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

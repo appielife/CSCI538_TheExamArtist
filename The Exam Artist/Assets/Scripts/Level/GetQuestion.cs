@@ -12,7 +12,7 @@ public class GetQuestion
 
     private string jsonString;
     private JObject ques_obj;
-    private int numQuestions = 5;
+    private int numQuestion = 5;
 
     static System.Random _random = new System.Random();
 
@@ -79,6 +79,12 @@ public class GetQuestion
         return (string)ques[idx]["id"];
     }
 
+    //to get question text using the idx
+    public string getQuestionTxt(int idx)
+    {
+        return (string)ques[idx]["question_txt"];
+    }
+
     public int getQuestionCorrectAns(int idx)
     {
         JArray options = (JArray)ques[idx]["options"];
@@ -105,7 +111,7 @@ public class GetQuestion
             ques[i]["options"] = t;
         }
         JArray temp = new JArray();
-        for (int i = 0; i < numQuestions; i++)
+        for (int i = 0; i < numQuestion; i++)
         {
             temp.Add(ques[i]);
         }
@@ -131,6 +137,11 @@ public class GetQuestion
             array[r] = array[i];
             array[i] = t;
         }
+    }
+
+    public void setNumQuestion(int numQuestion)
+    {
+        this.numQuestion = numQuestion;
     }
 
 

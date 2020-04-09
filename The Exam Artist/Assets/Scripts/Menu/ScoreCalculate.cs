@@ -19,15 +19,22 @@ public class scoreObject
 public class ScoreCalculate : MonoBehaviour
 {
     public Text score;
+    public Text report;
     private JObject ans_obj;
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();
-
+    private List<string> reporttext = new List<string>();
+    private int index = 0;
 
     private void Start()
     {
         scoreObj = getScore();
         score.text = scoreObj.correct_ans.ToString() + " / " + scoreObj.total_count.ToString();
+        getReport();
+        report.text = reporttext[index];
+        GameObject scorereport = GameObject.Find("BlackBoard").transform.Find("ScoreReport").gameObject;
+        scorereport.transform.Find("PrevReport").GetComponentInChildren<Text>().text = '\u25B2'.ToString();
+        scorereport.transform.Find("NextReport").GetComponentInChildren<Text>().text = '\u25BC'.ToString();
     }
 
 
@@ -39,7 +46,38 @@ public class ScoreCalculate : MonoBehaviour
         scoreObj.unans_count = getUnansweredCount();
         //Debug.Log(scoreObj.correct_ans);
         return scoreObj;
+    }
 
+    // to get report 
+    public void getReport()
+    {
+        for (int i = 0; i < ans_arr.Count; i++)
+        {
+            reporttext.Add("Question " + (i + 1).ToString() + " : " + ans_arr[i]["question_txt"].ToString() + "\n Correct Answer: " + ans_arr[i]["MyAns"].ToString() + "\n Your Answer: " + ans_arr[i]["YourAns"].ToString()); 
+        }
+    }
+
+    public void nextReport()
+    {
+        if (index + 1 < reporttext.Count)
+        {
+            index++;
+        }
+        else
+        {
+            index = 0;
+        }
+        report.text = reporttext[index];
+    }
+    public void prevReport()
+    {
+        if (index - 1 > 0) {
+            index--;
+        }
+        else {
+            index = reporttext.Count - 1;
+        }
+        report.text = reporttext[index];
     }
 
     public JArray readAnswersFromJson()

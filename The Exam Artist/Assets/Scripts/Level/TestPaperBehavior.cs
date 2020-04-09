@@ -49,6 +49,7 @@ public class TestPaperBehavior : MonoBehaviour
         }
         else
         {
+            question.setNumQuestion(setting.numQuestion);
             question.readQuestionFromJson(JSON_file);
             //Debug.Log(question.ques);
             quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
@@ -96,7 +97,6 @@ public class TestPaperBehavior : MonoBehaviour
 
     public void next()
     {
-    
         reset();
 
         if (tempQuestion < question.getQuesCount() - 1)
@@ -218,6 +218,9 @@ public class TestPaperBehavior : MonoBehaviour
                 writer.WriteStartObject();
                 writer.WritePropertyName("id");
                 writer.WriteValue(question.getQuestionId(i));
+                // writing question_txt to the answers.json file
+                writer.WritePropertyName("question_txt");
+                writer.WriteValue(question.getQuestionTxt(i));
                 writer.WritePropertyName("YourAns");
                 //Debug.Log(i);
                 //Debug.Log(quesTrack.Length);

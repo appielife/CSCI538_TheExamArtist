@@ -17,11 +17,15 @@ public class Timer : MonoBehaviour
     {
         GameObject player = GameObject.Find("TestAndScore");
         test = player.transform.Find("SelectHandler").gameObject.GetComponent<TestPaperBehavior>();
-
-        offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
-        if (GameObject.Find("LevelSetting").GetComponent<LevelSetting>().timeLeft > 0)
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        offset = setting.offset;
+        if (setting.timeLeft > 0)
         {
-            timeLeft = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().timeLeft;
+            timeLeft = setting.timeLeft;
+        }
+        else
+        {
+            timeLeft = setting.initialTime;
         }
         timeLeft += 1;
     }
