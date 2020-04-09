@@ -111,6 +111,15 @@ public class GetQuestion
             ques[i]["options"] = t;
         }
         JArray temp = new JArray();
+        if(numQuestion > ques.Count)
+        {
+            numQuestion = ques.Count;
+        }
+        else if(numQuestion < 0)
+        {
+            numQuestion = 1;
+        }
+
         for (int i = 0; i < numQuestion; i++)
         {
             temp.Add(ques[i]);
