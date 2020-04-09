@@ -35146,7 +35146,7 @@ MonoBehaviour:
   scoreTrack: 
   setting: {fileID: 0}
   subject: 
-  numQuestion: 15
+  numQuestion: 5
 --- !u!4 &1426615128
 Transform:
   m_ObjectHideFlags: 0
