@@ -22,14 +22,4 @@ public class CheatSheet : MonoBehaviour
     {
         gameObject.transform.position = originalPlace;
     }
-
-    /*private void OnMouseEnter()
-    {
-        MoveOut();
-    }
-
-    private void OnMouseExit()
-    {
-        MoveIn();
-    }*/
 }
