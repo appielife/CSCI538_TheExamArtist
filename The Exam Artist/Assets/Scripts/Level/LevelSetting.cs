@@ -2,20 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
+
+public class ReadOnlyAttribute : PropertyAttribute { }
+
+[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+public class ReadOnlyDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property,
+                                            GUIContent label)
+    {
+        return EditorGUI.GetPropertyHeight(property, label, true);
+    }
+
+    public override void OnGUI(Rect position,
+                               SerializedProperty property,
+                               GUIContent label)
+    {
+        GUI.enabled = false;
+        EditorGUI.PropertyField(position, property, label, true);
+        GUI.enabled = true;
+    }
+}
 
 public class LevelSetting : MonoBehaviour
 {
-    public bool start = false;
-    public float offset;
-    public float timeLeft = -1.0f, initialTime = 300.0f;
-    public string[] answer;
-    public bool washroomed = false;
-    public GetQuestion question;
-    public MultipleChoiceBehavior[] quesTrack;
-    public int[] scoreTrack;
-    public Settings setting;
-    public string subject;
+    [ReadOnly] public bool start = false;
+    public float offset, initialTime = 300.0f;
+    [ReadOnly] public float timeLeft = -1.0f;
+    [ReadOnly] public string[] answer;
+    [ReadOnly] public bool washroomed = false;
+    [ReadOnly] public GetQuestion question;
+    [ReadOnly] public MultipleChoiceBehavior[] quesTrack;
+    [ReadOnly] public int[] scoreTrack;
+    [ReadOnly] public Settings setting;
+    [ReadOnly] public string subject;
     public int numQuestion = 5;
+    public bool randomseats = false;
 
     private void Start()
     {
@@ -66,6 +89,7 @@ public class LevelSetting : MonoBehaviour
     public void resetTemp()
     {
         Debug.Log("reset");
+        start = false;
         question = null;
         quesTrack = null;
         scoreTrack = null;
