@@ -10,10 +10,9 @@ public class TestPaperAuto : MonoBehaviour
 {
     public GameObject testPaper;
     public GameObject questionTextObj;
-    public GameObject choiceA;
-    public GameObject choiceB;
-    public GameObject choiceC;
-    public GameObject choiceD;
+    public GameObject Choices3D;
+    public GameObject choiceA, choiceB, choiceC, choiceD;
+    private MeshRenderer[] choiceMesh;
     private GetQuestion question;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
@@ -34,11 +33,13 @@ public class TestPaperAuto : MonoBehaviour
 
         testPage.SetActive(false);
         initialPage.SetActive(true);
+        Choices3D.SetActive(false);
 
         offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
 
         mainSelectHandler = GameObject.FindGameObjectWithTag("MainSelectHandler");
         timeChange = frequency;
+        choiceMesh = Choices3D.GetComponentsInChildren<MeshRenderer>();
     }
 
     void Update()
@@ -53,6 +54,7 @@ public class TestPaperAuto : MonoBehaviour
             {
                 initialPage.SetActive(false);
                 testPage.SetActive(true);
+                //Choices3D.SetActive(true);
                 if (question == null)
                 {
                     question = mainSelectHandler.GetComponent<TestPaperBehavior>().question.copy();
@@ -99,43 +101,28 @@ public class TestPaperAuto : MonoBehaviour
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
         int correctAns = quesTrack[tempQuestion].correctAns;
         quesTrack[tempQuestion].select(choices[correctAns], correctAns);
+        Color higlight = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        choiceMesh[correctAns].material.color = higlight;
     }
 
     public void reset()
     {
+        Color white = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         Button A = choiceA.GetComponentInChildren<Button>();
         Button B = choiceB.GetComponentInChildren<Button>();
         Button C = choiceC.GetComponentInChildren<Button>();
         Button D = choiceD.GetComponentInChildren<Button>();
         ColorBlock cb = A.colors;
-        cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        cb.normalColor = white;
         A.colors = cb;
         B.colors = cb;
         C.colors = cb;
         D.colors = cb;
-    }
+        for(int i = 0; i < choiceMesh.Length; i++)
+        {
+            choiceMesh[i].material.color = white;
+        }
 
-
-
-    public void selectA()
-    {
-        reset();
-        quesTrack[tempQuestion].select(choiceA, 0);
-    }
-    public void selectB()
-    {
-        reset();
-        quesTrack[tempQuestion].select(choiceB, 1);
-    }
-    public void selectC()
-    {
-        reset();
-        quesTrack[tempQuestion].select(choiceC, 2);
-    }
-    public void selectD()
-    {
-        reset();
-        quesTrack[tempQuestion].select(choiceD, 3);
     }
 }
 

@@ -559,17 +559,17 @@ AnimatorStateMachine:
     m_Position: {x: 270, y: 20, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
+  - {fileID: 1101882823811484514}
   - {fileID: 1101733172595776832}
   - {fileID: 1101499185966388122}
-  - {fileID: 1101882823811484514}
+  - {fileID: 1101081558171068900}
   - {fileID: 1101058280712717146}
   - {fileID: 1101936406621643016}
   - {fileID: 8225042515029409129}
-  - {fileID: 1101081558171068900}
   - {fileID: -4472168290995046043}
+  - {fileID: -5165771572308100050}
   - {fileID: -4950801260764712584}
   - {fileID: -2482567853660250197}
-  - {fileID: -5165771572308100050}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []

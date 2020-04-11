@@ -87,6 +87,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
                 setting.timeLeft = timer.GetComponent<Timer>().timeLeft;
                 setting.setWashroom();
                 setting.setQuestion();
+                setting.setHint();
                 SceneManager.LoadScene(3);
             }
         }

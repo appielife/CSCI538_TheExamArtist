@@ -10,16 +10,20 @@ public class RandomSeat : MonoBehaviour
 
     void Start()
     {
-        getPosition();
-        for (int i = 0; i < 12; i++)
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        if (setting.randomseats)
         {
-            positions.Add(GameObject.Find(names[i]).transform.position);
-            //Debug.Log(positions[i]);
-        }
-        randomize();
-        for (int i = 0; i < 12; i++)
-        {
-            GameObject.Find(names[i]).transform.position = positions[i];
+            getPosition();
+            for (int i = 0; i < 12; i++)
+            {
+                positions.Add(GameObject.Find(names[i]).transform.position);
+                Debug.Log(positions[i]);
+            }
+            randomize();
+            for (int i = 0; i < 12; i++)
+            {
+                GameObject.Find(names[i]).transform.position = positions[i];
+            }
         }
     }
 
@@ -38,7 +42,7 @@ public class RandomSeat : MonoBehaviour
     void getPosition()
     {
         string current = "";
-        for(int i = 0; i < 12; i++)
+        for (int i = 0; i < 12; i++)
         {
             if (i < 5)
             {

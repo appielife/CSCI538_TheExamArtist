@@ -12,7 +12,7 @@ public class GetQuestion
 
     private string jsonString;
     private JObject ques_obj;
-    private int numQuestion = 5;
+    private int numQuestion = 5, numFileQuestion;
 
     static System.Random _random = new System.Random();
 
@@ -103,6 +103,7 @@ public class GetQuestion
     public void getQuestionsArray()
     {
         ques = (JArray)ques_obj["questions"];
+        numFileQuestion = ques.Count;
         Shuffle(ques);
         for (int i = 0; i < ques.Count; i++)
         {
@@ -151,6 +152,11 @@ public class GetQuestion
     public void setNumQuestion(int numQuestion)
     {
         this.numQuestion = numQuestion;
+    }
+
+    public int getNumFileQuestion()
+    {
+        return numFileQuestion;
     }
 
 

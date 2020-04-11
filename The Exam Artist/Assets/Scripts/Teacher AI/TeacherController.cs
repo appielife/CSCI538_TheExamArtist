@@ -21,7 +21,7 @@ public class TeacherController : MonoBehaviour
 
     private int behaviour = 1; // moving
     private bool inEyesight = false, gameover = false, play = false;
-    private float angle;
+    private float angle, minDistance = 0.2f;
     //private float minDistance = 10000f, minAngle = 120f
     private GameObject target;
     private AudioSource[] studentsound, teachersound;
@@ -43,7 +43,6 @@ public class TeacherController : MonoBehaviour
         target.transform.position = GetRandomPosition();
         
         setBribeTarget();
-
     }
 
     void Update()
@@ -104,13 +103,13 @@ public class TeacherController : MonoBehaviour
             teachersound[1].UnPause();
         }
         Transform destination = target.transform;
-        teacher.SetDestination(destination.position);
-        //Debug.Log(destination.position);
+        //teacher.SetDestination(destination.position);
+        //Debug.Log(teacher.transform.position + "," + destination.position + "," + teacher.destination);
         ani.SetInteger("animation_int", 1);
         if (gameover)
         {
             teacher.SetDestination(gameoverTarget.transform.position);
-            if (Vector3.Distance(teacher.transform.position, teacher.destination) < 0.1f)
+            if (Vector3.Distance(teacher.transform.position, teacher.destination) < minDistance)
             {
                 int index = Random.Range(5, 7);
                 ani.SetInteger("animation_int", index);
@@ -130,17 +129,21 @@ public class TeacherController : MonoBehaviour
             {
                 if (clapBombTrigger.targetStudentPos != null)
                 {
+                    Debug.Log("CLAP");
                     teacher.SetDestination(clapBombTrigger.targetStudentPos.transform.position);
                     behaviour = 6;
                 }
                 else if (giftSkillTrigger.isTrigger() == true)
                 {
+                    Debug.Log("GIFT");
                     teacher.SetDestination(giftTarget.transform.position);
                     behaviour = 5;
                 }
                 else
                 {
+                    //teacher.destination = destination.position;
                     teacher.SetDestination(destination.position);
+                    //Debug.Log("Set:" + destination.position + " into " + teacher.destination);
                     if (!teacher.hasPath)
                     {
                         target.transform.position = GetRandomPosition();
@@ -151,7 +154,8 @@ public class TeacherController : MonoBehaviour
 
             if (!gameover)
             {
-                if (Vector3.Distance(teacher.transform.position, destination.position) < 0.1f)
+                //Debug.Log(Vector3.Distance(teacher.transform.position, destination.position));
+                if (Vector3.Distance(teacher.transform.position, destination.position) < minDistance)
                 {
                     //Debug.Log(teacher.transform.position);
                     teacher.ResetPath();
@@ -203,14 +207,14 @@ public class TeacherController : MonoBehaviour
             }
         }
     }
-    
+
     void bribeBehavior()
     {
         if (giftSkillTrigger.isTrigger() == false)
         {
             behaviour = 1;
         }
-        if (Vector3.Distance(teacher.transform.position, teacher.destination) < 0.1f)
+        if (Vector3.Distance(teacher.transform.position, teacher.destination) < minDistance)
         {
             teachersound[1].Pause();
             teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
@@ -240,7 +244,7 @@ public class TeacherController : MonoBehaviour
 
     void checkStudentBehavior()
     {
-        if (Vector3.Distance(teacher.transform.position, teacher.destination) < 0.1f)
+        if (Vector3.Distance(teacher.transform.position, teacher.destination) < minDistance)
         {
             teachersound[1].Pause();
             teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
@@ -266,7 +270,6 @@ public class TeacherController : MonoBehaviour
         int t = Random.Range(0, navMeshData.indices.Length - 3);
         Vector3 point = Vector3.Lerp(navMeshData.vertices[navMeshData.indices[t]], navMeshData.vertices[navMeshData.indices[t + 1]], Random.value);
         point = Vector3.Lerp(point, navMeshData.vertices[navMeshData.indices[t + 2]], Random.value);
-        //point = new Vector3(-4.2f, -0.8f, -0.7f);
         //Debug.Log("generate: " + point);
         return point;
     }

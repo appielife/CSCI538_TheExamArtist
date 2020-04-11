@@ -9,16 +9,19 @@ using Newtonsoft.Json.Linq;
 public class MagicCheatSheetBehavior : MonoBehaviour
 {
     private JArray hintArray;
-    public GameObject testPaper, hintObj;
+    public GameObject testPaper;
     public Image imgCoolDown, imgExist;
     public Text textCoolDown;
     
     private float coolDown = 5.0f, coolDownCounter = 5.0f;
     private float existTime = 5.0f, existTimeCounter = 5.0f;
-    private bool exist = false,  used = false;
-    private Text tempHintShow;
+    private bool exist = false, used = false; //increased = false;
+    private Text currentHintShown;
     private Text cheatText;
     static string[] choices = { "A", "B", "C", "D" };
+    private Text tableHint;
+    private HintsHandle hintHandle;
+    private List<JToken> hintJToken = new List<JToken>();
 
     private void loadResources()
     {
@@ -34,35 +37,34 @@ public class MagicCheatSheetBehavior : MonoBehaviour
 
         GameObject cheatsheet = GameObject.Find("CheatSheet");
         cheatText = cheatsheet.transform.Find("Hint").GetComponentInChildren<Text>();
+
+        tableHint = GameObject.Find("TableHint").GetComponentInChildren<Text>();
+        hintHandle = GameObject.Find("HintHandle").GetComponent<HintsHandle>();
     }
-    void Awake()
+
+    void Start()
     {
         loadResources();
 
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
-        hintObj.GetComponentInChildren<Text>().text = "";
         cheatText.text = "";
+
+        GameObject[] hints = GameObject.FindGameObjectsWithTag("Hint");
+        for(int i = 0; i < hints.Length; i++)
+        {
+            hints[i].GetComponentInChildren<Text>().text = "";
+        }
+
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/hints.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
             hintArray = (JArray)((JObject)JToken.ReadFrom(reader))["questions"];
-            //Debug.Log(hintArray);
         }
-
-        JArray temp = new JArray();
-        int j = 0;
-        for (int i = 0; i < 31; i++)
-        {
-            temp.Add(hintArray[j]);
-            temp[i]["id"] = i.ToString();
-            if(j == 4) { j = 0; }
-            else { j++; }
-        }
-        hintArray = temp;
-        //Debug.Log(hintArray);
+        RandomHint();
     }
+
     void Update()
     {
         if (existTimeCounter > 0 && exist == true && used == false)
@@ -76,9 +78,9 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             existTimeCounter = existTime;
             exist = false;
             imgExist.fillAmount = 0.0f;
-            hintObj.GetComponentsInChildren<Text>()[0].text = "";
+            tableHint.text = "";
             cheatText.text = "";
-            tempHintShow.text = "";
+            currentHintShown.text = "";
             used = true; 
         }
         else if (coolDownCounter > 0 && used == true)
@@ -86,7 +88,6 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             coolDownCounter -= Time.deltaTime;
             imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
             textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-            //Debug.Log(coolDownCounter[0]);
         }
         else if (coolDownCounter <= 0 && used == true)
         {
@@ -96,41 +97,36 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             used = false;
         }
     }
+
     public void MagicCheatSheet()
     {
+        /*if (!increased)
+        {
+            IncreaseHint();
+            increased = true;
+        }*/
         if (exist == false && used == false)
         {
             int temp_ques_id = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesId();
             //Debug.Log(temp_ques_id);
             //Debug.Log((JObject)hintArray[temp_ques_id]);
-            string hintStr = (string)((JArray)((JObject)hintArray[temp_ques_id])["hints"])[0];
-            hintObj.GetComponentsInChildren<Text>()[0].text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " + hintStr;
-            cheatText.text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " +  hintStr;
+            //string hintStr = (string)((JObject)hintArray[temp_ques_id])["hints"];
+            int index = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum();
+            string hintStr = (string) hintJToken[index]["hints"];
+            tableHint.text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " + hintStr;
+            cheatText.text = hintStr;
+
             exist = true;
             int tempAnsIdx = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-            switch (hintStr){
-                case "Look at the ceiling":
-                    hintObj.GetComponentsInChildren<Text>()[1].text = choices[tempAnsIdx];
-                    tempHintShow = hintObj.GetComponentsInChildren<Text>()[1];
-                    break;
-                case "Look at the wall to the right":
-                    hintObj.GetComponentsInChildren<Text>()[2].text = choices[tempAnsIdx];
-                    tempHintShow = hintObj.GetComponentsInChildren<Text>()[2];
-                    break;
-                case "Look at the lower right of the board":
-                    hintObj.GetComponentsInChildren<Text>()[3].text = choices[tempAnsIdx];
-                    tempHintShow = hintObj.GetComponentsInChildren<Text>()[3];
-                    break;
-                case "Look at the back of the teacher":
-                    GameObject.FindGameObjectsWithTag("Hint")[0].GetComponentInChildren<Text>().text = choices[tempAnsIdx];
-                    tempHintShow = GameObject.FindGameObjectsWithTag("Hint")[0].GetComponentInChildren<Text>();
-                    break;
-                case "Look in your desk drawer":
-                    hintObj.GetComponentsInChildren<Text>()[4].text = choices[tempAnsIdx];
-                    tempHintShow = hintObj.GetComponentsInChildren<Text>()[4];
-                    break;
-                default:
-                    break;
+            //int id = (int)((JObject)hintArray[temp_ques_id])["id"];
+            int id = (int) hintJToken[index]["id"];
+
+            hintHandle.Hints[id].text = choices[tempAnsIdx];
+            currentHintShown = hintHandle.Hints[id];
+            if (id == 8)
+            {
+                GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().startAnimation();
+                GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().enabled = true;
             }
         }
         else
@@ -149,15 +145,53 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
-        hintObj.GetComponentInChildren<Text>().text = "";
-        if (tempHintShow)
+        tableHint.text = "";
+        cheatText.text = "";
+        if (currentHintShown)
         {
-            tempHintShow.text = "";
+            currentHintShown.text = "";
         }
 
         coolDownCounter = coolDown;
         existTimeCounter = existTime;
         exist = false;
         used = false;
+    }
+
+    /*public void IncreaseHint()
+    {
+        int maxNum = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>().question.getNumFileQuestion();
+        JArray temp = new JArray();
+        int j = 0;
+        for (int i = 0; i < maxNum; i++)
+        {
+            temp.Add(hintArray[j]);
+            //temp[i]["id"] = i.ToString();
+            if (j == hintArray.Count - 1) { j = 0; }
+            else { j++; }
+        }
+        hintArray = temp;
+    }*/
+
+    public void RandomHint()
+    {
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        if (setting.hints.Count != 0)
+        {
+            hintJToken = setting.hints;
+        }
+        else{
+            int numQuestion = setting.numQuestion;
+            for (int i = 0; i < numQuestion; i++)
+            {
+                int id = Random.Range(0, hintArray.Count);
+                hintJToken.Add(hintArray[id]);
+            }
+        }
+    }
+
+    public List<JToken> setHints()
+    {
+        return hintJToken;
     }
 }

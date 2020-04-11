@@ -36,9 +36,9 @@ public class TestPaperBehavior : MonoBehaviour
         int index = Random.Range(0, 4);
         string filename = "questions-" + files[index] + ".json";
         JSON_file = filename;
-        GameObject.Find("LevelSetting").GetComponent<LevelSetting>().setSubject(files[index]);
-
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        setting.setSubject(files[index]);
+
         offset = setting.offset;
         if (setting.washroomed)
         {
