@@ -1,33 +1,33 @@
 {
   "Answers": [
     {
-      "id": "23",
-      "question_txt": "ヒロアカHero tooの作詞?",
-      "YourAns": "NA",
-      "MyAns": "D"
-    },
-    {
       "id": "2",
       "question_txt": "埋在地下一千年的酒，出来以后叫什么?",
-      "YourAns": "NA",
+      "YourAns": "B",
+      "MyAns": "B"
+    },
+    {
+      "id": "6",
+      "question_txt": "我爱?",
+      "YourAns": "B",
+      "MyAns": "B"
+    },
+    {
+      "id": "10",
+      "question_txt": "哪种水果视力最差?",
+      "YourAns": "A",
       "MyAns": "A"
     },
     {
-      "id": "7",
-      "question_txt": "一番面白いのは何ですか",
-      "YourAns": "NA",
+      "id": "14",
+      "question_txt": "從1到5哪個數字最勤勞",
+      "YourAns": "A",
       "MyAns": "A"
     },
     {
-      "id": "8",
-      "question_txt": "How many chickens would it take to be able to kill a lion?",
-      "YourAns": "NA",
-      "MyAns": "C"
-    },
-    {
-      "id": "28",
-      "question_txt": "What is the professor's name?",
-      "YourAns": "NA",
+      "id": "4",
+      "question_txt": "If animals could talk, which species would be the rudest of them all?",
+      "YourAns": "A",
       "MyAns": "A"
     }
   ]

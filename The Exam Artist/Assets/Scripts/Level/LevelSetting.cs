@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using Newtonsoft.Json.Linq;
 
 public class ReadOnlyAttribute : PropertyAttribute { }
 
@@ -39,6 +40,7 @@ public class LevelSetting : MonoBehaviour
     [ReadOnly] public string subject;
     public int numQuestion = 5;
     public bool randomseats = false;
+    public List<JToken> hints = new List<JToken>();
 
     private void Start()
     {
@@ -84,6 +86,12 @@ public class LevelSetting : MonoBehaviour
         question = test.setQuestion();
         quesTrack = test.setQuesTrack();
         scoreTrack = test.setScoreTrack();
+    }
+
+    public void setHint()
+    {
+        MagicCheatSheetBehavior test = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>();
+        hints = test.setHints();
     }
 
     public void resetTemp()
