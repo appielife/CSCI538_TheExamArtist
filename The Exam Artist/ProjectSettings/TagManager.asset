@@ -24,6 +24,7 @@ TagManager:
   - Chair
   - TeacherHint
   - ClipboardHint
+  - Projectile
   layers:
   - Default
   - TransparentFX

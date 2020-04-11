@@ -3,7 +3,7 @@
     {
       "id": 0,
       "hints": "Check the wall to the right close to the first row",
-      "name":  "RightWallHint1"
+      "name": "RightWallHint1"
     },
     {
       "id": 1,
@@ -44,6 +44,11 @@
       "id": 8,
       "hints": "Someone's outside!",
       "name": "ClipboardHint"
+    },
+    {
+      "id": 9,
+      "hints": "I'm on your bottle~",
+      "name": "BottleHint"
     }
   ]
 }

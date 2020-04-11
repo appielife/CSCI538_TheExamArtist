@@ -29,7 +29,13 @@ public class femaleoutside : MonoBehaviour
             v.z = 30;
             transform.localPosition = v;
             gameObject.GetComponent<femaleoutside>().enabled = false;
+            ani.SetInteger("animation_int", 0);
         }
+    }
+
+    public void startAnimation()
+    {
+        ani.SetInteger("animation_int", 1);
     }
 
 }

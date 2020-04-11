@@ -15,11 +15,10 @@ public class Collision : MonoBehaviour
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (collision.collider.name == "eraser")
+        if (collision.collider.tag == "Projectile")
         {
             position = gameObject.transform.Find("Position").transform.position;
             obj = collision.collider.gameObject;
-            //Debug.Log(position);
             control.setTarget(gameObject.transform.Find("Position").gameObject);
             hit = true;
         }

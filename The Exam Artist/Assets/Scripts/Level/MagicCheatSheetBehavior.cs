@@ -123,7 +123,11 @@ public class MagicCheatSheetBehavior : MonoBehaviour
 
             hintHandle.Hints[id].text = choices[tempAnsIdx];
             currentHintShown = hintHandle.Hints[id];
-            if (id == 8) { GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().enabled = true; }
+            if (id == 8)
+            {
+                GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().startAnimation();
+                GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().enabled = true;
+            }
         }
         else
         {
