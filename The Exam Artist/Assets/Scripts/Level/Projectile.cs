@@ -6,6 +6,7 @@ using Valve.VR.InteractionSystem;
 public class Projectile : MonoBehaviour
 {
     private LevelSetting setting;
+    private bool added = false;
     void Start()
     {
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
@@ -13,9 +14,10 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        if (!setting.onPrepare)
+        if (!setting.onPrepare && !added)
         {
             gameObject.AddComponent<Throwable>();
+            added = true;
         }
     }
 }
