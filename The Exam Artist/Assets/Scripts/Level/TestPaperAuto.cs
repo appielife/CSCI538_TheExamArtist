@@ -12,6 +12,8 @@ public class TestPaperAuto : MonoBehaviour
     public GameObject questionTextObj;
     public GameObject Choices3D;
     public GameObject choiceA, choiceB, choiceC, choiceD;
+
+    private TestPaperBehavior playerTest;
     private MeshRenderer[] choiceMesh;
     private GetQuestion question;
     private int tempQuestion = -1;
@@ -28,6 +30,7 @@ public class TestPaperAuto : MonoBehaviour
 
     void Start()
     {
+        playerTest = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
         testPage = testPaper.transform.Find("TestPage").gameObject;
         initialPage = testPaper.transform.Find("InitialPage").gameObject;
 
@@ -44,38 +47,41 @@ public class TestPaperAuto : MonoBehaviour
 
     void Update()
     {
-        if (offset > 0)
+        if (!playerTest.onPrepare)
         {
-            offset -= Time.deltaTime;
-        }
-        else
-        {
-            if (!start)
+            if (offset > 0)
             {
-                initialPage.SetActive(false);
-                testPage.SetActive(true);
-                //Choices3D.SetActive(true);
-                if (question == null)
-                {
-                    question = mainSelectHandler.GetComponent<TestPaperBehavior>().question.copy();
-                    quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
-                    next();
-                }
-                start = true;
-            }
-            if (slowDown == true)
-            {
-                timeChange -= Time.deltaTime / 2;
+                offset -= Time.deltaTime;
             }
             else
             {
-                timeChange -= Time.deltaTime;
-            }
+                if (!start)
+                {
+                    initialPage.SetActive(false);
+                    testPage.SetActive(true);
+                    //Choices3D.SetActive(true);
+                    if (question == null)
+                    {
+                        question = mainSelectHandler.GetComponent<TestPaperBehavior>().question.copy();
+                        quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
+                        next();
+                    }
+                    start = true;
+                }
+                if (slowDown == true)
+                {
+                    timeChange -= Time.deltaTime / 2;
+                }
+                else
+                {
+                    timeChange -= Time.deltaTime;
+                }
 
-            if (timeChange <= 0)
-            {
-                timeChange = frequency;
-                next();
+                if (timeChange <= 0)
+                {
+                    timeChange = frequency;
+                    next();
+                }
             }
         }
     }

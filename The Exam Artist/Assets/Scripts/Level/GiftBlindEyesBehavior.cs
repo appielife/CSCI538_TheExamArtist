@@ -14,6 +14,11 @@ public class GiftBlindEyesBehavior : MonoBehaviour
 {
     public Image imgCoolDown, imgExist;
     public Text textCoolDown;
+    public List<Sprite> bribeList = new List<Sprite>();
+    public string target;
+    public string tempChoice = "";
+    public Sprite[] buttons;
+    //private string backButton = "B";
 
     private float coolDown = 5.0f, coolDownCounter = 5.0f;
     private float existTime = 15.0f, existTimeCounter = 15.0f;
@@ -29,6 +34,9 @@ public class GiftBlindEyesBehavior : MonoBehaviour
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
+
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        bribeList = setting.bribeList; // Link Reference
     }
 
 
@@ -105,5 +113,11 @@ public class GiftBlindEyesBehavior : MonoBehaviour
             int n = songPlayer.Next(3);
             sound[0].PlayOneShot(giftAudioClip[n], 1.5f);
         }
+    }
+
+    public void ChooseBribee(GameObject t)
+    {
+        target = t.GetComponent<Image>().sprite.name;
+        GiftBlindEyes();
     }
 }

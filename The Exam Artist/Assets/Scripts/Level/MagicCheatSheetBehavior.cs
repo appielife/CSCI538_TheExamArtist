@@ -158,21 +158,6 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         used = false;
     }
 
-    /*public void IncreaseHint()
-    {
-        int maxNum = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>().question.getNumFileQuestion();
-        JArray temp = new JArray();
-        int j = 0;
-        for (int i = 0; i < maxNum; i++)
-        {
-            temp.Add(hintArray[j]);
-            //temp[i]["id"] = i.ToString();
-            if (j == hintArray.Count - 1) { j = 0; }
-            else { j++; }
-        }
-        hintArray = temp;
-    }*/
-
     public void RandomHint()
     {
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();

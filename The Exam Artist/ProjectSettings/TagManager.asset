@@ -25,6 +25,9 @@ TagManager:
   - TeacherHint
   - ClipboardHint
   - Projectile
+  - Student
+  - BribeOption
+  - MainPlayerPosition
   layers:
   - Default
   - TransparentFX

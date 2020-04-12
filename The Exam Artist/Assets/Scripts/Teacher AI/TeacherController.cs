@@ -36,58 +36,64 @@ public class TeacherController : MonoBehaviour
     {
         studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
         teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
+
+        test = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
+
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
         teacher.speed = speed;
         target = GameObject.Find("target1");
         target.transform.position = GetRandomPosition();
         
-        setBribeTarget();
+        //setBribeTarget();
     }
 
     void Update()
     {
-        if (timeLeft > 0)
+        if (!test.onPrepare)
         {
-            if (!play)
+            if (timeLeft > 0)
             {
-                ani.SetInteger("animation_int", 9);
-                teachersound[0].Play();
-                play = true;
+                if (!play)
+                {
+                    ani.SetInteger("animation_int", 9);
+                    teachersound[0].Play();
+                    play = true;
+                }
+                timeLeft -= Time.deltaTime;
             }
-            timeLeft -= Time.deltaTime;
-        }
-        else
-        {
-            switch (behaviour)
+            else
             {
-                case 0:
-                    behaviour = 1;   //switch behavior from initialization to move
-                    break;
-                case 1:
-                    Moving();  // move
-                    break;
-                case 2:
-                case 3:
-                    Pausing();
-                    break;
-                case 4:
-                    teacher.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                    behaviour = 2;
-                    teachersound[1].Pause();
-                    test.writeAnsToJson();
-                    break;
-                case 5:
-                    bribeBehavior();
-                    break;
-                case 6:
-                    checkStudentBehavior();
-                    break;
+                switch (behaviour)
+                {
+                    case 0:
+                        behaviour = 1;   //switch behavior from initialization to move
+                        break;
+                    case 1:
+                        Moving();  // move
+                        break;
+                    case 2:
+                    case 3:
+                        Pausing();
+                        break;
+                    case 4:
+                        teacher.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                        behaviour = 2;
+                        teachersound[1].Pause();
+                        test.writeAnsToJson();
+                        break;
+                    case 5:
+                        bribeBehavior();
+                        break;
+                    case 6:
+                        checkStudentBehavior();
+                        break;
 
-            }
-            if (!gameover)
-            {
-                eyesightCheck();
+                }
+                if (!gameover)
+                {
+                    eyesightCheck();
+                }
             }
         }
     }
@@ -129,13 +135,14 @@ public class TeacherController : MonoBehaviour
             {
                 if (clapBombTrigger.targetStudentPos != null)
                 {
-                    Debug.Log("CLAP");
+                    //Debug.Log("CLAP");
                     teacher.SetDestination(clapBombTrigger.targetStudentPos.transform.position);
                     behaviour = 6;
                 }
                 else if (giftSkillTrigger.isTrigger() == true)
                 {
-                    Debug.Log("GIFT");
+                    //Debug.Log("GIFT");
+                    setBribeTarget();
                     teacher.SetDestination(giftTarget.transform.position);
                     behaviour = 5;
                 }
@@ -259,8 +266,8 @@ public class TeacherController : MonoBehaviour
 
     void setBribeTarget()
     {
-        int index = Random.Range(1, 11);
-        giftTarget = GameObject.FindGameObjectsWithTag("StudentPosition")[index];
+        //giftTarget = GameObject.Find("Student" + giftSkillTrigger.target).transform.GetChild(0).gameObject;
+        giftTarget = GameObject.Find("Student" + giftSkillTrigger.target).transform.Find("Position").gameObject;
     }
 
     public Vector3 GetRandomPosition()

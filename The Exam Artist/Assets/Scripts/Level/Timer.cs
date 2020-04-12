@@ -11,14 +11,18 @@ public class Timer : MonoBehaviour
 
     private bool timesUp = false;
     private TestPaperBehavior test;
+    private LevelSetting setting;
+
     private float offset;
+    private bool onPrepare;
 
     void Start()
     {
         GameObject player = GameObject.Find("TestAndScore");
         test = player.transform.Find("SelectHandler").gameObject.GetComponent<TestPaperBehavior>();
-        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         offset = setting.offset;
+        onPrepare = setting.onPrepare;
         if (setting.timeLeft > 0)
         {
             timeLeft = setting.timeLeft;
@@ -31,26 +35,33 @@ public class Timer : MonoBehaviour
     }
     void Update()
     {
-        if (offset > 0)
+        if (!onPrepare)
         {
-            offset -= Time.deltaTime;
+            if (offset > 0)
+            {
+                offset -= Time.deltaTime;
+            }
+            else
+            {
+                if (timeLeft > 0)
+                {
+                    timeLeft -= Time.deltaTime;
+                    string minutes = ((int)timeLeft / 60).ToString();
+                    string seconds = ((int)timeLeft % 60).ToString();
+                    if ((int)timeLeft / 60 < 10) { minutes = "0" + minutes; }
+                    if ((int)timeLeft % 60 < 10) { seconds = "0" + seconds; }
+                    timerText.text = minutes + ":" + seconds;
+                }
+                else if (timeLeft < 0 && !timesUp)
+                {
+                    test.writeAnsToJson();
+                    timesUp = true;
+                }
+            }
         }
         else
         {
-            if (timeLeft > 0)
-            {
-                timeLeft -= Time.deltaTime;
-                string minutes = ((int)timeLeft / 60).ToString();
-                string seconds = ((int)timeLeft % 60).ToString();
-                if ((int)timeLeft / 60 < 10) { minutes = "0" + minutes; }
-                if ((int)timeLeft % 60 < 10) { seconds = "0" + seconds; }
-                timerText.text = minutes + ":" + seconds;
-            }
-            else if (timeLeft < 0 && !timesUp)
-            {
-                test.writeAnsToJson();
-                timesUp = true;
-            }
+            onPrepare = setting.onPrepare;
         }
     }
 }

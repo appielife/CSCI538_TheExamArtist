@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    private float time = 25.0f;
+    //private float time = 25.0f;
     private GameObject obj;
     private TeacherController control;
     private Vector3 position;
@@ -12,6 +12,8 @@ public class Collision : MonoBehaviour
     private student target;
     private float timeLeft = 10.0f;
     private bool hit = false, moved = false;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
@@ -34,18 +36,12 @@ public class Collision : MonoBehaviour
         ani = gameObject.transform.Find("student").GetComponent<Animator>();
         target = gameObject.transform.Find("student").GetComponent<student>();
         control = GameObject.FindGameObjectWithTag("TeacherAction").GetComponent<TeacherController>();
+        originalPosition = GameObject.FindGameObjectWithTag("Projectile").transform.position;
+        originalRotation = GameObject.FindGameObjectWithTag("Projectile").transform.rotation;
     }
 
     private void Update()
     {
-        if (time > 0)
-        {
-            time -= Time.deltaTime;
-        }
-        else
-        {
-            Destroy(obj);
-        }
         if (hit)
         {
             if (!moved)
@@ -62,6 +58,9 @@ public class Collision : MonoBehaviour
             }
             else
             {
+                obj.transform.position = originalPosition;
+                obj.transform.rotation = originalRotation;
+                timeLeft = 10.0f;
                 hit = false;
                 moved = false;
                 target.resetPosition();

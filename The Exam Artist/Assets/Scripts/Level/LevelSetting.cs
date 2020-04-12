@@ -38,9 +38,13 @@ public class LevelSetting : MonoBehaviour
     [ReadOnly] public int[] scoreTrack;
     [ReadOnly] public Settings setting;
     [ReadOnly] public string subject;
+    [ReadOnly] public List<Vector3> positions = new List<Vector3>();
     public int numQuestion = 5;
     public bool randomseats = false;
+    [ReadOnly] public bool randomed = false;
     public List<JToken> hints = new List<JToken>();
+    public bool onPrepare = true;
+    public List<Sprite> bribeList = new List<Sprite>();
 
     private void Start()
     {
@@ -96,7 +100,7 @@ public class LevelSetting : MonoBehaviour
 
     public void resetTemp()
     {
-        Debug.Log("reset");
+        //Debug.Log("reset");
         start = false;
         question = null;
         quesTrack = null;
@@ -104,6 +108,8 @@ public class LevelSetting : MonoBehaviour
         washroomed = false;
         timeLeft = -1.0f;
         offset = 15.0f;
+        onPrepare = true;
+        bribeList = null;
     }
 
     public void setSubject(string s)
@@ -115,6 +121,16 @@ public class LevelSetting : MonoBehaviour
         {
             test[i].GetComponent<Text>().text = s;
         }
+    }
+
+    public void setOnPrepare(bool b)
+    {
+        onPrepare = b;
+    }
+
+    public void setPositions(List<Vector3> positions)
+    {
+        this.positions = positions;
     }
 
 }

@@ -6,6 +6,8 @@ using System.Threading;
 public class student : MonoBehaviour { 
 
     public Animator ani;
+
+    private TestPaperBehavior playerTest;
     private GameObject chair;
     private AudioSource[] source;
     private AudioSource[] teacher;
@@ -24,6 +26,7 @@ public class student : MonoBehaviour {
 
     void Start()
     {
+        playerTest = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
         ani = gameObject.GetComponent<Animator>();
         source = GameObject.FindGameObjectWithTag ("student").GetComponents<AudioSource> ();
         teacher = GameObject.FindGameObjectWithTag ("teacher").GetComponents<AudioSource> ();
@@ -43,20 +46,23 @@ public class student : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
-        if (timeLeft > 0)
+        if (!playerTest.onPrepare)
         {
-            timeLeft -= Time.deltaTime;
-        }
-        else
-        {
-            if (!writing)
+            if (timeLeft > 0)
             {
-                setPosition(new Vector3(0.5f, -0.05f, 0.0f));
-                writing = true;
+                timeLeft -= Time.deltaTime;
             }
-            ani.SetInteger("animation_int", animationIndex);
+            else
+            {
+                if (!writing)
+                {
+                    setPosition(new Vector3(0.5f, -0.05f, 0.0f));
+                    writing = true;
+                }
+                ani.SetInteger("animation_int", animationIndex);
+            }
         }
+        
     // if (Input.GetKeyDown(KeyCode.Alpha0)){
     //     ani.SetInteger("animation_int", 0);//idle
     //     }

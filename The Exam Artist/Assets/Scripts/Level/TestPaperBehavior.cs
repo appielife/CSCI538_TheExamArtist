@@ -10,7 +10,9 @@ using Valve.VR;
 
 public class TestPaperBehavior : MonoBehaviour
 {
-    private GameObject testPage, submitPage, initialPage;
+    private GameObject testPage, submitPage, initialPage, bribePage, bribeSkillPage;
+    public GameObject preparePage;
+    private GiftBlindEyesBehavior gbe;
     public GameObject questionTextObj, choiceA, choiceB, choiceC, choiceD;
     public GetQuestion question = new GetQuestion();
     public string JSON_file;
@@ -18,28 +20,55 @@ public class TestPaperBehavior : MonoBehaviour
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
+    private int bribePageCounter = -1;
+
     public int total_score = 0;
+    public bool onPrepare = true;
+    public Sprite[] studentImage;
+
+    private GameObject[] bribeOptions;
     private float offset;
     private bool start = false;
+    private Color disabledColor = new Color(0.78f, 0.78f, 0.78f, 1.0f);
+    private Color bribeColor = new Color(0.98f, 0.812f, 0.016f, 1.0f);
+    private LevelSetting setting;
 
     void Start()
     {
+        gbe = GameObject.Find("SkillsScript").GetComponent<GiftBlindEyesBehavior>();
+
         GameObject testPaper = GameObject.FindGameObjectWithTag("MainTestPaper");
         testPage = testPaper.transform.Find("TestPage").gameObject;
         submitPage = testPaper.transform.Find("SubmitPage").gameObject;
         initialPage = testPaper.transform.Find("InitialPage").gameObject;
-        initialPage.SetActive(true);
+        preparePage = testPaper.transform.Find("PreparePage").gameObject;
+        bribePage = testPaper.transform.Find("BribePage").gameObject;
+        bribeSkillPage = testPaper.transform.Find("BribeSkillPage").gameObject;
+
+        preparePage.SetActive(true);
+        initialPage.SetActive(false);
         testPage.SetActive(false);
         submitPage.SetActive(false);
+        bribePage.SetActive(false);
+        bribeSkillPage.SetActive(false);
 
         string[] files = { "World", "Foreign", "Chemistry", "Math" };
         int index = Random.Range(0, 4);
         string filename = "questions-" + files[index] + ".json";
         JSON_file = filename;
-        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+
+        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         setting.setSubject(files[index]);
 
+        onPrepare = setting.onPrepare;
+        if (!onPrepare)
+        {
+            initialPage.SetActive(true);
+            preparePage.SetActive(false);
+        }
+
         offset = setting.offset;
+
         if (setting.washroomed)
         {
             question = setting.question;
@@ -64,20 +93,23 @@ public class TestPaperBehavior : MonoBehaviour
 
     void Update()
     {
-        if (offset > 0)
+        if (!onPrepare)
         {
-            offset -= Time.deltaTime;
-        }
-        else
-        {
-            if (!start)
+            if (offset > 0)
             {
-                initialPage.SetActive(false);
-                testPage.SetActive(true);
-                next();
-                start = true;
+                offset -= Time.deltaTime;
             }
-        }
+            else
+            {
+                if (!start)
+                {
+                    initialPage.SetActive(false);
+                    testPage.SetActive(true);
+                    next();
+                    start = true;
+                }
+            }
+        } 
     }
 
     public int getCurrentQuesNum()
@@ -153,6 +185,159 @@ public class TestPaperBehavior : MonoBehaviour
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
     }
 
+    public void startTest()
+    {
+        preparePage.SetActive(false);
+        initialPage.SetActive(true);
+        onPrepare = false;
+        setting.setOnPrepare(false);
+    }
+
+    public void openBribePage()
+    {
+        preparePage.SetActive(false);
+        bribePage.SetActive(true);
+        bribeOptions = GameObject.FindGameObjectsWithTag("BribeOption");
+        bribePageNext();
+    }
+
+    public void bribePageNext()
+    {
+        //Debug.Log(Mathf.Floor(studentImage.Length / bribeOptions.Length));
+        //Debug.Log((float)studentImage.Length / bribeOptions.Length);
+        if (bribePageCounter + 1 < Mathf.Ceil((float)studentImage.Length / bribeOptions.Length))
+        {
+            bribePageCounter += 1;
+        }
+        else
+        {
+            bribePageCounter = 0;
+        }
+        showStudentImage();
+    }
+
+    public void bribePagePrev()
+    {
+        if (bribePageCounter > 0)
+        {
+            bribePageCounter -= 1;
+        }
+        else
+        {
+            bribePageCounter = (int)Mathf.Ceil((float)studentImage.Length / bribeOptions.Length) - 1;
+        }
+        showStudentImage();
+    }
+
+    private void showStudentImage()
+    {
+        for (int i = 0; i < bribeOptions.Length; i++)
+        {
+            if (bribePageCounter * bribeOptions.Length + i < studentImage.Length)
+            {
+                Image img = bribeOptions[i].GetComponent<Image>();
+                img.sprite = studentImage[bribePageCounter * bribeOptions.Length + i];
+                bribeOptions[i].transform.parent.parent.gameObject.SetActive(true);
+                if (gbe.bribeList.Contains(img.sprite))
+                {
+                    bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Text>().text = "Cancel";
+                }
+                else
+                {
+                    bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Text>().text = "Bribe";
+                }
+                if (gbe.bribeList.Count == 3)
+                {
+                    if (bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Text>().text == "Bribe")
+                    {
+                        bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Button>().enabled = false;
+                        bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Image>().color = disabledColor;
+                    }
+                    else
+                    {
+                        bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Button>().enabled = true;
+                        bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Image>().color = bribeColor;
+                    }
+                }
+                else
+                {
+                    bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Button>().enabled = true;
+                    bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Image>().color = bribeColor;
+                }
+            }
+            else
+            {
+                bribeOptions[i].transform.parent.parent.gameObject.SetActive(false);
+            }
+
+        }
+    }
+
+    public void showBribeSkillPage()
+    {
+        if (!gbe.isCoolDown())
+        {
+            testPage.SetActive(false);
+            bribeSkillPage.SetActive(true);
+            for (int i = 0; i < gbe.bribeList.Count; i++)
+            {
+                bribeSkillPage.transform.GetChild(i).gameObject.SetActive(true);
+                bribeSkillPage.transform.GetChild(i).GetChild(0).GetComponentInChildren<Image>().sprite = gbe.bribeList[i];
+            }
+        }
+        else
+        {
+            Debug.Log("The bribing system is cooling down!");
+        }
+        
+    }
+
+    public void bribeStudent(GameObject target)
+    {
+        if (target.transform.GetChild(1).GetComponentInChildren<Text>().text == "Bribe")
+        {
+            target.transform.GetChild(1).GetComponentInChildren<Text>().text = "Cancel";
+            gbe.bribeList.Add(target.transform.GetChild(0).GetComponentInChildren<Image>().sprite);
+        }
+        else
+        {
+            target.transform.GetChild(1).GetComponentInChildren<Text>().text = "Bribe";
+            gbe.bribeList.Remove(target.transform.GetChild(0).GetComponentInChildren<Image>().sprite);
+        }
+        GameObject options = target.transform.parent.gameObject;
+        for (int i = 0; i < bribeOptions.Length; i++)
+        {
+            GameObject temp = options.transform.GetChild(i).gameObject;
+            if (temp.transform.GetChild(1).GetComponentInChildren<Text>().text == "Bribe")
+            {
+                if (gbe.bribeList.Count == 3)
+                {
+                    temp.transform.GetChild(1).GetComponentInChildren<Button>().enabled = false;
+                    temp.transform.GetChild(1).GetComponentInChildren<Image>().color = disabledColor;
+                }
+                else
+                {
+                    temp.transform.GetChild(1).GetComponentInChildren<Button>().enabled = true;
+                    temp.transform.GetChild(1).GetComponentInChildren<Image>().color = bribeColor;
+                }
+            }
+        }
+    }
+
+    public void ChooseBribee(GameObject t)
+    {
+        gbe.ChooseBribee(t);
+        backToTest();
+    }
+
+    public void backToPreparePage()
+    {
+        bribePage.SetActive(false);
+        preparePage.SetActive(true);
+        bribePageCounter = -1;
+        //Debug.Log(gbe.bribeList.Count);
+    }
+
     public void submit()
     {
         Button submit = testPage.GetComponentsInChildren<Button>()[6];
@@ -166,12 +351,19 @@ public class TestPaperBehavior : MonoBehaviour
 
     public void backToTest()
     {
-        Button no = submitPage.GetComponentsInChildren<Button>()[1];
-        ColorBlock cb = no.colors;
-        cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        no.colors = cb;
+        if (submitPage.activeSelf)
+        {
+            Button no = submitPage.GetComponentsInChildren<Button>()[1];
+            ColorBlock cb = no.colors;
+            cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            no.colors = cb;
+            submitPage.SetActive(false);
+        }
+        if (bribeSkillPage.activeSelf)
+        {
+            bribeSkillPage.SetActive(false);
+        }
 
-        submitPage.SetActive(false);
         testPage.SetActive(true);
     }
 
