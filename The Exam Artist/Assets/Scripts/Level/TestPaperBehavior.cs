@@ -10,13 +10,13 @@ using Valve.VR;
 
 public class TestPaperBehavior : MonoBehaviour
 {
-    private GameObject testPage, submitPage, initialPage, bribePage, bribeSkillPage;
-    public GameObject preparePage;
+    private GameObject preparePage, testPage, submitPage, initialPage, bribePage, bribeSkillPage;
     private GiftBlindEyesBehavior gbe;
     public GameObject questionTextObj, choiceA, choiceB, choiceC, choiceD;
     public GetQuestion question = new GetQuestion();
     public string JSON_file;
-    //private ScoreCalculate calculateScore;
+
+    public List<int> unansweredQues = new List<int>();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
     private int[] scoreTrack;
@@ -75,6 +75,7 @@ public class TestPaperBehavior : MonoBehaviour
             quesTrack = setting.quesTrack;
             scoreTrack = setting.scoreTrack;
             tempQuestion = question.current - 1;
+            unansweredQues = setting.unansweredQues;
         }
         else
         {
@@ -87,6 +88,10 @@ public class TestPaperBehavior : MonoBehaviour
             {
                 scoreTrack[i] = 0;
                 next();
+            }
+            for (int i = 0; i < setting.numQuestion; i++)
+            {
+                unansweredQues.Add(i);
             }
         }
     }
@@ -380,6 +385,11 @@ public class TestPaperBehavior : MonoBehaviour
         return scoreTrack;
     }
 
+    public List<int> setUnansweredQues()
+    {
+        return unansweredQues;
+    }
+
     public string[] getAllAnswer()
     {
         int size = question.getQuesCount();
@@ -448,31 +458,26 @@ public class TestPaperBehavior : MonoBehaviour
     {
         reset();
         quesTrack[tempQuestion].select(choiceA, 0);
+        unansweredQues.Remove(tempQuestion);
     }
     public void selectB()
     {
         reset();
         quesTrack[tempQuestion].select(choiceB, 1);
+        unansweredQues.Remove(tempQuestion);
     }
     public void selectC()
     {
         reset();
         quesTrack[tempQuestion].select(choiceC, 2);
+        unansweredQues.Remove(tempQuestion);
     }
     public void selectD()
     {
         reset();
         quesTrack[tempQuestion].select(choiceD, 3);
+        unansweredQues.Remove(tempQuestion);
     }
-   
-   // fucntion to calulate all the scores
-    /*public void showScore()
-    {
-        scoreObject a = calculateScore.getScore();
-        Debug.Log(a.unans_count);
-        Debug.Log(a.correct_ans);
-        Debug.Log(a.total_count);       
-    }*/
 
     private void FadeIn()
     {

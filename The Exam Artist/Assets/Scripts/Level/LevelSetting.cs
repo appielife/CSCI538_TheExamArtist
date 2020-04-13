@@ -33,6 +33,8 @@ public class LevelSetting : MonoBehaviour
     [ReadOnly] public float timeLeft = -1.0f;
     [ReadOnly] public string[] answer;
     [ReadOnly] public bool washroomed = false;
+    [ReadOnly] public float washroomDuration = 10.0f;
+    [ReadOnly] public List<int> unansweredQues;
     [ReadOnly] public GetQuestion question;
     [ReadOnly] public MultipleChoiceBehavior[] quesTrack;
     [ReadOnly] public int[] scoreTrack;
@@ -90,6 +92,7 @@ public class LevelSetting : MonoBehaviour
         question = test.setQuestion();
         quesTrack = test.setQuesTrack();
         scoreTrack = test.setScoreTrack();
+        unansweredQues = test.setUnansweredQues();
     }
 
     public void setHint()
@@ -105,6 +108,7 @@ public class LevelSetting : MonoBehaviour
         question = null;
         quesTrack = null;
         scoreTrack = null;
+        unansweredQues = null;
         washroomed = false;
         timeLeft = -1.0f;
         offset = 15.0f;

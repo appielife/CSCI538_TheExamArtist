@@ -7,8 +7,6 @@ public class Timer : MonoBehaviour
 {
     public Text timerText;
     public float timeLeft;
-    //public ActLikeTheFlashBehavior flashSkillTrigger;
-
     private bool timesUp = false;
     private TestPaperBehavior test;
     private LevelSetting setting;
@@ -18,8 +16,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        GameObject player = GameObject.Find("TestAndScore");
-        test = player.transform.Find("SelectHandler").gameObject.GetComponent<TestPaperBehavior>();
+        test = GameObject.FindGameObjectWithTag("MainSelectHandler").gameObject.GetComponent<TestPaperBehavior>();
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         offset = setting.offset;
         onPrepare = setting.onPrepare;

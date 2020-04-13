@@ -7,22 +7,59 @@ using UnityEngine.SceneManagement;
 public class Washroom : MonoBehaviour
 {
     public LevelSetting setting;
-    private float timer = 10.0f;
+    private float timer;
     private GameObject paper;
     void Start()
     {
+        List<int> randomArray = new List<int>();
         if (GameObject.Find("LevelSetting") != null)
         {
             setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+            timer = setting.washroomDuration;
             paper = GameObject.Find("Paper");
-            int time = (int)(setting.timeLeft + 120.0f) / 60;
+
+            int time = (int)Mathf.Ceil((float)setting.timeLeft / 60.0f);
             string text = "";
 
-            for (int i = 0; i < setting.answer.Length - time; i++)
+            if (setting.timeLeft > (float)setting.initialTime / 2.0f)
+            {
+                for (int i = 0; i < time; i++)
+                {
+                    randomArray.Add(0);
+                }
+                randomArray.Add(1);
+            }
+            else
+            {
+                for (int i = 0; i < time + (int)Mathf.Ceil((float)setting.initialTime / 120.0f); i++)
+                {
+                    randomArray.Add(1);
+                }
+                randomArray.Add(2);
+            }
+            //Debug.Log(randomArray);
+            int numQues = randomArray[Random.Range(0, randomArray.Count)];
+
+            List<int> counter = new List<int>();
+            for (int i = 0; i < setting.unansweredQues.Count; i++)
+            {
+                counter.Add(i);
+            }
+            //Debug.Log(numQues);
+            for (int i = 0; i < numQues; i++)
+            {
+                int tempIdx = Random.Range(0, counter.Count);
+                int tempQues = counter[tempIdx];
+                counter.RemoveAt(tempIdx);
+                text += setting.answer[setting.unansweredQues[tempQues]] + "\n";
+            }
+            paper.GetComponentInChildren<Text>().text = text;
+
+            /*for (int i = 0; i < setting.answer.Length - time; i++)
             {
                 text = text + setting.answer[i] + "\n";
             }
-            paper.GetComponentInChildren<Text>().text = text;
+            paper.GetComponentInChildren<Text>().text = text;*/
         }
     }
 

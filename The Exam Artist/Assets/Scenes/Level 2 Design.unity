@@ -41638,10 +41638,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: 0
   offset: 0
-  initialTime: 300
+  initialTime: 600
   timeLeft: -1
   answer: []
   washroomed: 0
+  washroomDuration: 10
+  unansweredQues: 
   question:
     current: -1
   quesTrack: []
@@ -41649,7 +41651,7 @@ MonoBehaviour:
   setting: {fileID: 0}
   subject: 
   positions: []
-  numQuestion: 5
+  numQuestion: 10
   randomseats: 0
   randomed: 0
   onPrepare: 1
@@ -45753,7 +45755,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a95805e4fdc2141bd63701390e41a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preparePage: {fileID: 0}
   questionTextObj: {fileID: 251086596}
   choiceA: {fileID: 1649285343}
   choiceB: {fileID: 1157520096}
@@ -45762,6 +45763,7 @@ MonoBehaviour:
   question:
     current: -1
   JSON_file: questions.json
+  unansweredQues: 
   total_score: 0
   onPrepare: 0
   studentImage:

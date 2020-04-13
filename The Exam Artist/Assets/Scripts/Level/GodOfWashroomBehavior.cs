@@ -67,7 +67,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
     {
         if (used == false && limit > 0)
         {
-            if (timer.GetComponent<Timer>().timeLeft < 150)
+            if (timer.GetComponent<Timer>().timeLeft < 120)
             {
                 sound[0].PlayOneShot(washroomAudioClips[6], 1.0f);
                 //Debug.Log("Not enough time to go to washroom!");
@@ -76,7 +76,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
             {
                 FadeIn();
                 Invoke("FadeOut", duration);
-                timer.GetComponent<Timer>().timeLeft -= (120 - duration);
+                timer.GetComponent<Timer>().timeLeft -= (60 - duration);
                 used = true;
 
                 //int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
