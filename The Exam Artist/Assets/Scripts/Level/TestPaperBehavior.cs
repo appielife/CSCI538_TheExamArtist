@@ -15,7 +15,6 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject questionTextObj, choiceA, choiceB, choiceC, choiceD;
     public GetQuestion question = new GetQuestion();
     public string JSON_file;
-
     public List<int> unansweredQues = new List<int>();
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
@@ -427,10 +426,10 @@ public class TestPaperBehavior : MonoBehaviour
                 //Debug.Log(i);
                 //Debug.Log(quesTrack.Length);
                 if (quesTrack[i] == null || quesTrack[i].choice == -1) writer.WriteValue("NA");
-                else writer.WriteValue(abcd[quesTrack[i].choice]);
+                else writer.WriteValue(abcd[quesTrack[i].choice] + ". " + quesTrack[i].choiceContent);
                 writer.WritePropertyName("MyAns");
                 //Debug.Log(question.getQuestionCorrectAns(i));
-                writer.WriteValue(abcd[question.getQuestionCorrectAns(i)]);
+                writer.WriteValue(abcd[question.getQuestionCorrectAns(i)] + ". " + question.getQuestionCorrectAnsContext(i));
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();

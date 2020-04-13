@@ -15,6 +15,7 @@ public class MultipleChoiceBehavior
     public int correctAns = -1;
     public int isCorrect = 0;
     public int choice = -1;
+    public string choiceContent = "";
     public string quesId = "";
 
     public void pushQuestion(JObject Q)
@@ -28,7 +29,10 @@ public class MultipleChoiceBehavior
         {
             optionText[i] = (string)((JObject)options[i])["option_txt"];
             trueOrFalse[i] = (string)((JObject)options[i])["isCorrect"];
-            if (trueOrFalse[i] == "True") correctAns = i;
+            if (trueOrFalse[i] == "True")
+            {
+                correctAns = i;
+            }
         }
     }
 
@@ -51,20 +55,6 @@ public class MultipleChoiceBehavior
         }
     }
 
-    /*public void reset()
-    {
-        Button A = choiceA.GetComponentInChildren<Button>();
-        Button B = choiceB.GetComponentInChildren<Button>();
-        Button C = choiceC.GetComponentInChildren<Button>();
-        Button D = choiceD.GetComponentInChildren<Button>();
-        ColorBlock cb = A.colors;
-        cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        A.colors = cb;
-        B.colors = cb;
-        C.colors = cb;
-        D.colors = cb;
-    }*/
-
     void changeColor(GameObject Obj, Color c)
     {
         Button A = Obj.GetComponentInChildren<Button>();
@@ -72,12 +62,14 @@ public class MultipleChoiceBehavior
         cb.normalColor = c;
         A.colors = cb;
     }
+
     public void select(GameObject choiceObj, int idx)
     {
         //reset();
         Color c = new Color(0.8f, 0.9f, 1.0f, 1.0f);
         changeColor(choiceObj, c);
         choice = idx;
+        choiceContent = optionText[choice];
         if (trueOrFalse[idx] == "True")
         {
             isCorrect = 1;
@@ -87,55 +79,4 @@ public class MultipleChoiceBehavior
             isCorrect = 0;
         }
     }
-    /*public void selectB()
-    {
-        reset();
-        Button B = choiceB.GetComponentInChildren<Button>();
-        ColorBlock cb = B.colors;
-        cb.normalColor = new Color(0.8f, 0.9f, 1.0f, 1.0f);
-        B.colors = cb;
-        choice = 1;
-        if (trueOrFalse[1] == "True")
-        {
-            isCorrect = 1;
-        }
-        else
-        {
-            isCorrect = 0;
-        }
-    }
-    public void selectC()
-    {
-        reset();
-        Button C = choiceC.GetComponentInChildren<Button>();
-        ColorBlock cb = C.colors;
-        cb.normalColor = new Color(0.8f, 0.9f, 1.0f, 1.0f);
-        C.colors = cb;
-        choice = 2;
-        if (trueOrFalse[2] == "True")
-        {
-            isCorrect = 1;
-        }
-        else
-        {
-            isCorrect = 0;
-        }
-    }
-    public void selectD()
-    {
-        reset();
-        Button D = choiceD.GetComponentInChildren<Button>();
-        ColorBlock cb = D.colors;
-        cb.normalColor = new Color(0.8f, 0.9f, 1.0f, 1.0f);
-        D.colors = cb;
-        choice = 3;
-        if (trueOrFalse[3] == "True")
-        {
-            isCorrect = 1;
-        }
-        else
-        {
-            isCorrect = 0;
-        }
-    }*/
 }

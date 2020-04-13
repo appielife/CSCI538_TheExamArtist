@@ -1,34 +1,64 @@
 {
   "Answers": [
     {
-      "id": "3",
-      "question_txt": "Which ship is not an Olympic-class ship?",
-      "YourAns": "NA",
-      "MyAns": "A"
-    },
-    {
       "id": "8",
-      "question_txt": "Which breed of cats has the largest average size?",
+      "question_txt": "An electron is known to be in the n = 4 shell and the l = 2 subshell. How many possible combinations of quantum numbers could this electron have?",
       "YourAns": "NA",
-      "MyAns": "D"
+      "MyAns": "B. 10"
     },
     {
-      "id": "24",
-      "question_txt": "What did JFK says in 1963?",
+      "id": "16",
+      "question_txt": "At standard temperature and pressure, a chemical process is at equilibrium. What is the free energy of reaction (ΔG) for this process?",
       "YourAns": "NA",
-      "MyAns": "D"
+      "MyAns": "D. ΔG = 0"
     },
     {
-      "id": "11",
-      "question_txt": "Who lets the dogs out?",
+      "id": "2",
+      "question_txt": "What is Phosphoric Acid?",
       "YourAns": "NA",
-      "MyAns": "D"
+      "MyAns": "A. H3PO4"
+    },
+    {
+      "id": "14",
+      "question_txt": "What is the highest-energy orbital of elements with valence electrons in the n = 3 shell?",
+      "YourAns": "NA",
+      "MyAns": "C. d-orbital"
+    },
+    {
+      "id": "1",
+      "question_txt": "Which one of the following is the true covalent oxide of iodine?",
+      "YourAns": "NA",
+      "MyAns": "A. I2O5"
+    },
+    {
+      "id": "4",
+      "question_txt": "What is the product of water and pentyl ethanoate under acidic conditions?",
+      "YourAns": "NA",
+      "MyAns": "A. Ethanoic acid and pentanol"
+    },
+    {
+      "id": "20",
+      "question_txt": "I said to drink water, but my chemist friend died. Why?",
+      "YourAns": "NA",
+      "MyAns": "B. He drank something weird"
+    },
+    {
+      "id": "18",
+      "question_txt": "Why did the attacking army use acid?",
+      "YourAns": "NA",
+      "MyAns": "D. To neutralize the enemy's base"
     },
     {
       "id": "7",
-      "question_txt": "What is the Chemical Symbol of Tungsten?",
+      "question_txt": "Consider (E)-2-butene and (Z)-2-butene. This is a pair of what type(s) of isomers?\nI. Cis–trans isomers\nII. Diastereomers\nIII. Enantiomers",
       "YourAns": "NA",
-      "MyAns": "C"
+      "MyAns": "B. I and II only"
+    },
+    {
+      "id": "9",
+      "question_txt": "All of the following are true with respect to carbonyls EXCEPT:",
+      "YourAns": "NA",
+      "MyAns": "B. the π electrons are mobile and are pulled toward the carbonyl carbon."
     }
   ]
 }
