@@ -24,6 +24,7 @@ public class TestPaperBehavior : MonoBehaviour
     public int total_score = 0;
     public bool onPrepare = true;
     public Sprite[] studentImage;
+    public GameObject LoadSceneHandler;
 
     private GameObject[] bribeOptions;
     private float offset;
@@ -452,8 +453,9 @@ public class TestPaperBehavior : MonoBehaviour
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        FadeIn();
-        Invoke("FadeOut", 2.0f);
+        /*FadeIn();
+        Invoke("FadeOut", 2.0f);*/
+        LoadSceneHandler.SetActive(true);
     }
 
     public void reset()
@@ -505,5 +507,10 @@ public class TestPaperBehavior : MonoBehaviour
         SteamVR_Fade.Start(Color.black, 0.0f);
         SteamVR_Fade.Start(Color.clear, 2.0f);
         SceneManager.LoadScene(2);
+    }
+
+    public bool isStart()
+    {
+        return start;
     }
 }

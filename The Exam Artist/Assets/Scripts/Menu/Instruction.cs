@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Instruction : MonoBehaviour
 {
     private Text main, shadow;
-    private string init = "Become the EXAM ARTIST!";
+    private string init = "Become the one and only EXAM ARTIST!";
     void Start()
     {
         main = GameObject.Find("InstructionText").GetComponent<Text>();
@@ -38,7 +38,7 @@ public class Instruction : MonoBehaviour
 
     public void showInstructionB()
     {
-        main.text = "Let your classmate(s) to distract teacher";
+        main.text = "Let your classmate(s) distract the teacher";
         shadow.text = main.text;
     }
 }

@@ -6,7 +6,7 @@ public class CollisionFloor : MonoBehaviour
 {
     //private float time = 25.0f;
     private GameObject obj;
-    private bool hit = false;
+    private bool hit = false, set = false;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
     private TeacherController control;
@@ -30,6 +30,12 @@ public class CollisionFloor : MonoBehaviour
 
     private void Update()
     {
+        if (!set)
+        {
+            originalPosition = GameObject.FindGameObjectWithTag("Projectile").transform.position;
+            originalRotation = GameObject.FindGameObjectWithTag("Projectile").transform.rotation;
+            set = true;
+        }
         if (hit)
         {
             if (!control.collision)

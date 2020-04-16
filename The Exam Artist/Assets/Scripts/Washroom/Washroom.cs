@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Washroom : MonoBehaviour
 {
     public LevelSetting setting;
+    public GameObject LoadSceneHandler;
     private float timer;
     private GameObject paper;
     void Start()
@@ -73,7 +74,8 @@ public class Washroom : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene(1);
+                //SceneManager.LoadScene(1);
+                LoadSceneHandler.SetActive(true);
             }
         }
     }

@@ -17,7 +17,6 @@ public class MeditationBehavior : MonoBehaviour
     private bool used = false;
     //private int limit = 5;
     private float duration = 2.0f;
-    private LevelSetting setting;
 
     void Start()
     {

@@ -28,25 +28,55 @@ public class ReadOnlyDrawer : PropertyDrawer
 
 public class LevelSetting : MonoBehaviour
 {
-    public bool start = false;
+    [Tooltip("This is used to store grabbed answer or not")]
+    public bool grabAnswer = false;
+    [Tooltip("This is used to store talking and starting time")]
     public float offset, initialTime = 300.0f;
+    [Tooltip("This is used to store remaining time")]
     public float timeLeft = -1.0f;
+    [Tooltip("This is used to store answers")]
     public string[] answer;
+    [Tooltip("This is used to determine if went to washroom")]
     public bool washroomed = false;
+    [Tooltip("Set time staying in washroom")]
     public float washroomDuration = 10.0f;
+    [Tooltip("This is used to store unanswered questions")]
     public List<int> unansweredQues;
+    [Tooltip("This is used to store questions")]
     public GetQuestion question;
+    [Tooltip("This is used to store current questions")]
     public MultipleChoiceBehavior[] quesTrack;
+    [Tooltip("This is used to store score")]
     public int[] scoreTrack;
+    [Tooltip("This is used to store hand and volume setting")]
     public Settings setting;
+    [Tooltip("This is used to store subject")]
     public string subject;
+    [Tooltip("This is used to store student positions")]
     public List<Vector3> positions = new List<Vector3>();
+    [Tooltip("Set number of questions")]
     public int numQuestion = 5;
+    [Tooltip("Check to enable random seats")]
     public bool randomseats = false;
+    [Tooltip("This is used for randomseats")]
     public bool randomed = false;
+    [Tooltip("This is used to store hints")]
     public List<JToken> hints = new List<JToken>();
+    [Tooltip("Check to enable prepare page")]
     public bool onPrepare = true;
+    [Tooltip("This is used to store bribe list")]
     public List<Sprite> bribeList = new List<Sprite>();
+    [Tooltip("Check to enable illegal detection")]
+    public bool illegalDetect = true;
+
+    /*public float MeditationCD = 0.0f;
+    public bool MeditationUsed = false;
+
+    public float CheatSheetCD = 0.0f;
+    public bool CheatSheetUsed = false;
+
+    public float BribeCD = 0.0f;
+    public bool BribeUsed = false;*/
 
     private void Start()
     {
@@ -67,11 +97,11 @@ public class LevelSetting : MonoBehaviour
         }
         else
         {
-            if (!start)
+            if (!grabAnswer)
             {
                 answer = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>().getAllAnswer();
                 //setQuestion();
-                start = true;
+                grabAnswer = true;
             }
         }
     }
@@ -104,7 +134,7 @@ public class LevelSetting : MonoBehaviour
     public void resetTemp()
     {
         //Debug.Log("reset");
-        start = false;
+        grabAnswer = false;
         question = null;
         quesTrack = null;
         scoreTrack = null;
@@ -113,6 +143,7 @@ public class LevelSetting : MonoBehaviour
         timeLeft = -1.0f;
         offset = 15.0f;
         onPrepare = true;
+        randomed = false;
         bribeList = new List<Sprite>();
     }
 
@@ -136,5 +167,15 @@ public class LevelSetting : MonoBehaviour
     {
         this.positions = positions;
     }
+
+    /*public void setCD()
+    {
+        MeditationCD = GameObject.Find("SkillsScript").GetComponent<MeditationBehavior>().getCD();
+        MeditationUsed = GameObject.Find("SkillsScript").GetComponent<MeditationBehavior>().getUse();
+        CheatSheetCD = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>().getCD();
+        CheatSheetUsed = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>().getUse();
+        BribeCD = GameObject.Find("SkillsScript").GetComponent<GiftBlindEyesBehavior>().getCD();
+        BribeUsed = GameObject.Find("SkillsScript").GetComponent<GiftBlindEyesBehavior>().getUse();
+    }*/
 
 }

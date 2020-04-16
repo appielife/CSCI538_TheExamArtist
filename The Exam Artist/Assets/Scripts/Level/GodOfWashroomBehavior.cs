@@ -19,6 +19,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
     private int limit = 5;
     private float duration = 2.0f;
     private LevelSetting setting;
+    public GameObject LoadSceneHandler;
 
     private void loadResources()
     {
@@ -74,21 +75,18 @@ public class GodOfWashroomBehavior : MonoBehaviour
             }
             else
             {
-                FadeIn();
-                Invoke("FadeOut", duration);
+                /*FadeIn();
+                Invoke("FadeOut", duration);*/
                 timer.GetComponent<Timer>().timeLeft -= (60 - duration);
                 used = true;
-
-                //int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-                //sound[0].PlayOneShot(washroomAudioClips[correctAns], 1.0f);
-                //Debug.Log("The correct answer is " + correctAns.ToString());
                 limit -= 1;
 
                 setting.timeLeft = timer.GetComponent<Timer>().timeLeft;
                 setting.setWashroom();
                 setting.setQuestion();
                 setting.setHint();
-                SceneManager.LoadScene(3);
+                //SceneManager.LoadScene(3);
+                LoadSceneHandler.SetActive(true);
             }
         }
         else
@@ -132,6 +130,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
     {
         SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
+        SceneManager.LoadScene(3);
     }
 
     private void FadeOut()

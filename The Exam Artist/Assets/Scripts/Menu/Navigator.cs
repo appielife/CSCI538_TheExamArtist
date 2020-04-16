@@ -175,14 +175,14 @@ public class Navigator : MonoBehaviour
     public void Left()
     {
         if (hand != null) { hand.setHand("LeftHand"); }
-        FadeIn();
-        Invoke("FadeOut", 5.0f);
+        /*FadeIn();
+        Invoke("FadeOut", 5.0f);*/
     }
     public void Right()
     {
         if (hand != null) { hand.setHand("RightHand"); }
-        FadeIn();
-        Invoke("FadeOut", 5.0f);
+        /*FadeIn();
+        Invoke("FadeOut", 5.0f);*/
     }
     public void Back()
     {
@@ -197,7 +197,7 @@ public class Navigator : MonoBehaviour
             LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             setting.resetTemp();
         }
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
     }
     public void Continue()
     {
