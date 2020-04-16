@@ -21,8 +21,9 @@ public class TeacherController : MonoBehaviour
 
     private int behaviour = 1; // moving
     private bool inEyesight = false, gameover = false, play = false;
-    private float angle, minDistance = 0.2f;
-    //private float minDistance = 10000f, minAngle = 120f
+    public bool collision = false;
+    private float angle, minDistance = 0.2f, minAngle = 120f, minEyesight = 10000f;
+    //private float minDistance = 10000f, 
     private GameObject target;
     private AudioSource[] studentsound, teachersound;
     private float timePaused = 0.0f;
@@ -109,8 +110,8 @@ public class TeacherController : MonoBehaviour
             teachersound[1].UnPause();
         }
         Transform destination = target.transform;
-        //teacher.SetDestination(destination.position);
-        //Debug.Log(teacher.transform.position + "," + destination.position + "," + teacher.destination);
+        // teacher.SetDestination(destination.position);
+        // Debug.Log(target.transform.position);
         ani.SetInteger("animation_int", 1);
         if (gameover)
         {
@@ -133,13 +134,13 @@ public class TeacherController : MonoBehaviour
             }
             else
             {
-                if (clapBombTrigger.targetStudentPos != null)
+                /*if (clapBombTrigger.targetStudentPos != null)
                 {
                     //Debug.Log("CLAP");
                     teacher.SetDestination(clapBombTrigger.targetStudentPos.transform.position);
                     behaviour = 6;
-                }
-                else if (giftSkillTrigger.isTrigger() == true)
+                }*/
+                if (giftSkillTrigger.isTrigger() == true)
                 {
                     //Debug.Log("GIFT");
                     setBribeTarget();
@@ -151,10 +152,10 @@ public class TeacherController : MonoBehaviour
                     //teacher.destination = destination.position;
                     teacher.SetDestination(destination.position);
                     //Debug.Log("Set:" + destination.position + " into " + teacher.destination);
-                    if (!teacher.hasPath)
+                    if (!teacher.hasPath && !collision)
                     {
                         target.transform.position = GetRandomPosition();
-                        teacher.SetDestination(destination.position);
+                        //teacher.SetDestination(destination.position);
                     }
                 }
             }
@@ -185,10 +186,28 @@ public class TeacherController : MonoBehaviour
         Vector3 forwardLocalVect = forwardLocalPos - teaPos;
         forwardLocalVect.y = 0;
         float angle = Vector3.Angle(srcLocalVect, forwardLocalVect);
+        if (distance < minEyesight && angle < minAngle / 2)
+        {
+            //text.text = "in eyesight";
+            inEyesight = true;
+            if (illegalmove.illegal)
+            {
+                behaviour = 3;
+            }
+        }
+        else
+        {
+            //text.text = "not in eyesight";
+            inEyesight = false;
+        }
     }
 
     void Pausing()
     {
+        if (collision)
+        {
+            collision = false;
+        }
         timePaused += Time.deltaTime;
         teachersound[1].Pause();
         if (gameover)
@@ -261,7 +280,11 @@ public class TeacherController : MonoBehaviour
 
     public void setTarget(GameObject t)
     {
-        target = t;
+        target.transform.position = t.transform.position;
+
+        //Debug.Log("Collide: " + target.transform.position);
+        behaviour = 1;
+        collision = true;
     }
 
     void setBribeTarget()

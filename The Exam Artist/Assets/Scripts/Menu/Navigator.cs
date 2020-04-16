@@ -50,7 +50,10 @@ public class Navigator : MonoBehaviour
     {
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
-            GameObject blackboard = GameObject.Find("BlackBoard");
+
+            Button b = e.target.gameObject.GetComponent<Button>();
+            b.onClick.Invoke();
+            /*GameObject blackboard = GameObject.Find("BlackBoard");
             switch (e.target.name)
             {
                 case "Play":
@@ -107,12 +110,12 @@ public class Navigator : MonoBehaviour
                     break;
                 default:
                     break;
-            }
+            }*/
         }
     }
     public void PointerInside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null)
+        if (e.target.gameObject.GetComponent<Button>() != null && e.target.tag != "InstructionButton")
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;
@@ -122,7 +125,7 @@ public class Navigator : MonoBehaviour
     }
     public void PointerOutside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null)
+        if (e.target.gameObject.GetComponent<Button>() != null && e.target.tag != "InstructionButton")
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;
@@ -135,11 +138,11 @@ public class Navigator : MonoBehaviour
     {
         SteamVR_Fade.Start(Color.clear, 0.0f);
         SteamVR_Fade.Start(Color.black, 2.0f);
+        SceneManager.LoadScene(1);
     }
     private void FadeOut()
     {
         SteamVR_Fade.Start(Color.black, 0.0f);
-        SceneManager.LoadScene(1);
         SteamVR_Fade.Start(Color.clear, 2.0f);
     }
 
@@ -172,12 +175,14 @@ public class Navigator : MonoBehaviour
     public void Left()
     {
         if (hand != null) { hand.setHand("LeftHand"); }
-        SceneManager.LoadScene(1);
+        FadeIn();
+        Invoke("FadeOut", 5.0f);
     }
     public void Right()
     {
         if (hand != null) { hand.setHand("RightHand"); }
-        SceneManager.LoadScene(1);
+        FadeIn();
+        Invoke("FadeOut", 5.0f);
     }
     public void Back()
     {

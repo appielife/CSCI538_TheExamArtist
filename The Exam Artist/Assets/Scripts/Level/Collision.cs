@@ -15,9 +15,8 @@ public class Collision : MonoBehaviour
     private Vector3 originalPosition;
     private Quaternion originalRotation;
 
-    private void OnCollisionEnter(UnityEngine.Collision collision)
-    {
-        if (collision.collider.tag == "Projectile")
+    private void OnCollisionEnter(UnityEngine.Collision collision) { 
+        if (collision.collider.tag == "Projectile" || collision.rigidbody.tag == "Projectile")
         {
             position = gameObject.transform.Find("Position").transform.position;
             obj = collision.collider.gameObject;

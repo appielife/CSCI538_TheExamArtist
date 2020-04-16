@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEditor;
 using Newtonsoft.Json.Linq;
 
-public class ReadOnlyAttribute : PropertyAttribute { }
+/*public class ReadOnlyAttribute : PropertyAttribute { }
 
 [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
 public class ReadOnlyDrawer : PropertyDrawer
@@ -24,26 +24,26 @@ public class ReadOnlyDrawer : PropertyDrawer
         EditorGUI.PropertyField(position, property, label, true);
         GUI.enabled = true;
     }
-}
+}*/
 
 public class LevelSetting : MonoBehaviour
 {
-    [ReadOnly] public bool start = false;
+    public bool start = false;
     public float offset, initialTime = 300.0f;
-    [ReadOnly] public float timeLeft = -1.0f;
-    [ReadOnly] public string[] answer;
-    [ReadOnly] public bool washroomed = false;
-    [ReadOnly] public float washroomDuration = 10.0f;
-    [ReadOnly] public List<int> unansweredQues;
-    [ReadOnly] public GetQuestion question;
-    [ReadOnly] public MultipleChoiceBehavior[] quesTrack;
-    [ReadOnly] public int[] scoreTrack;
-    [ReadOnly] public Settings setting;
-    [ReadOnly] public string subject;
-    [ReadOnly] public List<Vector3> positions = new List<Vector3>();
+    public float timeLeft = -1.0f;
+    public string[] answer;
+    public bool washroomed = false;
+    public float washroomDuration = 10.0f;
+    public List<int> unansweredQues;
+    public GetQuestion question;
+    public MultipleChoiceBehavior[] quesTrack;
+    public int[] scoreTrack;
+    public Settings setting;
+    public string subject;
+    public List<Vector3> positions = new List<Vector3>();
     public int numQuestion = 5;
     public bool randomseats = false;
-    [ReadOnly] public bool randomed = false;
+    public bool randomed = false;
     public List<JToken> hints = new List<JToken>();
     public bool onPrepare = true;
     public List<Sprite> bribeList = new List<Sprite>();
@@ -113,7 +113,7 @@ public class LevelSetting : MonoBehaviour
         timeLeft = -1.0f;
         offset = 15.0f;
         onPrepare = true;
-        bribeList = null;
+        bribeList = new List<Sprite>();
     }
 
     public void setSubject(string s)

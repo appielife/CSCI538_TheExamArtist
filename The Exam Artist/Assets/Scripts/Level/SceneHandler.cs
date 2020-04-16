@@ -32,6 +32,21 @@ public class SceneHandler : MonoBehaviour
         laserPointer.PointerIn += PointerInside;
         laserPointer.PointerOut += PointerOutside;
         laserPointer.PointerClick += PointerClick;
+
+        if(hand == "LeftHand")
+        {
+            GameObject.Find("PlayerTable").transform.Find("BottleLeft").gameObject.SetActive(true);
+            GameObject.Find("PlayerTable").transform.Find("BottleRight").gameObject.SetActive(false);
+            GameObject.Find("Projectile").transform.Find("EraserLeft").gameObject.SetActive(false);
+            GameObject.Find("Projectile").transform.Find("EraserRight").gameObject.SetActive(true);
+        }
+        else
+        {
+            GameObject.Find("PlayerTable").transform.Find("BottleLeft").gameObject.SetActive(false);
+            GameObject.Find("PlayerTable").transform.Find("BottleRight").gameObject.SetActive(true);
+            GameObject.Find("Projectile").transform.Find("EraserLeft").gameObject.SetActive(true);
+            GameObject.Find("Projectile").transform.Find("EraserRight").gameObject.SetActive(false);
+        }
     }
 
     public void PointerClick(object sender, PointerEventArgs e)
@@ -40,7 +55,7 @@ public class SceneHandler : MonoBehaviour
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             b.onClick.Invoke();
-            if (e.target.name != "Next" && e.target.name != "Prev")
+            if (e.target.name != "Next" && e.target.name != "Prev" && e.target.name != "Button")
             {
                 clicked = e.target.name;
             }

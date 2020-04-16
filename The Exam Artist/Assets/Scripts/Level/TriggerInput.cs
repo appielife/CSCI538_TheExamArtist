@@ -9,6 +9,8 @@ public class TriggerInput : MonoBehaviour
     public SteamVR_Action_Boolean Ypressed;
     public SteamVR_Action_Boolean Xpressed;
     public SteamVR_Action_Boolean Spressed;
+    public SteamVR_Action_Boolean Apressed;
+    public SteamVR_Action_Boolean Bpressed;
     public SteamVR_Action_Boolean LeftEast;
     public SteamVR_Action_Boolean LeftWest;
     public SteamVR_Action_Boolean RightEast;
@@ -21,8 +23,10 @@ public class TriggerInput : MonoBehaviour
     public MagicCheatSheetBehavior hint;
     public HideAndShowSkills hns;
     public TestPaperBehavior test;
+    public GiftBlindEyesBehavior gbe;
+    public MeditationBehavior mb;
 
-    private bool show = false;
+    private bool show = false, onPrepare = true;
     public float offset;
 
     void OnDestroy()
@@ -33,6 +37,9 @@ public class TriggerInput : MonoBehaviour
         Spressed.RemoveOnStateDownListener(TriggerDownS, left);
         Spressed.RemoveOnStateUpListener(TriggerUpS, right);
         Spressed.RemoveOnStateDownListener(TriggerDownS, right);
+        Apressed.RemoveOnStateDownListener(TriggerDownA, right);
+        Bpressed.RemoveOnStateDownListener(TriggerDownB, right);
+
         LeftEast.RemoveOnStateDownListener(TriggerDownR, left);
         LeftWest.RemoveOnStateDownListener(TriggerDownL, left);
         RightEast.RemoveOnStateDownListener(TriggerDownR, right);
@@ -44,10 +51,13 @@ public class TriggerInput : MonoBehaviour
         washroom = GameObject.Find("SkillsScript").GetComponent<GodOfWashroomBehavior>();
         hint = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>();
         hns = GameObject.Find("SkillsScript").GetComponent<HideAndShowSkills>();
-        GameObject playerTest = GameObject.Find("TestAndScore");
-        test = playerTest.transform.Find("SelectHandler").gameObject.GetComponent<TestPaperBehavior>();
+        gbe = GameObject.Find("SkillsScript").GetComponent<GiftBlindEyesBehavior>();
+        mb = GameObject.Find("SkillsScript").GetComponent<MeditationBehavior>();
+
+        test = GameObject.FindGameObjectWithTag("MainSelectHandler").gameObject.GetComponent<TestPaperBehavior>();
 
         offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
+        onPrepare = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().onPrepare;
 
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
@@ -55,6 +65,9 @@ public class TriggerInput : MonoBehaviour
         Spressed.AddOnStateDownListener(TriggerDownS, left);
         Spressed.AddOnStateUpListener(TriggerUpS, right);
         Spressed.AddOnStateDownListener(TriggerDownS, right);
+        Apressed.AddOnStateDownListener(TriggerDownA, right);
+        Bpressed.AddOnStateDownListener(TriggerDownB, right);
+
         LeftEast.AddOnStateDownListener(TriggerDownR, left);
         LeftWest.AddOnStateDownListener(TriggerDownL, left);
         RightEast.AddOnStateDownListener(TriggerDownR, right);
@@ -63,22 +76,49 @@ public class TriggerInput : MonoBehaviour
 
     void Update()
     {
-        if (offset > 0)
+        if (onPrepare)
         {
-            offset -= Time.deltaTime;
+            onPrepare = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().onPrepare;
+        }
+        else
+        {
+            if (offset >= 0)
+            {
+                offset -= Time.deltaTime;
+            }
         }
     }
 
     public void TriggerDownY(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0) {
-            washroom.GodOfWashroom();
+        if (offset < 0)
+        {
+            if (test.isBribeSkillActive())
+            {
+                GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt1").gameObject;
+                GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
+                test.ChooseBribee(image);
+            }
+            else
+            {
+                hint.MagicCheatSheet();
+            }
         }
     }
     public void TriggerDownX(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0) {
-            hint.MagicCheatSheet();
+        if (offset < 0)
+        {
+            if (test.isBribeSkillActive())
+            {
+                GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt2").gameObject;
+                GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
+                test.ChooseBribee(image);
+            }
+            else
+            {
+                washroom.GodOfWashroom();
+            }
         }
     }
     public void TriggerUpS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -99,6 +139,10 @@ public class TriggerInput : MonoBehaviour
     }
     public void TriggerDownL(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
+        if (test.isBribeActive())
+        {
+            test.bribePagePrev();
+        }
         if (offset < 0)
         {
             test.previous();
@@ -106,9 +150,38 @@ public class TriggerInput : MonoBehaviour
     }
     public void TriggerDownR(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
+        if (test.isBribeActive())
+        {
+            test.bribePageNext();
+        }
         if (offset < 0)
         {
             test.next();
+        }
+    }
+
+    public void TriggerDownA(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        if (offset < 0)
+        {
+            if (test.isBribeSkillActive())
+            {
+                GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt3").gameObject;
+                GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
+                test.ChooseBribee(image);
+            }
+            else
+            {
+                mb.Meditation();
+            }
+        }
+    }
+
+    public void TriggerDownB(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        if (offset < 0)
+        {
+            test.showBribeSkillPage();
         }
     }
 

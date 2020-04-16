@@ -17,6 +17,9 @@ public class Projectile : MonoBehaviour
         if (!setting.onPrepare && !added)
         {
             gameObject.AddComponent<Throwable>();
+            gameObject.transform.localPosition = new Vector3(0.514f, 1.2f, 0.848f); 
+            gameObject.transform.localEulerAngles = new Vector3(-0.002f, 180.361f, 0.032f);
+            gameObject.GetComponent<Throwable>().releaseVelocityStyle = ReleaseStyle.ShortEstimation;
             added = true;
         }
     }

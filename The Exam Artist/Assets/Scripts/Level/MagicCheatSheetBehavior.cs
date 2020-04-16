@@ -49,6 +49,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
+        tableHint.text = "";
         cheatText.text = "";
 
         GameObject[] hints = GameObject.FindGameObjectsWithTag("Hint");
@@ -78,7 +79,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             existTimeCounter = existTime;
             exist = false;
             imgExist.fillAmount = 0.0f;
-            tableHint.text = "";
+            //tableHint.text = "";
             cheatText.text = "";
             currentHintShown.text = "";
             used = true; 
@@ -113,7 +114,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
             //string hintStr = (string)((JObject)hintArray[temp_ques_id])["hints"];
             int index = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum();
             string hintStr = (string) hintJToken[index]["hints"];
-            tableHint.text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " + hintStr;
+            //tableHint.text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " + hintStr;
             cheatText.text = hintStr;
 
             exist = true;
@@ -145,7 +146,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
-        tableHint.text = "";
+        //tableHint.text = "";
         cheatText.text = "";
         if (currentHintShown)
         {

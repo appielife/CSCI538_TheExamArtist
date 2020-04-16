@@ -195,13 +195,20 @@ public class TestPaperBehavior : MonoBehaviour
         initialPage.SetActive(true);
         onPrepare = false;
         setting.setOnPrepare(false);
+        Text subjectText = GameObject.FindGameObjectWithTag("MainSubject").GetComponent<Text>();
+        subjectText.text = setting.subject;
+       
     }
 
     public void openBribePage()
     {
         preparePage.SetActive(false);
         bribePage.SetActive(true);
-        bribeOptions = GameObject.FindGameObjectsWithTag("BribeOption");
+        if (bribeOptions == null || bribeOptions.Length == 0)
+        {
+            bribeOptions = GameObject.FindGameObjectsWithTag("BribeOption");
+        }
+
         bribePageNext();
     }
 
@@ -340,6 +347,16 @@ public class TestPaperBehavior : MonoBehaviour
         preparePage.SetActive(true);
         bribePageCounter = -1;
         //Debug.Log(gbe.bribeList.Count);
+    }
+
+    public bool isBribeSkillActive()
+    {
+        return bribeSkillPage.activeSelf;
+    }
+
+    public bool isBribeActive()
+    {
+        return bribePage.activeSelf;
     }
 
     public void submit()

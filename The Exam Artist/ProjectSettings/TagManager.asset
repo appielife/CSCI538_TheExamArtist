@@ -28,6 +28,8 @@ TagManager:
   - Student
   - BribeOption
   - MainPlayerPosition
+  - InstructionButton
+  - MainSubject
   layers:
   - Default
   - TransparentFX
