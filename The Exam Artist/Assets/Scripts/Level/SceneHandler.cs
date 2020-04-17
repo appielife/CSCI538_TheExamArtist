@@ -9,9 +9,8 @@ public class SceneHandler : MonoBehaviour
 {
 
     private SteamVR_LaserPointer laserPointer;
+    private Color selectedColor;
 
-    private string clicked = "";
-    
     void Start()
     {
         Settings setting = null;
@@ -19,7 +18,7 @@ public class SceneHandler : MonoBehaviour
         {
             setting = GameObject.Find("Settings").GetComponent<Settings>();
         }
-        string hand = (setting != null) ? setting.getHand() : "LeftHand";
+        string hand = (setting != null) ? setting.getHand() : "RightHand";
 
         GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
         GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
@@ -33,7 +32,7 @@ public class SceneHandler : MonoBehaviour
         laserPointer.PointerOut += PointerOutside;
         laserPointer.PointerClick += PointerClick;
 
-        if(hand == "LeftHand")
+        if (hand == "LeftHand")
         {
             GameObject.Find("PlayerTable").transform.Find("BottleLeft").gameObject.SetActive(true);
             GameObject.Find("PlayerTable").transform.Find("BottleRight").gameObject.SetActive(false);
@@ -47,45 +46,53 @@ public class SceneHandler : MonoBehaviour
             GameObject.Find("Projectile").transform.Find("EraserLeft").gameObject.SetActive(true);
             GameObject.Find("Projectile").transform.Find("EraserRight").gameObject.SetActive(false);
         }
+        selectedColor = new Color(0.8f, 0.9f, 1.0f, 1.0f);
     }
 
     public void PointerClick(object sender, PointerEventArgs e)
     {
-        if(e.target.gameObject.GetComponent<Button>() != null)
+        if (e.target.gameObject.GetComponent<Button>() != null)
         {
             Button b = e.target.gameObject.GetComponent<Button>();
-            b.onClick.Invoke();
-            if (e.target.name != "Next" && e.target.name != "Prev" && e.target.name != "Button")
+
+            if (b.colors.normalColor != selectedColor)
             {
-                clicked = e.target.name;
+                b.onClick.Invoke();
             }
         }
-  
+
     }
     public void PointerInside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null && clicked != e.target.name)
+        if (e.target.gameObject.GetComponent<Button>() != null)
         {
             laserPointer.thickness = 0.002f;
             Button b = e.target.gameObject.GetComponent<Button>();
-            ColorBlock cb = b.colors;
-            cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-            b.colors = cb;
+            if (b.colors.normalColor != selectedColor)
+            {
+                ColorBlock cb = b.colors;
+                cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                b.colors = cb;
+            }
         }
-        if(e.target.name == "TestPaper")
+        if (e.target.name == "TestPaper")
         {
             laserPointer.thickness = 0.002f;
         }
     }
     public void PointerOutside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null && clicked != e.target.name)
+        if (e.target.gameObject.GetComponent<Button>() != null)
         {
             laserPointer.thickness = 0.0f;
             Button b = e.target.gameObject.GetComponent<Button>();
-            ColorBlock cb = b.colors;
-            cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            b.colors = cb;
+
+            if (b.colors.normalColor != selectedColor)
+            {
+                ColorBlock cb = b.colors;
+                cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                b.colors = cb;
+            }
         }
         if (e.target.name == "TestPaper")
         {

@@ -115,21 +115,29 @@ public class Navigator : MonoBehaviour
     }
     public void PointerInside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null && e.target.tag != "InstructionButton")
+        if (e.target.gameObject.GetComponent<Button>() != null)
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;
             cb.normalColor = new Color(0.13f, 0.22f, 0.2f, 1.0f);
+            if (e.target.tag == "InstructionButton")
+            {
+                cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            }
             b.colors = cb;
         }
     }
     public void PointerOutside(object sender, PointerEventArgs e)
     {
-        if (e.target.gameObject.GetComponent<Button>() != null && e.target.tag != "InstructionButton")
+        if (e.target.gameObject.GetComponent<Button>() != null)
         {
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;
             cb.normalColor = new Color(0.13f, 0.22f, 0.2f, 0.0f);
+            if (e.target.tag == "InstructionButton")
+            {
+                cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            }
             b.colors = cb;
         }
     }

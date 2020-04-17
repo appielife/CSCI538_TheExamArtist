@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
-      "id": "28",
-      "question_txt": "What is the professor's name?",
-      "YourAns": "NA",
-      "MyAns": "D. OOOOO XXXXX"
+      "id": "8",
+      "question_txt": "x+y+z=1. x^2+y^2+z^2=2. x^3+y^3+z^3=3. x^4+y^4+z^4=?",
+      "YourAns": "A. 7",
+      "MyAns": "C. 25/6"
     },
     {
-      "id": "14",
-      "question_txt": "從1到5哪個數字最勤勞",
+      "id": "17",
+      "question_txt": "1 + 1/2 + 1/4 + 1/8 + ...=?",
       "YourAns": "NA",
-      "MyAns": "D. 2"
+      "MyAns": "A. ∞"
     },
     {
-      "id": "11",
-      "question_txt": "ねこのてXX",
+      "id": "1",
+      "question_txt": "In the xy-plane, the point (p,r) lies on the line with equation y=x+b, where b is a constant. The point with coordinates (2p,5r) lies on the line with equation y=2x+b. If p≠0, what is the value of r/p?",
       "YourAns": "NA",
-      "MyAns": "A. 猫の手足"
+      "MyAns": "C. 3/4"
     },
     {
-      "id": "25",
-      "question_txt": "天天說?",
+      "id": "13",
+      "question_txt": "0=1, 6=1, 18=2, 64=1, 192=?",
       "YourAns": "NA",
-      "MyAns": "A. 你好"
+      "MyAns": "C. 1"
     },
     {
       "id": "7",
-      "question_txt": "一番面白いのは何ですか",
+      "question_txt": "x+y+z=1. x^2+y^2+z^2=2. x^3+y^3+z^3=3. x^5+y^5+z^5=?",
       "YourAns": "NA",
-      "MyAns": "C. 俎板の上の鯉"
-    },
-    {
-      "id": "27",
-      "question_txt": "貴方の猫の名前はなに?",
-      "YourAns": "NA",
-      "MyAns": "A. ねこ"
-    },
-    {
-      "id": "0",
-      "question_txt": "What is the thing to make you XXX?",
-      "YourAns": "NA",
-      "MyAns": "C. antidisestablishmentarianism"
-    },
-    {
-      "id": "6",
-      "question_txt": "我爱?",
-      "YourAns": "NA",
-      "MyAns": "D. 它"
-    },
-    {
-      "id": "24",
-      "question_txt": "Naruto XXX",
-      "YourAns": "NA",
-      "MyAns": "A. Uzumaki"
+      "MyAns": "A. 6"
     },
     {
       "id": "9",
-      "question_txt": "萬獸之王是?",
+      "question_txt": "4^x+6^x=9^x. x=?",
       "YourAns": "NA",
-      "MyAns": "C. 動物園園長"
+      "MyAns": "D. 1.187"
+    },
+    {
+      "id": "14",
+      "question_txt": "ABC = A! + B! + C!, None of the digits is equal to 0. Solve ABC.",
+      "YourAns": "NA",
+      "MyAns": "A. 145"
+    },
+    {
+      "id": "15",
+      "question_txt": "I have a pen, I have an apple, and what do I have?",
+      "YourAns": "NA",
+      "MyAns": "C. pen"
+    },
+    {
+      "id": "5",
+      "question_txt": "6/2(1+2)=?",
+      "YourAns": "D. 1",
+      "MyAns": "A. 9"
+    },
+    {
+      "id": "19",
+      "question_txt": "If a, b, c, d are positive integers with sum of 63, what is the maximum value of ab+bc+cd?",
+      "YourAns": "B. 771",
+      "MyAns": "A. 991"
     }
   ]
 }
