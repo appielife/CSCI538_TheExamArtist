@@ -9,11 +9,11 @@ public class Instruction : MonoBehaviour
 {
     private Text main, shadow;
     private string init = "Become the one and only EXAM ARTIST!";
+
     void Start()
     {
         main = GameObject.Find("InstructionText").GetComponent<Text>();
         shadow = GameObject.Find("InstructionText2").GetComponent<Text>();
-
         main.text = init;
         shadow.text = init;
     }

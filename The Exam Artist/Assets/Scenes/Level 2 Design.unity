@@ -46376,7 +46376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabAnswer: 0
-  offset: 0
+  offset: 12
   initialTime: 600
   timeLeft: -1
   answer: []
@@ -46393,9 +46393,9 @@ MonoBehaviour:
   numQuestion: 10
   randomseats: 1
   randomed: 0
-  onPrepare: 0
+  onPrepare: 1
   bribeList: []
-  illegalDetect: 0
+  illegalDetect: 1
 --- !u!4 &1426615128
 Transform:
   m_ObjectHideFlags: 0
@@ -51534,7 +51534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603118076}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 11.5, y: 3.2415705, z: 8.02}
+  m_LocalPosition: {x: 11.574, y: 3.2415705, z: 8.02}
   m_LocalScale: {x: 0.28048107, y: 1, z: 1}
   m_Children:
   - {fileID: 83927482}
@@ -68260,6 +68260,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 9.95
       objectReference: {fileID: 0}
+    - target: {fileID: 3855207827067543810, guid: 83bb089fcb328429fabf17b015ad744e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.735
+      objectReference: {fileID: 0}
     - target: {fileID: 4258472561517613775, guid: 83bb089fcb328429fabf17b015ad744e,
         type: 3}
       propertyPath: m_Name
@@ -68339,6 +68344,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.149746
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416366992702706879, guid: 83bb089fcb328429fabf17b015ad744e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.735
       objectReference: {fileID: 0}
     - target: {fileID: 4416366993421739213, guid: 83bb089fcb328429fabf17b015ad744e,
         type: 3}

@@ -9,7 +9,7 @@ public class Navigator : MonoBehaviour
 {
     private SteamVR_LaserPointer laserPointerL;
     private SteamVR_LaserPointer laserPointerR;
-    private Settings hand;
+    private Settings setting;
     private Volume volume;
     private LevelSetting levelsetting;
     private ScoreCalculate report;
@@ -34,7 +34,7 @@ public class Navigator : MonoBehaviour
         laserPointerR.PointerOut += PointerOutside;
         laserPointerR.PointerClick += PointerClick;
 
-        hand = (GameObject.Find("Settings")) ? GameObject.Find("Settings").GetComponent<Settings>() : null;
+        setting = (GameObject.Find("Settings")) ? GameObject.Find("Settings").GetComponent<Settings>() : null;
         if (GameObject.Find("VolumeHandler"))
         {
             volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
@@ -53,6 +53,7 @@ public class Navigator : MonoBehaviour
 
             Button b = e.target.gameObject.GetComponent<Button>();
             b.onClick.Invoke();
+            //setting.click.Play();
             /*GameObject blackboard = GameObject.Find("BlackBoard");
             switch (e.target.name)
             {
@@ -182,13 +183,13 @@ public class Navigator : MonoBehaviour
     }
     public void Left()
     {
-        if (hand != null) { hand.setHand("LeftHand"); }
+        if (setting != null) { setting.setHand("LeftHand"); }
         /*FadeIn();
         Invoke("FadeOut", 5.0f);*/
     }
     public void Right()
     {
-        if (hand != null) { hand.setHand("RightHand"); }
+        if (setting != null) { setting.setHand("RightHand"); }
         /*FadeIn();
         Invoke("FadeOut", 5.0f);*/
     }
