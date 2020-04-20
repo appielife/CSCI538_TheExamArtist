@@ -30,6 +30,9 @@ TagManager:
   - MainPlayerPosition
   - InstructionButton
   - MainSubject
+  - MainChoice
+  - MainChoiceSelected
+  - TestSound
   layers:
   - Default
   - TransparentFX

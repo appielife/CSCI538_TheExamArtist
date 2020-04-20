@@ -78,6 +78,14 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/NextReport",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PrevReport",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

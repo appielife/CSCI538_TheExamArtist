@@ -34,7 +34,11 @@ public class Navigator : MonoBehaviour
         laserPointerR.PointerOut += PointerOutside;
         laserPointerR.PointerClick += PointerClick;
 
-        setting = (GameObject.Find("Settings")) ? GameObject.Find("Settings").GetComponent<Settings>() : null;
+        setting = null;
+        if (GameObject.Find("Settings"))
+        {
+            setting = GameObject.Find("Settings").GetComponent<Settings>();
+        }
         if (GameObject.Find("VolumeHandler"))
         {
             volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
@@ -53,7 +57,10 @@ public class Navigator : MonoBehaviour
 
             Button b = e.target.gameObject.GetComponent<Button>();
             b.onClick.Invoke();
-            //setting.click.Play();
+            if (setting != null)
+            {
+                setting.click.Play();
+            }
             /*GameObject blackboard = GameObject.Find("BlackBoard");
             switch (e.target.name)
             {

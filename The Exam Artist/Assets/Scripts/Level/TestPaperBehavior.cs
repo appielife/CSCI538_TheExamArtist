@@ -470,29 +470,37 @@ public class TestPaperBehavior : MonoBehaviour
         B.colors = cb;
         C.colors = cb;
         D.colors = cb;
+        A.tag = "MainChoice";
+        B.tag = "MainChoice";
+        C.tag = "MainChoice";
+        D.tag = "MainChoice";
     }
 
      public void selectA()
     {
         reset();
+        choiceA.GetComponentInChildren<Button>().tag = "MainChoiceSelected";
         quesTrack[tempQuestion].select(choiceA, 0);
         unansweredQues.Remove(tempQuestion);
     }
     public void selectB()
     {
         reset();
+        choiceB.GetComponentInChildren<Button>().tag = "MainChoiceSelected";
         quesTrack[tempQuestion].select(choiceB, 1);
         unansweredQues.Remove(tempQuestion);
     }
     public void selectC()
     {
         reset();
+        choiceC.GetComponentInChildren<Button>().tag = "MainChoiceSelected";
         quesTrack[tempQuestion].select(choiceC, 2);
         unansweredQues.Remove(tempQuestion);
     }
     public void selectD()
     {
         reset();
+        choiceD.GetComponentInChildren<Button>().tag = "MainChoiceSelected";
         quesTrack[tempQuestion].select(choiceD, 3);
         unansweredQues.Remove(tempQuestion);
     }

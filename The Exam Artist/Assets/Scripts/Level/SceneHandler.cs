@@ -9,11 +9,12 @@ public class SceneHandler : MonoBehaviour
 {
 
     private SteamVR_LaserPointer laserPointer;
-    private Color selectedColor;
+    public Settings setting;
+    private AudioSource scribble;
 
     void Start()
     {
-        Settings setting = null;
+        setting = null;
         if (GameObject.Find("Settings"))
         {
             setting = GameObject.Find("Settings").GetComponent<Settings>();
@@ -46,7 +47,7 @@ public class SceneHandler : MonoBehaviour
             GameObject.Find("Projectile").transform.Find("EraserLeft").gameObject.SetActive(true);
             GameObject.Find("Projectile").transform.Find("EraserRight").gameObject.SetActive(false);
         }
-        selectedColor = new Color(0.8f, 0.9f, 1.0f, 1.0f);
+        scribble = GameObject.FindGameObjectWithTag("TestSound").GetComponent<AudioSource>();
     }
 
     public void PointerClick(object sender, PointerEventArgs e)
@@ -54,9 +55,19 @@ public class SceneHandler : MonoBehaviour
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
             Button b = e.target.gameObject.GetComponent<Button>();
-
-            if (b.colors.normalColor != selectedColor)
+            if(b.tag != "MainChoiceSelected")
             {
+                if (b.tag == "MainChoice")
+                {
+                    scribble.Play();
+                }
+                else
+                {
+                    if (setting != null)
+                    {
+                        setting.click.Play();
+                    }
+                }
                 b.onClick.Invoke();
             }
         }
@@ -68,7 +79,7 @@ public class SceneHandler : MonoBehaviour
         {
             laserPointer.thickness = 0.002f;
             Button b = e.target.gameObject.GetComponent<Button>();
-            if (b.colors.normalColor != selectedColor)
+            if(b.tag != "MainChoiceSelected")
             {
                 ColorBlock cb = b.colors;
                 cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
@@ -86,8 +97,7 @@ public class SceneHandler : MonoBehaviour
         {
             laserPointer.thickness = 0.0f;
             Button b = e.target.gameObject.GetComponent<Button>();
-
-            if (b.colors.normalColor != selectedColor)
+            if (b.tag != "MainChoiceSelected")
             {
                 ColorBlock cb = b.colors;
                 cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);

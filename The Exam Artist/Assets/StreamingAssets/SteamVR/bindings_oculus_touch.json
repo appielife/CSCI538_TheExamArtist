@@ -221,6 +221,12 @@
                   "east" : {
                      "output" : "/actions/default/in/nextquestion"
                   },
+                  "north" : {
+                     "output" : "/actions/default/in/prevreport"
+                  },
+                  "south" : {
+                     "output" : "/actions/default/in/nextreport"
+                  },
                   "west" : {
                      "output" : "/actions/default/in/prevquestion"
                   }
@@ -237,6 +243,12 @@
                "inputs" : {
                   "east" : {
                      "output" : "/actions/default/in/nextquestion"
+                  },
+                  "north" : {
+                     "output" : "/actions/default/in/prevreport"
+                  },
+                  "south" : {
+                     "output" : "/actions/default/in/nextreport"
                   },
                   "west" : {
                      "output" : "/actions/default/in/prevquestion"

@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
-      "id": "8",
-      "question_txt": "x+y+z=1. x^2+y^2+z^2=2. x^3+y^3+z^3=3. x^4+y^4+z^4=?",
-      "YourAns": "A. 7",
-      "MyAns": "C. 25/6"
+      "id": "2",
+      "question_txt": "Which 'MJ' has the greatest achievement in music?",
+      "YourAns": "NA",
+      "MyAns": "C. Michael Jackson"
     },
     {
-      "id": "17",
-      "question_txt": "1 + 1/2 + 1/4 + 1/8 + ...=?",
+      "id": "32",
+      "question_txt": "Master Chief, is a character from what Video game series?",
       "YourAns": "NA",
-      "MyAns": "A. ∞"
+      "MyAns": "B. Halo"
     },
     {
-      "id": "1",
-      "question_txt": "In the xy-plane, the point (p,r) lies on the line with equation y=x+b, where b is a constant. The point with coordinates (2p,5r) lies on the line with equation y=2x+b. If p≠0, what is the value of r/p?",
+      "id": "21",
+      "question_txt": "A man has fallen into the river in Lego city; build what?",
       "YourAns": "NA",
-      "MyAns": "C. 3/4"
+      "MyAns": "A. A Rescue Helicopter"
+    },
+    {
+      "id": "20",
+      "question_txt": "A man has fallen into the river in Lego city; build what?",
+      "YourAns": "NA",
+      "MyAns": "C. A Rescue Helicopter"
     },
     {
       "id": "13",
-      "question_txt": "0=1, 6=1, 18=2, 64=1, 192=?",
+      "question_txt": "Which character was Gender-swapped in Fate anime Series",
       "YourAns": "NA",
-      "MyAns": "C. 1"
+      "MyAns": "B. Arthur Pendragon"
     },
     {
-      "id": "7",
-      "question_txt": "x+y+z=1. x^2+y^2+z^2=2. x^3+y^3+z^3=3. x^5+y^5+z^5=?",
+      "id": "31",
+      "question_txt": "In the video game: Team Fortress 2, Who likes Sandvich?",
       "YourAns": "NA",
-      "MyAns": "A. 6"
-    },
-    {
-      "id": "9",
-      "question_txt": "4^x+6^x=9^x. x=?",
-      "YourAns": "NA",
-      "MyAns": "D. 1.187"
+      "MyAns": "A. Heavy Weapons Guy"
     },
     {
       "id": "14",
-      "question_txt": "ABC = A! + B! + C!, None of the digits is equal to 0. Solve ABC.",
+      "question_txt": "Which of these is not part of the Trimurti",
+      "YourAns": "B. Shiva",
+      "MyAns": "A. Kali"
+    },
+    {
+      "id": "23",
+      "question_txt": "Which battle took place in 1916?",
       "YourAns": "NA",
-      "MyAns": "A. 145"
+      "MyAns": "D. The Battle of Somme"
     },
     {
-      "id": "15",
-      "question_txt": "I have a pen, I have an apple, and what do I have?",
+      "id": "28",
+      "question_txt": "Who discovered MSG and its properties?",
       "YourAns": "NA",
-      "MyAns": "C. pen"
+      "MyAns": "D. Kikunae Ikeda"
     },
     {
-      "id": "5",
-      "question_txt": "6/2(1+2)=?",
-      "YourAns": "D. 1",
-      "MyAns": "A. 9"
-    },
-    {
-      "id": "19",
-      "question_txt": "If a, b, c, d are positive integers with sum of 63, what is the maximum value of ab+bc+cd?",
-      "YourAns": "B. 771",
-      "MyAns": "A. 991"
+      "id": "4",
+      "question_txt": "What City was not once a capital of Roman Empire",
+      "YourAns": "NA",
+      "MyAns": "A. Turin"
     }
   ]
 }

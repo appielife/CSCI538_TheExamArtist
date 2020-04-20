@@ -10,11 +10,11 @@ public class TestPaperAuto : MonoBehaviour
 {
     public GameObject testPaper;
     public GameObject questionTextObj;
-    public GameObject Choices3D;
+    //public GameObject Choices3D;
     public GameObject choiceA, choiceB, choiceC, choiceD;
 
     private TestPaperBehavior playerTest;
-    private MeshRenderer[] choiceMesh;
+    //private MeshRenderer[] choiceMesh;
     private GetQuestion question;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
@@ -36,13 +36,13 @@ public class TestPaperAuto : MonoBehaviour
 
         testPage.SetActive(false);
         initialPage.SetActive(true);
-        Choices3D.SetActive(false);
+        //Choices3D.SetActive(false);
 
         offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
 
         mainSelectHandler = GameObject.FindGameObjectWithTag("MainSelectHandler");
         timeChange = frequency;
-        choiceMesh = Choices3D.GetComponentsInChildren<MeshRenderer>();
+        //choiceMesh = Choices3D.GetComponentsInChildren<MeshRenderer>();
     }
 
     void Update()
@@ -108,7 +108,7 @@ public class TestPaperAuto : MonoBehaviour
         int correctAns = quesTrack[tempQuestion].correctAns;
         quesTrack[tempQuestion].select(choices[correctAns], correctAns);
         Color higlight = new Color(1.0f, 0.0f, 0.0f, 1.0f);
-        choiceMesh[correctAns].material.color = higlight;
+        //choiceMesh[correctAns].material.color = higlight;
     }
 
     public void reset()
@@ -124,11 +124,10 @@ public class TestPaperAuto : MonoBehaviour
         B.colors = cb;
         C.colors = cb;
         D.colors = cb;
-        for(int i = 0; i < choiceMesh.Length; i++)
+        /*for(int i = 0; i < choiceMesh.Length; i++)
         {
             choiceMesh[i].material.color = white;
-        }
-
+        }*/
     }
 }
 
