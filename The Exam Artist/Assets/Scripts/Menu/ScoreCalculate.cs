@@ -69,6 +69,7 @@ public class ScoreCalculate : MonoBehaviour
         }
         report.text = reporttext[index];
     }
+
     public void prevReport()
     {
         if (index - 1 > 0) {
@@ -93,7 +94,6 @@ public class ScoreCalculate : MonoBehaviour
         return ans_arr;
     }
 
-
     public int getCorrectAnswersCount()
     {
         //to get data from json file
@@ -112,19 +112,16 @@ public class ScoreCalculate : MonoBehaviour
         return corr_count;
     }
 
-
     // to getcount of questios not anseed
     public int getUnansweredCount()
     {
         int count = 0;
-        // 
         for (int i = 0; i < ans_arr.Count; i++)
         {
             // if the answer is equal to NA abbrevation for not answered
             if ((ans_arr[i]["YourAns"].ToString()) == "NA")
             {
                 count = count + 1;
-
             }
         }
         return count;

@@ -9,29 +9,26 @@ public class TeacherController : MonoBehaviour
 {
     public float speed = 2.0f;
     public NavMeshAgent teacher;
-    public GameObject student, gameoverTarget, giftTarget;
+    public GameObject student, gameoverTarget;
     public Animator ani;
-    //public Text text;
     public Random ran = new Random();
     public AudioClip wow;
-    public TestPaperBehavior test;
     public IllegalMoveHandler illegalmove;
     public GiftBlindEyesBehavior giftSkillTrigger;
-    public ClapBombBehavior clapBombTrigger;
-
-    private int behaviour = 1; // moving
-    private bool inEyesight = false, gameover = false, play = false;
-    public bool collision = false;
-    private float angle, minDistance = 0.2f, minAngle = 120f, minEyesight = 10000f;
-    //private float minDistance = 10000f, 
-    private GameObject target;
-    private AudioSource[] studentsound, teachersound;
-    private float timePaused = 0.0f;
-    float timeChecked = 0.0f;
     public float MaxPauseTime = 3.0f;
     public float MaxCheckTime = 5.5f;
+    public bool collision = false, gameover = false;
 
+    private int behaviour = 1; 
+    private bool inEyesight = false, play = false;
+    private float angle, minDistance = 0.2f, minAngle = 120f, minEyesight = 10000f;
+    //private float minDistance = 10000f, 
+    private GameObject target, giftTarget;
+    private AudioSource[] studentsound, teachersound;
+    private float timePaused = 0.0f;
+    private float timeChecked = 0.0f;
     private float timeLeft = 15.0f;
+    private TestPaperBehavior test;
 
     void Start()
     {
@@ -45,8 +42,6 @@ public class TeacherController : MonoBehaviour
         teacher.speed = speed;
         target = GameObject.Find("target1");
         target.transform.position = GetRandomPosition();
-        
-        //setBribeTarget();
     }
 
     void Update()
@@ -86,10 +81,6 @@ public class TeacherController : MonoBehaviour
                     case 5:
                         bribeBehavior();
                         break;
-                    case 6:
-                        checkStudentBehavior();
-                        break;
-
                 }
                 if (!gameover)
                 {
@@ -134,28 +125,18 @@ public class TeacherController : MonoBehaviour
             }
             else
             {
-                /*if (clapBombTrigger.targetStudentPos != null)
-                {
-                    //Debug.Log("CLAP");
-                    teacher.SetDestination(clapBombTrigger.targetStudentPos.transform.position);
-                    behaviour = 6;
-                }*/
                 if (giftSkillTrigger.isTrigger() == true)
                 {
-                    //Debug.Log("GIFT");
                     setBribeTarget();
                     teacher.SetDestination(giftTarget.transform.position);
                     behaviour = 5;
                 }
                 else
                 {
-                    //teacher.destination = destination.position;
                     teacher.SetDestination(destination.position);
-                    //Debug.Log("Set:" + destination.position + " into " + teacher.destination);
                     if (!teacher.hasPath && !collision)
                     {
                         target.transform.position = GetRandomPosition();
-                        //teacher.SetDestination(destination.position);
                     }
                 }
             }
@@ -165,7 +146,6 @@ public class TeacherController : MonoBehaviour
                 //Debug.Log(Vector3.Distance(teacher.transform.position, destination.position));
                 if (Vector3.Distance(teacher.transform.position, destination.position) < minDistance)
                 {
-                    //Debug.Log(teacher.transform.position);
                     teacher.ResetPath();
                     behaviour = 3;
                     target.transform.position = GetRandomPosition();
@@ -188,7 +168,6 @@ public class TeacherController : MonoBehaviour
         float angle = Vector3.Angle(srcLocalVect, forwardLocalVect);
         if (distance < minEyesight && angle < minAngle / 2)
         {
-            //text.text = "in eyesight";
             inEyesight = true;
             if (illegalmove.illegal)
             {
@@ -197,7 +176,6 @@ public class TeacherController : MonoBehaviour
         }
         else
         {
-            //text.text = "not in eyesight";
             inEyesight = false;
         }
     }
@@ -248,7 +226,7 @@ public class TeacherController : MonoBehaviour
         }
     }
 
-    void Checking()
+    /*void Checking()
     {
         timeChecked += Time.deltaTime;
         teachersound[1].Pause();
@@ -276,7 +254,7 @@ public class TeacherController : MonoBehaviour
             teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
             Checking();
         }
-    }
+    }*/
 
     public void setTarget(GameObject t)
     {
@@ -289,7 +267,6 @@ public class TeacherController : MonoBehaviour
 
     void setBribeTarget()
     {
-        //giftTarget = GameObject.Find("Student" + giftSkillTrigger.target).transform.GetChild(0).gameObject;
         giftTarget = GameObject.Find("Student" + giftSkillTrigger.target).transform.Find("Position").gameObject;
     }
 

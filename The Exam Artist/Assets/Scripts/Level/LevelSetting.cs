@@ -150,7 +150,7 @@ public class LevelSetting : MonoBehaviour
     public void setSubject(string s)
     {
         subject = s;
-        GameObject.Find("Subject").GetComponent<Text>().text = s.ToUpper() + " QUIZ !";
+        GameObject.Find("Subject").GetComponent<Text>().text = s.ToUpper() + " TEST !";
         GameObject[] test = GameObject.FindGameObjectsWithTag("Subject");
         for(int i = 0; i< test.Length; i++)
         {

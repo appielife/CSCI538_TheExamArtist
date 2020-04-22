@@ -25,8 +25,9 @@ public class TriggerInput : MonoBehaviour
     public TestPaperBehavior test;
     public GiftBlindEyesBehavior gbe;
     public MeditationBehavior mb;
+    public TeacherController tc;
 
-    private bool show = false, onPrepare = true;
+    private bool show = false, onPrepare = true, gameover = false;
     public float offset;
 
     void OnDestroy()
@@ -59,6 +60,8 @@ public class TriggerInput : MonoBehaviour
         offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
         onPrepare = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().onPrepare;
 
+        tc = GameObject.FindGameObjectWithTag("TeacherAction").GetComponent<TeacherController>();
+
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
         Spressed.AddOnStateUpListener(TriggerUpS, left);
@@ -86,12 +89,16 @@ public class TriggerInput : MonoBehaviour
             {
                 offset -= Time.deltaTime;
             }
+            if (!gameover)
+            {
+                gameover = tc.gameover;
+            }
         }
     }
 
     public void TriggerDownY(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             if (test.isBribeSkillActive())
             {
@@ -107,7 +114,7 @@ public class TriggerInput : MonoBehaviour
     }
     public void TriggerDownX(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             if (test.isBribeSkillActive())
             {
@@ -123,7 +130,7 @@ public class TriggerInput : MonoBehaviour
     }
     public void TriggerUpS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             if (show) hns.Hide();
             show = false;
@@ -131,7 +138,7 @@ public class TriggerInput : MonoBehaviour
     }
     public void TriggerDownS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             if (!show) hns.Show();
             show = true;
@@ -143,7 +150,7 @@ public class TriggerInput : MonoBehaviour
         {
             test.bribePagePrev();
         }
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             test.previous();
         }
@@ -154,7 +161,7 @@ public class TriggerInput : MonoBehaviour
         {
             test.bribePageNext();
         }
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             test.next();
         }
@@ -162,7 +169,7 @@ public class TriggerInput : MonoBehaviour
 
     public void TriggerDownA(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             if (test.isBribeSkillActive())
             {
@@ -179,7 +186,7 @@ public class TriggerInput : MonoBehaviour
 
     public void TriggerDownB(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
-        if (offset < 0)
+        if (offset < 0 && !gameover)
         {
             test.showBribeSkillPage();
         }

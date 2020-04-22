@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
+      "id": "1",
+      "question_txt": "In the xy-plane, the point (p,r) lies on the line with equation y=x+b, where b is a constant. The point with coordinates (2p,5r) lies on the line with equation y=2x+b. If p≠0, what is the value of r/p?",
+      "YourAns": "C. 3/4",
+      "MyAns": "C. 3/4"
+    },
+    {
       "id": "2",
-      "question_txt": "Which 'MJ' has the greatest achievement in music?",
-      "YourAns": "NA",
-      "MyAns": "C. Michael Jackson"
+      "question_txt": "If x is the average of m and 9, y is the average of 2m and 15, and z is the average of 3m and 18, what is the average of x, y, and z in terms of m?",
+      "YourAns": "D. m+7",
+      "MyAns": "D. m+7"
     },
     {
-      "id": "32",
-      "question_txt": "Master Chief, is a character from what Video game series?",
-      "YourAns": "NA",
-      "MyAns": "B. Halo"
+      "id": "6",
+      "question_txt": "The product of 3 positive integers x, y, z is 192. z = 4 and p is equal to the average of x and y. What is the minimum possible value of p?",
+      "YourAns": "B. 7",
+      "MyAns": "B. 7"
     },
     {
-      "id": "21",
-      "question_txt": "A man has fallen into the river in Lego city; build what?",
-      "YourAns": "NA",
-      "MyAns": "A. A Rescue Helicopter"
+      "id": "8",
+      "question_txt": "x+y+z=1. x^2+y^2+z^2=2. x^3+y^3+z^3=3. x^4+y^4+z^4=?",
+      "YourAns": "C. 25/6",
+      "MyAns": "C. 25/6"
     },
     {
-      "id": "20",
-      "question_txt": "A man has fallen into the river in Lego city; build what?",
-      "YourAns": "NA",
-      "MyAns": "C. A Rescue Helicopter"
+      "id": "9",
+      "question_txt": "4^x+6^x=9^x. x=?",
+      "YourAns": "D. 1.187",
+      "MyAns": "D. 1.187"
+    },
+    {
+      "id": "19",
+      "question_txt": "If a, b, c, d are positive integers with sum of 63, what is the maximum value of ab+bc+cd?",
+      "YourAns": "A. 991",
+      "MyAns": "A. 991"
     },
     {
       "id": "13",
-      "question_txt": "Which character was Gender-swapped in Fate anime Series",
-      "YourAns": "NA",
-      "MyAns": "B. Arthur Pendragon"
+      "question_txt": "0=1, 6=1, 18=2, 64=1, 192=?",
+      "YourAns": "B. 1",
+      "MyAns": "B. 1"
     },
     {
-      "id": "31",
-      "question_txt": "In the video game: Team Fortress 2, Who likes Sandvich?",
-      "YourAns": "NA",
-      "MyAns": "A. Heavy Weapons Guy"
+      "id": "7",
+      "question_txt": "x+y+z=1. x^2+y^2+z^2=2. x^3+y^3+z^3=3. x^5+y^5+z^5=?",
+      "YourAns": "D. 6",
+      "MyAns": "D. 6"
     },
     {
-      "id": "14",
-      "question_txt": "Which of these is not part of the Trimurti",
-      "YourAns": "B. Shiva",
-      "MyAns": "A. Kali"
+      "id": "20",
+      "question_txt": "1 + 2 + 3 + 4 + ...=?",
+      "YourAns": "C. ∞",
+      "MyAns": "C. ∞"
     },
     {
-      "id": "23",
-      "question_txt": "Which battle took place in 1916?",
-      "YourAns": "NA",
-      "MyAns": "D. The Battle of Somme"
-    },
-    {
-      "id": "28",
-      "question_txt": "Who discovered MSG and its properties?",
-      "YourAns": "NA",
-      "MyAns": "D. Kikunae Ikeda"
-    },
-    {
-      "id": "4",
-      "question_txt": "What City was not once a capital of Roman Empire",
-      "YourAns": "NA",
-      "MyAns": "A. Turin"
+      "id": "0",
+      "question_txt": "If 3x−y=12, what is the value of (8^x)/(2^y)",
+      "YourAns": "D. 2^12",
+      "MyAns": "D. 2^12"
     }
   ]
 }

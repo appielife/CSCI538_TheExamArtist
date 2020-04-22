@@ -61,64 +61,6 @@ public class Navigator : MonoBehaviour
             {
                 setting.click.Play();
             }
-            /*GameObject blackboard = GameObject.Find("BlackBoard");
-            switch (e.target.name)
-            {
-                case "Play":
-                    Play();
-                    break;
-                case "Options":
-                    Options();
-                    break;
-                case "Quit":
-                    Quit();
-                    break;
-                case "ToneDown":
-                    volume.ToneDown();
-                    break;
-                case "ToneUp":
-                    volume.ToneUp();
-                    break;
-                case "Return":
-                    Return();
-                    break;
-                case "Left":
-                    if (hand != null) { hand.setHand("LeftHand"); }
-                    FadeIn();
-                    Invoke("FadeOut", 5.0f);
-                    break;
-                case "Right":
-                    if (hand != null) { hand.setHand("RightHand"); }
-                    FadeIn();
-                    Invoke("FadeOut", 5.0f);
-                    break;
-                case "Back":
-                    Back();
-                    break;
-                case "Continue":
-                    Continue();
-                    break;
-                case "TryAgain":
-                    LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-                    setting.resetTemp();
-                    FadeIn();
-                    Invoke("FadeOut", 5.0f);
-                    break;
-                case "ShowReport":
-                    ShowReport();
-                    break;
-                case "DecideBack":
-                    DecideBack();
-                    break;
-                case "PrevReport":
-                    PrevReport();
-                    break;
-                case "NextReport":
-                    NextReport();
-                    break;
-                default:
-                    break;
-            }*/
         }
     }
     public void PointerInside(object sender, PointerEventArgs e)
@@ -213,7 +155,6 @@ public class Navigator : MonoBehaviour
             LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             setting.resetTemp();
         }
-        //SceneManager.LoadScene(1);
     }
     public void Continue()
     {

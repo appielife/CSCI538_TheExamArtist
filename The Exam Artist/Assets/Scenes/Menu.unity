@@ -10997,11 +10997,11 @@ MonoBehaviour:
   bottom: {fileID: 0}
   backgroundColor: {r: 0, g: 0, b: 0, a: 1}
   showGrid: 0
-  fadeOutTime: 0.5
-  fadeInTime: 0.5
+  fadeOutTime: 1
+  fadeInTime: 1
   postLoadSettleTime: 0
-  loadingScreenFadeInTime: 1
-  loadingScreenFadeOutTime: 0.25
+  loadingScreenFadeInTime: 0
+  loadingScreenFadeOutTime: 0
   autoTriggerOnEnable: 1
 --- !u!4 &1314254991
 Transform:
