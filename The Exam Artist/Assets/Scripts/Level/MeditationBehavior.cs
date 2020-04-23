@@ -18,6 +18,7 @@ public class MeditationBehavior : MonoBehaviour
     //private int limit = 5;
     private float duration = 2.0f;
     public GameObject wall, level, player;
+    public int correctAns;
 
     void Start()
     {
@@ -84,8 +85,8 @@ public class MeditationBehavior : MonoBehaviour
                 wall.SetActive(true);
                 Invoke("FadeIn", duration);
 
-                int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-                sound[0].PlayOneShot(meditationAudioClips[correctAns], 1.0f);
+                correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
+                //sound[0].PlayOneShot(meditationAudioClips[correctAns], 1.0f);
             }
         }
         else

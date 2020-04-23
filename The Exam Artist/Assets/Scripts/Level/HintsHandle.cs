@@ -12,7 +12,7 @@ public class HintsHandle : MonoBehaviour
     public List<Text> Hints = new List<Text>();
     private List<string> objName = new List<string>();
 
-    private void Start()
+    private void Awake()
     {
         JArray hintArray;
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/hints.json"))
