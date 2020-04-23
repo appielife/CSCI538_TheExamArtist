@@ -52,8 +52,8 @@ public class TestPaperBehavior : MonoBehaviour
         bribePage.SetActive(false);
         bribeSkillPage.SetActive(false);
 
-        string[] files = { "World", "Foreign", "Chemistry", "Math" };
-        int index = Random.Range(0, 4);
+        string[] files = { "World", "Foreign", "Chemistry", "Math", "Biology", "Computer", "History", "Music" };
+        int index = Random.Range(0, files.Length);
         string filename = "questions-" + files[index] + ".json";
         JSON_file = filename;
 

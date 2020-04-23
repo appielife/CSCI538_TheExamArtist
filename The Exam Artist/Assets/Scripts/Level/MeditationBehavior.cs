@@ -17,10 +17,13 @@ public class MeditationBehavior : MonoBehaviour
     private bool used = false;
     //private int limit = 5;
     private float duration = 2.0f;
+    public GameObject wall, level, player;
 
     void Start()
     {
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
+        level = GameObject.Find("Level");
+        player = GameObject.FindGameObjectWithTag("MainPlayer");
         imgCoolDown.fillAmount = 0.0f;
         textCoolDown.text = "";
     }
@@ -53,8 +56,6 @@ public class MeditationBehavior : MonoBehaviour
             }
             else
             {
-                FadeIn();
-                Invoke("FadeOut", duration);
                 timer.GetComponent<Timer>().timeLeft -= (60 - duration);
                 used = true;
 
@@ -78,9 +79,13 @@ public class MeditationBehavior : MonoBehaviour
                     gbe.ReduceCoolDownCounter(60);
                 }
 
+                FadeOut();
+                level.SetActive(false);
+                wall.SetActive(true);
+                Invoke("FadeIn", duration);
+
                 int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
                 sound[0].PlayOneShot(meditationAudioClips[correctAns], 1.0f);
-                //Debug.Log("The correct answer is " + correctAns.ToString());
             }
         }
         else
@@ -89,13 +94,13 @@ public class MeditationBehavior : MonoBehaviour
         }
     }
 
-    private void FadeIn()
+    private void FadeOut()
     {
         SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
     }
 
-    private void FadeOut()
+    private void FadeIn()
     {
         SteamVR_Fade.Start(Color.black, 0f);
         SteamVR_Fade.Start(Color.clear, duration);

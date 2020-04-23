@@ -26,7 +26,7 @@ public class TeacherController : MonoBehaviour
     private GameObject target, giftTarget;
     private AudioSource[] studentsound, teachersound;
     private float timePaused = 0.0f;
-    private float timeChecked = 0.0f;
+    //private float timeChecked = 0.0f;
     private float timeLeft = 15.0f;
     private TestPaperBehavior test;
 
