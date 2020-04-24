@@ -31177,7 +31177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 171666, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 467406, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -57354,7 +57354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabAnswer: 0
-  offset: 12
+  offset: 0
   initialTime: 600
   timeLeft: -1
   answer: []
@@ -57369,11 +57369,11 @@ MonoBehaviour:
   subject: 
   positions: []
   numQuestion: 10
-  randomseats: 1
+  randomseats: 0
   randomed: 0
-  onPrepare: 1
+  onPrepare: 0
   bribeList: []
-  illegalDetect: 1
+  illegalDetect: 0
 --- !u!4 &1426615128
 Transform:
   m_ObjectHideFlags: 0
@@ -74847,7 +74847,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 171666, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_Name
-      value: EraserRight
+      value: EraserRight2
       objectReference: {fileID: 0}
     - target: {fileID: 171666, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -74856,6 +74856,10 @@ PrefabInstance:
     - target: {fileID: 171666, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_TagString
       value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 171666, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 467406, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -74912,6 +74916,10 @@ PrefabInstance:
     - target: {fileID: 467406, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_LocalScale.z
       value: 5.18735
+      objectReference: {fileID: 0}
+    - target: {fileID: 2359512, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6524096, guid: 950c71dd5929b4a41b833a85f89647ce, type: 3}
       propertyPath: m_IsTrigger
@@ -75171,7 +75179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1852051014
 MonoBehaviour:
   m_ObjectHideFlags: 0

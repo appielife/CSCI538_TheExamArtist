@@ -62,7 +62,7 @@ public class Collision : MonoBehaviour
                 {
                     target.resetPosition();
                     target.setPosition(new Vector3(-0.3f, 0.45f, 0.0f));
-                    target.setChairPosition(new Vector3(0.0f, 0.0f, -0.115f));
+                    target.setChairPosition(new Vector3(0.0f, 0.0f, -0.215f));
                     moved = true;
                 }
                 target.setAnimation(11);
