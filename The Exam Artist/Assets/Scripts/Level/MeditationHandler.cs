@@ -9,9 +9,9 @@ using Newtonsoft.Json.Linq;
 public class MeditationHandler : MonoBehaviour
 {
     public GameObject level;
-    public GameObject front, right, left;
-    private float time = 15.0f;
-    private Text[] frontText, rightText, leftText, texts;
+    public GameObject front, right, left, back;
+    private float time = 15000.0f;
+    private Text[] frontText, rightText, leftText, backText, texts;
     private List<bool> show = new List<bool>();
     private Dictionary<int, Text> showing = new Dictionary<int, Text>(), fading = new Dictionary<int, Text>();
     private List<int> remove = new List<int>();
@@ -27,11 +27,13 @@ public class MeditationHandler : MonoBehaviour
         frontText = front.GetComponentsInChildren<Text>();
         rightText = right.GetComponentsInChildren<Text>();
         leftText = left.GetComponentsInChildren<Text>();
+        backText = back.GetComponentsInChildren<Text>();
 
-        texts = new Text[frontText.Length + rightText.Length + leftText.Length];
+        texts = new Text[frontText.Length + rightText.Length + leftText.Length + backText.Length];
         frontText.CopyTo(texts, 0);
         rightText.CopyTo(texts, frontText.Length);
         leftText.CopyTo(texts, frontText.Length + rightText.Length);
+        backText.CopyTo(texts, frontText.Length + rightText.Length + leftText.Length);
 
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/Meditation.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
