@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Valve.VR;
 
 public class Washroom : MonoBehaviour
 {
     public LevelSetting setting;
-    public GameObject LoadSceneHandler;
-    private float timer;
+    public GameObject LoadSceneHandler, current, Level;
+    public float timer;
     private GameObject paper;
-    void Start()
+    private float duration = 2.0f;
+    private bool back = false;
+
+    void OnEnable()
     {
+
+        back = false;
         List<int> randomArray = new List<int>();
         if (GameObject.Find("LevelSetting") != null)
         {
@@ -74,9 +80,35 @@ public class Washroom : MonoBehaviour
             }
             else
             {
-                //SceneManager.LoadScene(1);
-                LoadSceneHandler.SetActive(true);
+                if (!back)
+                {
+                    back = true;
+                    FadeOut();
+                    Invoke("Change", duration);
+                    Invoke("FadeIn", duration * 2);
+                }
+                //LoadSceneHandler.SetActive(true);
             }
         }
+    }
+
+
+    private void FadeOut()
+    {
+        SteamVR_Fade.Start(Color.clear, 0f);
+        SteamVR_Fade.Start(Color.black, duration);
+    }
+
+    private void FadeIn()
+    {
+        SteamVR_Fade.Start(Color.black, 0f);
+        SteamVR_Fade.Start(Color.clear, duration);
+    }
+
+
+    private void Change()
+    {
+        Level.SetActive(true);
+        current.SetActive(false);
     }
 }

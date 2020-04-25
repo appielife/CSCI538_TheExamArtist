@@ -5,21 +5,25 @@ using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Valve.VR;
 
 public class MeditationHandler : MonoBehaviour
 {
     public GameObject level;
     public GameObject front, right, left, back;
-    private float time = 15000.0f;
+    public MeditationBehavior meditation;
+
+    private float time = 20.0f;
     private Text[] frontText, rightText, leftText, backText, texts;
     private List<bool> show = new List<bool>();
     private Dictionary<int, Text> showing = new Dictionary<int, Text>(), fading = new Dictionary<int, Text>();
     private List<int> remove = new List<int>();
     private AudioSource[] sound;
-    public MeditationBehavior meditation;
     private bool play = false;
     private JObject words_odj;
     private JArray words;
+    private float duration = 2.0f;
+
 
     void Awake()
     {
@@ -45,6 +49,7 @@ public class MeditationHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        sound[2].volume = 0.5f;
         for (int i = 0; i < texts.Length; i++)
         {
             Color c = texts[i].color;
@@ -64,6 +69,7 @@ public class MeditationHandler : MonoBehaviour
             {
                 if (!play)
                 {
+                    StartCoroutine(FadeOut(sound[2], 5.0f));
                     sound[0].PlayOneShot(meditation.meditationAudioClips[meditation.correctAns], 1.0f);
                     play = true;
                 }
@@ -110,10 +116,12 @@ public class MeditationHandler : MonoBehaviour
         }
         else
         {
+            sound[2].Stop();
             time = 15.0f;
             play = false;
-            gameObject.SetActive(false);
-            level.SetActive(true);
+
+            FadeOut();
+            Invoke("FadeIn", duration);
         }
     }
 
@@ -144,4 +152,36 @@ public class MeditationHandler : MonoBehaviour
             remove.Add(index);
         }
     }
+
+    public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
+    {
+        float startVolume = audioSource.volume;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;
+    }
+
+
+
+    private void FadeOut()
+    {
+        SteamVR_Fade.Start(Color.clear, 0f);
+        SteamVR_Fade.Start(Color.black, duration);
+    }
+
+    private void FadeIn()
+    {
+        SteamVR_Fade.Start(Color.black, 0f);
+        gameObject.SetActive(false);
+        level.SetActive(true);
+        SteamVR_Fade.Start(Color.clear, duration);
+    }
+
 }

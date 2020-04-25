@@ -52,7 +52,7 @@ public class TestPaperBehavior : MonoBehaviour
         bribePage.SetActive(false);
         bribeSkillPage.SetActive(false);
 
-        string[] files = { "World", "Language", "Chemistry", "Math", "Biology", "Computer", "History", "Music", "BioChemistry" };
+        string[] files = { "World", "Language", "Chemistry", "Math", "Biology", "Computer", "History", "Music", "BioChemistry", "Sports" };
         int index = Random.Range(0, files.Length);
         string filename = "questions-" + files[index] + ".json";
         JSON_file = filename;

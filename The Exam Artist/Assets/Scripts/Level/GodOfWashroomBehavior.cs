@@ -19,7 +19,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
     private int limit = 5;
     private float duration = 2.0f;
     private LevelSetting setting;
-    public GameObject LoadSceneHandler;
+    public GameObject LoadSceneHandler, Washroom, Level;
 
     private void loadResources()
     {
@@ -75,8 +75,6 @@ public class GodOfWashroomBehavior : MonoBehaviour
             }
             else
             {
-                /*FadeIn();
-                Invoke("FadeOut", duration);*/
                 timer.GetComponent<Timer>().timeLeft -= (60 - duration);
                 used = true;
                 limit -= 1;
@@ -85,8 +83,12 @@ public class GodOfWashroomBehavior : MonoBehaviour
                 setting.setWashroom();
                 setting.setQuestion();
                 setting.setHint();
-                //SceneManager.LoadScene(3);
-                LoadSceneHandler.SetActive(true);
+
+                FadeOut();
+                Invoke("Change", duration);
+                Invoke("FadeIn", duration * 2);
+
+                //LoadSceneHandler.SetActive(true);
             }
         }
         else
@@ -126,16 +128,21 @@ public class GodOfWashroomBehavior : MonoBehaviour
         }
     }
 
-    private void FadeIn()
+    private void FadeOut()
     {
         SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
-        SceneManager.LoadScene(3);
     }
 
-    private void FadeOut()
+    private void FadeIn()
     {
         SteamVR_Fade.Start(Color.black, 0f);
         SteamVR_Fade.Start(Color.clear, duration);
+    }
+
+    private void Change()
+    {
+        Washroom.SetActive(true);
+        Level.SetActive(false);
     }
 }

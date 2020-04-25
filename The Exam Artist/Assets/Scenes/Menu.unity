@@ -11000,8 +11000,8 @@ MonoBehaviour:
   fadeOutTime: 1
   fadeInTime: 1
   postLoadSettleTime: 0
-  loadingScreenFadeInTime: 0
-  loadingScreenFadeOutTime: 0
+  loadingScreenFadeInTime: 1
+  loadingScreenFadeOutTime: 1
   autoTriggerOnEnable: 1
 --- !u!4 &1314254991
 Transform:

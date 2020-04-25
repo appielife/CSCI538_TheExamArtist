@@ -7896,7 +7896,7 @@ MonoBehaviour:
   internalProcessArgs: 
   loadAdditive: 0
   loadAsync: 1
-  loadingScreen: {fileID: 0}
+  loadingScreen: {fileID: 2800000, guid: e629537f73a8d2c4895e437b07957799, type: 3}
   progressBarEmpty: {fileID: 0}
   progressBarFull: {fileID: 0}
   loadingScreenWidthInMeters: 6
@@ -7915,8 +7915,8 @@ MonoBehaviour:
   fadeOutTime: 1
   fadeInTime: 1
   postLoadSettleTime: 0
-  loadingScreenFadeInTime: 0
-  loadingScreenFadeOutTime: 0
+  loadingScreenFadeInTime: 0.1
+  loadingScreenFadeOutTime: 0.1
   autoTriggerOnEnable: 1
 --- !u!4 &1499540007
 Transform:

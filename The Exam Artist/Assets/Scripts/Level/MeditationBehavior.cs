@@ -81,8 +81,6 @@ public class MeditationBehavior : MonoBehaviour
                 }
 
                 FadeOut();
-                level.SetActive(false);
-                wall.SetActive(true);
                 Invoke("FadeIn", duration);
 
                 correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
@@ -104,6 +102,8 @@ public class MeditationBehavior : MonoBehaviour
     private void FadeIn()
     {
         SteamVR_Fade.Start(Color.black, 0f);
+        level.SetActive(false);
+        wall.SetActive(true);
         SteamVR_Fade.Start(Color.clear, duration);
     }
 }
