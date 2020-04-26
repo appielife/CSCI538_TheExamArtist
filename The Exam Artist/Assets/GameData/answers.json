@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
-      "id": "11",
-      "question_txt": "Chopin was well known for his Ballades. How many did he compose",
+      "id": "10",
+      "question_txt": "Which of the following is not an island country",
       "YourAns": "NA",
-      "MyAns": "D. 4"
-    },
-    {
-      "id": "13",
-      "question_txt": "The Amati family is well-known throughout the world of classical music. What are they known for?",
-      "YourAns": "NA",
-      "MyAns": "C. Violin"
-    },
-    {
-      "id": "8",
-      "question_txt": "What's the name of a large wind instrument is used for cultural music by the indigenous people of Australia?",
-      "YourAns": "NA",
-      "MyAns": "D. Didgeridoo"
-    },
-    {
-      "id": "4",
-      "question_txt": "How is American singer Michael Lee Aday better known?",
-      "YourAns": "NA",
-      "MyAns": "A. Meatloaf"
-    },
-    {
-      "id": "16",
-      "question_txt": "International music sensation ABBA originate from which European country?",
-      "YourAns": "NA",
-      "MyAns": "B. Sweden"
-    },
-    {
-      "id": "9",
-      "question_txt": "Names after the Greek god of wind, this musical instrument is played by passing a current of air over its strings. What is it?",
-      "YourAns": "NA",
-      "MyAns": "B. Aeolian Harp"
+      "MyAns": "A. Malaysia"
     },
     {
       "id": "5",
-      "question_txt": "Which Rolling Stones guitarist was found dead in a swimming pool in 1969?",
+      "question_txt": "Colombo is the capital of",
       "YourAns": "NA",
-      "MyAns": "D. Brian Jones"
+      "MyAns": "C. Sri Lanka"
+    },
+    {
+      "id": "2",
+      "question_txt": "Which of the following statement is wrong",
+      "YourAns": "NA",
+      "MyAns": "C. GDP 2019: Turkey < Saudi Arabia"
+    },
+    {
+      "id": "8",
+      "question_txt": "Which of the following number, in sq mi, is closest to the actual area of Caribbean sea",
+      "YourAns": "NA",
+      "MyAns": "C. 1.063 million"
+    },
+    {
+      "id": "15",
+      "question_txt": "Which of the following countries uses US Dollar as offical currency",
+      "YourAns": "NA",
+      "MyAns": "D. Republic of El Salvador"
     },
     {
       "id": "19",
-      "question_txt": "The Beatles released their first UK single 'Love Me Do' in what year?",
+      "question_txt": "Which of the following countries is not a Middle East Country",
       "YourAns": "NA",
-      "MyAns": "B. 1962"
+      "MyAns": "D. None of the three"
     },
     {
-      "id": "1",
-      "question_txt": "Which type of wood did the Beatles sing about?",
+      "id": "17",
+      "question_txt": "What is the highest mountain in Europe",
       "YourAns": "NA",
-      "MyAns": "D. Norwegian Wood"
+      "MyAns": "B. Mount Elbrus"
     },
     {
-      "id": "10",
-      "question_txt": "Which musical instrument was evolved from the sackbut – an early brass instrument.",
+      "id": "11",
+      "question_txt": "Which of the following countries has tropical rainforest climate?",
       "YourAns": "NA",
-      "MyAns": "A. Trombone"
+      "MyAns": "A. Kenya"
+    },
+    {
+      "id": "6",
+      "question_txt": "Which modern country was not a part of French Indochina?",
+      "YourAns": "NA",
+      "MyAns": "A. Thailand"
+    },
+    {
+      "id": "14",
+      "question_txt": "Which of following countries does not have a king or queen right now",
+      "YourAns": "NA",
+      "MyAns": "D. Tunisia"
     }
   ]
 }

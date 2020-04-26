@@ -15,6 +15,7 @@ public class TeacherController : MonoBehaviour
     public AudioClip wow;
     public IllegalMoveHandler illegalmove;
     public GiftBlindEyesBehavior giftSkillTrigger;
+    public TimeFreezeBehavior freezeSkillTrigger;
     public float MaxPauseTime = 3.0f;
     public float MaxCheckTime = 5.5f;
     public bool collision = false, gameover = false;
@@ -36,6 +37,7 @@ public class TeacherController : MonoBehaviour
         studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
         teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
 
+        freezeSkillTrigger = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
         test = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
 
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
@@ -94,13 +96,20 @@ public class TeacherController : MonoBehaviour
 
     void Moving()
     {
-        if (!teachersound[1].isPlaying)
+        if (!freezeSkillTrigger.isExisting())
         {
-            teachersound[1].Play();
+            if (!teachersound[1].isPlaying)
+            {
+                teachersound[1].Play();
+            }
+            else
+            {
+                teachersound[1].UnPause();
+            }
         }
         else
         {
-            teachersound[1].UnPause();
+            teachersound[1].Pause();
         }
         Transform destination = target.transform;
         // teacher.SetDestination(destination.position);
@@ -188,28 +197,43 @@ public class TeacherController : MonoBehaviour
         {
             collision = false;
         }
-        timePaused += Time.deltaTime;
         teachersound[1].Pause();
-        if (gameover)
+        if (!freezeSkillTrigger.isExisting())
         {
-            //int index = Random.Range(5, 7);
-            ani.SetInteger("animation_int", 3);
-            behaviour = 1;
-        }
-        else
-        {
-            if (timePaused >= MaxPauseTime)
+            timePaused += Time.deltaTime;
+
+            if (gameover)
             {
+                //int index = Random.Range(5, 7);
+                ani.SetInteger("animation_int", 3);
                 behaviour = 1;
-                timePaused = 0.0f;
             }
             else
             {
-                int index = Random.Range(2, 3);
-                ani.SetInteger("animation_int", index);
-                teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
-                teacher.SetDestination(teacher.transform.position);
-                //teacher.ResetPath();
+                if (giftSkillTrigger.isTrigger() == true)
+                {
+                    setBribeTarget();
+                    teacher.SetDestination(giftTarget.transform.position);
+                    ani.SetInteger("animation_int", 1);
+                    behaviour = 5;
+                }
+                else
+                {
+                    if (timePaused >= MaxPauseTime)
+                    {
+                        behaviour = 1;
+                        timePaused = 0.0f;
+                    }
+                    else
+                    {
+                        int index = Random.Range(2, 3);
+                        ani.SetInteger("animation_int", index);
+                        teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
+                        teacher.SetDestination(teacher.transform.position);
+                        //teacher.ResetPath();
+                    }
+                }
+
             }
         }
     }

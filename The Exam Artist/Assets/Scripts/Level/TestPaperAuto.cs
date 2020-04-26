@@ -13,6 +13,7 @@ public class TestPaperAuto : MonoBehaviour
     //public GameObject Choices3D;
     public GameObject choiceA, choiceB, choiceC, choiceD;
 
+    private TimeFreezeBehavior tf;
     private TestPaperBehavior playerTest;
     //private MeshRenderer[] choiceMesh;
     private GetQuestion question;
@@ -30,6 +31,7 @@ public class TestPaperAuto : MonoBehaviour
 
     void Start()
     {
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
         playerTest = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
         testPage = testPaper.transform.Find("TestPage").gameObject;
         initialPage = testPaper.transform.Find("InitialPage").gameObject;
@@ -68,19 +70,22 @@ public class TestPaperAuto : MonoBehaviour
                     }
                     start = true;
                 }
-                if (slowDown == true)
+                if (!tf.isExisting())
                 {
-                    timeChange -= Time.deltaTime / 2;
-                }
-                else
-                {
-                    timeChange -= Time.deltaTime;
-                }
+                    if (slowDown == true)
+                    {
+                        timeChange -= Time.deltaTime / 2;
+                    }
+                    else
+                    {
+                        timeChange -= Time.deltaTime;
+                    }
 
-                if (timeChange <= 0)
-                {
-                    timeChange = frequency;
-                    next();
+                    if (timeChange <= 0)
+                    {
+                        timeChange = frequency;
+                        next();
+                    }
                 }
             }
         }
