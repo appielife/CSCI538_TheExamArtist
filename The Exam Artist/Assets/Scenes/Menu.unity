@@ -10981,7 +10981,7 @@ MonoBehaviour:
   internalProcessArgs: 
   loadAdditive: 0
   loadAsync: 1
-  loadingScreen: {fileID: 2800000, guid: ca5b416cbdd533f40af66ab7d78a445e, type: 3}
+  loadingScreen: {fileID: 2800000, guid: 216bec206a1dc4749ad567afb6019af0, type: 3}
   progressBarEmpty: {fileID: 0}
   progressBarFull: {fileID: 0}
   loadingScreenWidthInMeters: 6
