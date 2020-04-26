@@ -5,27 +5,6 @@ using UnityEngine.UI;
 using UnityEditor;
 using Newtonsoft.Json.Linq;
 
-/*public class ReadOnlyAttribute : PropertyAttribute { }
-
-[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
-public class ReadOnlyDrawer : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty property,
-                                            GUIContent label)
-    {
-        return EditorGUI.GetPropertyHeight(property, label, true);
-    }
-
-    public override void OnGUI(Rect position,
-                               SerializedProperty property,
-                               GUIContent label)
-    {
-        GUI.enabled = false;
-        EditorGUI.PropertyField(position, property, label, true);
-        GUI.enabled = true;
-    }
-}*/
-
 public class LevelSetting : MonoBehaviour
 {
     [Tooltip("This is used to store grabbed answer or not")]
@@ -68,15 +47,8 @@ public class LevelSetting : MonoBehaviour
     public List<Sprite> bribeList = new List<Sprite>();
     [Tooltip("Check to enable illegal detection")]
     public bool illegalDetect = true;
-
-    /*public float MeditationCD = 0.0f;
-    public bool MeditationUsed = false;
-
-    public float CheatSheetCD = 0.0f;
-    public bool CheatSheetUsed = false;
-
-    public float BribeCD = 0.0f;
-    public bool BribeUsed = false;*/
+    [Tooltip("Used to know if got caught")]
+    public bool failed = false;
 
     private void Start()
     {
@@ -168,14 +140,9 @@ public class LevelSetting : MonoBehaviour
         this.positions = positions;
     }
 
-    /*public void setCD()
+    public void setFailed(bool b)
     {
-        MeditationCD = GameObject.Find("SkillsScript").GetComponent<MeditationBehavior>().getCD();
-        MeditationUsed = GameObject.Find("SkillsScript").GetComponent<MeditationBehavior>().getUse();
-        CheatSheetCD = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>().getCD();
-        CheatSheetUsed = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>().getUse();
-        BribeCD = GameObject.Find("SkillsScript").GetComponent<GiftBlindEyesBehavior>().getCD();
-        BribeUsed = GameObject.Find("SkillsScript").GetComponent<GiftBlindEyesBehavior>().getUse();
-    }*/
+        failed = b;
+    }
 
 }

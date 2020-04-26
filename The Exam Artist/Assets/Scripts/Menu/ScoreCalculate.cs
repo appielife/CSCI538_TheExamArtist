@@ -20,11 +20,14 @@ public class ScoreCalculate : MonoBehaviour
 {
     public Text score;
     public Text report;
+    public GameObject fail;
+    public GameObject yourscore;
     private JObject ans_obj;
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();
     private List<string> reporttext = new List<string>();
     private int index = 0;
+    private bool failed = false;
 
     private void Start()
     {
@@ -35,6 +38,15 @@ public class ScoreCalculate : MonoBehaviour
         GameObject scorereport = GameObject.Find("BlackBoard").transform.Find("ScoreReport").gameObject;
         scorereport.transform.Find("PrevReport").GetComponentInChildren<Text>().text = '\u25B2'.ToString();
         scorereport.transform.Find("NextReport").GetComponentInChildren<Text>().text = '\u25BC'.ToString();
+        if (GameObject.Find("LevelSetting"))
+        {
+            failed = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().failed;
+        }
+        if (failed)
+        {
+            yourscore.SetActive(false);
+            fail.SetActive(true);
+        }
     }
 
 

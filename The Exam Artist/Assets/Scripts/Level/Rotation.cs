@@ -5,6 +5,7 @@ using UnityEngine;
 public class Rotation : MonoBehaviour
 {
     public Transform target;
+    public int degree;
     private Vector3 point;
 
     void Start()
@@ -14,6 +15,6 @@ public class Rotation : MonoBehaviour
 
     void Update()
     {
-        transform.RotateAround(point, Vector3.up, 30 * Time.deltaTime);
+        transform.RotateAround(point, Vector3.up, degree * Time.deltaTime);
     }
 }

@@ -578,6 +578,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: {fileID: 1626616664}
   report: {fileID: 1436127363}
+  fail: {fileID: 721644986}
+  yourscore: {fileID: 737157267}
 --- !u!4 &50006135
 Transform:
   m_ObjectHideFlags: 0
@@ -1203,7 +1205,7 @@ RectTransform:
   m_Children:
   - {fileID: 70548686}
   m_Father: {fileID: 1515213366}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -4060,6 +4062,83 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 720209384}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &721644986
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 721644987}
+  - component: {fileID: 721644989}
+  - component: {fileID: 721644988}
+  m_Layer: 5
+  m_Name: Fail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &721644987
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721644986}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00067160197}
+  m_LocalScale: {x: 0.53043, y: 0.5304301, z: 0.5304301}
+  m_Children: []
+  m_Father: {fileID: 1515213366}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 3252.1, y: 368.1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &721644988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721644986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 455c0f301d5c1244b9c63c123ac15cd5, type: 3}
+    m_FontSize: 250
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: FAILED YOU GOT CAUGHT
+--- !u!222 &721644989
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721644986}
+  m_CullTransparentMesh: 0
 --- !u!1 &724428546 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 160596, guid: dc06161b6d97feb419f45f03b62e14b9,
@@ -4120,7 +4199,7 @@ RectTransform:
   - {fileID: 1817316138}
   - {fileID: 1626616663}
   m_Father: {fileID: 1515213366}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5336,7 +5415,7 @@ RectTransform:
   m_Children:
   - {fileID: 2141160666}
   m_Father: {fileID: 1515213366}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -7896,7 +7975,7 @@ MonoBehaviour:
   internalProcessArgs: 
   loadAdditive: 0
   loadAsync: 1
-  loadingScreen: {fileID: 2800000, guid: e629537f73a8d2c4895e437b07957799, type: 3}
+  loadingScreen: {fileID: 2800000, guid: 216bec206a1dc4749ad567afb6019af0, type: 3}
   progressBarEmpty: {fileID: 0}
   progressBarFull: {fileID: 0}
   loadingScreenWidthInMeters: 6
@@ -8065,6 +8144,7 @@ RectTransform:
   m_LocalScale: {x: 0.0022705458, y: 0.0012350554, z: 0.0028399993}
   m_Children:
   - {fileID: 1035384105}
+  - {fileID: 721644987}
   - {fileID: 737157268}
   - {fileID: 977161892}
   - {fileID: 198908964}

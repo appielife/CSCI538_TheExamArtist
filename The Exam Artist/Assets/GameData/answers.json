@@ -2,63 +2,63 @@
   "Answers": [
     {
       "id": "11",
-      "question_txt": "Who lets the dogs out?",
+      "question_txt": "Chopin was well known for his Ballades. How many did he compose",
       "YourAns": "NA",
-      "MyAns": "D. Woof!x5 "
-    },
-    {
-      "id": "8",
-      "question_txt": "Which breed of cats has the largest average size?",
-      "YourAns": "NA",
-      "MyAns": "B. Maine Coon"
-    },
-    {
-      "id": "0",
-      "question_txt": "Which musician is not king of something?",
-      "YourAns": "NA",
-      "MyAns": "B. David Bowie"
+      "MyAns": "D. 4"
     },
     {
       "id": "13",
-      "question_txt": "Which character was Gender-swapped in Fate anime Series",
+      "question_txt": "The Amati family is well-known throughout the world of classical music. What are they known for?",
       "YourAns": "NA",
-      "MyAns": "B. Arthur Pendragon"
+      "MyAns": "C. Violin"
     },
     {
-      "id": "21",
-      "question_txt": "A man has fallen into the river in Lego city; build what?",
+      "id": "8",
+      "question_txt": "What's the name of a large wind instrument is used for cultural music by the indigenous people of Australia?",
       "YourAns": "NA",
-      "MyAns": "D. A Rescue Helicopter"
+      "MyAns": "D. Didgeridoo"
     },
     {
-      "id": "27",
-      "question_txt": "What is the atomic weight of Deuterium?",
+      "id": "4",
+      "question_txt": "How is American singer Michael Lee Aday better known?",
       "YourAns": "NA",
-      "MyAns": "B. 2"
+      "MyAns": "A. Meatloaf"
     },
     {
-      "id": "26",
-      "question_txt": "Which of these cities in US is the furthest West",
+      "id": "16",
+      "question_txt": "International music sensation ABBA originate from which European country?",
       "YourAns": "NA",
-      "MyAns": "C. Atlanta"
+      "MyAns": "B. Sweden"
     },
     {
-      "id": "7",
-      "question_txt": "What is the Chemical Symbol of Tungsten?",
+      "id": "9",
+      "question_txt": "Names after the Greek god of wind, this musical instrument is played by passing a current of air over its strings. What is it?",
       "YourAns": "NA",
-      "MyAns": "D. W"
+      "MyAns": "B. Aeolian Harp"
     },
     {
-      "id": "25",
-      "question_txt": "Which weapons is designed to attack Cavalry",
+      "id": "5",
+      "question_txt": "Which Rolling Stones guitarist was found dead in a swimming pool in 1969?",
       "YourAns": "NA",
-      "MyAns": "C. Halberd"
+      "MyAns": "D. Brian Jones"
     },
     {
-      "id": "29",
-      "question_txt": "What is the capital of Australia?",
+      "id": "19",
+      "question_txt": "The Beatles released their first UK single 'Love Me Do' in what year?",
       "YourAns": "NA",
-      "MyAns": "D. Canberra"
+      "MyAns": "B. 1962"
+    },
+    {
+      "id": "1",
+      "question_txt": "Which type of wood did the Beatles sing about?",
+      "YourAns": "NA",
+      "MyAns": "D. Norwegian Wood"
+    },
+    {
+      "id": "10",
+      "question_txt": "Which musical instrument was evolved from the sackbut – an early brass instrument.",
+      "YourAns": "NA",
+      "MyAns": "A. Trombone"
     }
   ]
 }

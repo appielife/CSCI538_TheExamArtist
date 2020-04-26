@@ -19,10 +19,11 @@ public class MeditationHandler : MonoBehaviour
     private Dictionary<int, Text> showing = new Dictionary<int, Text>(), fading = new Dictionary<int, Text>();
     private List<int> remove = new List<int>();
     private AudioSource[] sound;
-    private bool play = false;
+    private bool play = false, extended = false;
     private JObject words_odj;
     private JArray words;
     private float duration = 2.0f;
+    private LevelSetting setting;
 
 
     void Awake()
@@ -45,10 +46,20 @@ public class MeditationHandler : MonoBehaviour
             words_odj = (JObject)JToken.ReadFrom(reader);
         }
         words = (JArray)words_odj["words"];
+        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+
     }
 
     private void OnEnable()
     {
+        if (!extended)
+        {
+            for (int i = 0; i < setting.question.getQuesCount(); i++)
+            {
+                JToken t = setting.question.getQuestionTxt(i);
+                words.Add(t);
+            }
+        }
         sound[2].volume = 0.5f;
         for (int i = 0; i < texts.Length; i++)
         {

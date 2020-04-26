@@ -29,6 +29,7 @@ public class TeacherController : MonoBehaviour
     //private float timeChecked = 0.0f;
     private float timeLeft = 15.0f;
     private TestPaperBehavior test;
+    private LevelSetting setting;
 
     void Start()
     {
@@ -37,7 +38,7 @@ public class TeacherController : MonoBehaviour
 
         test = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
 
-        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
         teacher.speed = speed;
         target = GameObject.Find("target1");
@@ -73,6 +74,7 @@ public class TeacherController : MonoBehaviour
                         Pausing();
                         break;
                     case 4:
+                        setting.setFailed(true);
                         teacher.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
                         behaviour = 2;
                         teachersound[1].Pause();

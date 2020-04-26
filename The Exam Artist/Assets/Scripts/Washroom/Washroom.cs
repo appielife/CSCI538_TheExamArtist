@@ -60,13 +60,11 @@ public class Washroom : MonoBehaviour
                 counter.RemoveAt(tempIdx);
                 text += setting.answer[setting.unansweredQues[tempQues]] + "\n";
             }
-            paper.GetComponentInChildren<Text>().text = text;
-
-            /*for (int i = 0; i < setting.answer.Length - time; i++)
+            if (numQues == 0)
             {
-                text = text + setting.answer[i] + "\n";
+                text = "Unfortunately, I failed to find answers :(\n\nBetter luck next time~";
             }
-            paper.GetComponentInChildren<Text>().text = text;*/
+            paper.GetComponentInChildren<Text>().text = text;
         }
     }
 

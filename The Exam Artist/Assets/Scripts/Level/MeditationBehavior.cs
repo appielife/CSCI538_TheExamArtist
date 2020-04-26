@@ -12,13 +12,14 @@ public class MeditationBehavior : MonoBehaviour
     public GameObject testPaper;
     private AudioSource[] sound;
     public AudioClip[] meditationAudioClips = new AudioClip[4];
-    private float coolDown = 5.0f;
-    private float coolDownCounter = 5.0f;
-    private bool used = false;
+    private float coolDown = 15.0f;
+    private float coolDownCounter = 15.0f;
+    private bool used = false, enoughTime = true;
     //private int limit = 5;
     private float duration = 2.0f;
     public GameObject wall, level, player;
     public int correctAns;
+    private LevelSetting setting;
 
     void Start()
     {
@@ -27,70 +28,76 @@ public class MeditationBehavior : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("MainPlayer");
         imgCoolDown.fillAmount = 0.0f;
         textCoolDown.text = "";
+        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
     }
 
     void Update()
     {
-        if (coolDownCounter > 0 && used == true)
+        if (timer.GetComponent<Timer>().timeLeft < 60 && enoughTime)
         {
-            coolDownCounter -= Time.deltaTime;
-            imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
-            textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-            //Debug.Log(coolDownCounter[0]);
-        }
-        else if (coolDownCounter <= 0 && used == true)
-        {
-            coolDownCounter = coolDown;
+            imgCoolDown.fillAmount = 1.0f;
+            imgCoolDown.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
             textCoolDown.text = "";
-            imgCoolDown.fillAmount = 0.0f;
-            used = false;
+            enoughTime = false;
+        }
+        else
+        {
+            if (coolDownCounter > 0 && used == true)
+            {
+                coolDownCounter -= Time.deltaTime;
+                imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
+                textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
+                //Debug.Log(coolDownCounter[0]);
+            }
+            else if (coolDownCounter <= 0 && used == true)
+            {
+                coolDownCounter = coolDown;
+                textCoolDown.text = "";
+                imgCoolDown.fillAmount = 0.0f;
+                used = false;
+            }
         }
     }
 
     public void Meditation()
     {
-        if (used == false)
+        if (!used && enoughTime)
         {
-            if (timer.GetComponent<Timer>().timeLeft < 60)
+            timer.GetComponent<Timer>().timeLeft -= (60 - duration);
+            used = true;
+
+            GameObject skills = GameObject.Find("SkillsScript");
+            GodOfWashroomBehavior gow = skills.GetComponent<GodOfWashroomBehavior>();
+            MagicCheatSheetBehavior mcs = skills.GetComponent<MagicCheatSheetBehavior>();
+            GiftBlindEyesBehavior gbe = skills.GetComponent<GiftBlindEyesBehavior>();
+
+            setting.setQuestion();
+
+            if (gow.isTrigger() == true)
             {
-                Debug.Log("Not enough time to meditate!");
+                gow.ReduceCoolDownCounter(60);
             }
-            else
+
+            if (mcs.isTrigger())
             {
-                timer.GetComponent<Timer>().timeLeft -= (60 - duration);
-                used = true;
-
-                GameObject skills = GameObject.Find("SkillsScript");
-                GodOfWashroomBehavior gow = skills.GetComponent<GodOfWashroomBehavior>();
-                MagicCheatSheetBehavior mcs = skills.GetComponent<MagicCheatSheetBehavior>();
-                GiftBlindEyesBehavior gbe = skills.GetComponent<GiftBlindEyesBehavior>();
-
-                if (gow.isTrigger() == true)
-                {
-                    gow.ReduceCoolDownCounter(60);
-                }
-
-                if (mcs.isTrigger())
-                {
-                    mcs.ResetSkill();
-                }
-                
-                if (gbe.isCoolDown())
-                {
-                    gbe.ReduceCoolDownCounter(60);
-                }
-
-                FadeOut();
-                Invoke("FadeIn", duration);
-
-                correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-                //sound[0].PlayOneShot(meditationAudioClips[correctAns], 1.0f);
+                mcs.ResetSkill();
             }
+
+            if (gbe.isCoolDown())
+            {
+                gbe.ReduceCoolDownCounter(60);
+            }
+
+            FadeOut();
+            Invoke("FadeIn", duration);
+
+            correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
+            //sound[0].PlayOneShot(meditationAudioClips[correctAns], 1.0f);
         }
-        else
+        /*else
         {
             Debug.Log("The skill is cooling down.");
-        }
+        }*/
     }
 
     private void FadeOut()
@@ -105,5 +112,10 @@ public class MeditationBehavior : MonoBehaviour
         level.SetActive(false);
         wall.SetActive(true);
         SteamVR_Fade.Start(Color.clear, duration);
+    }
+
+    public bool isTrigger()
+    {
+        return used;
     }
 }

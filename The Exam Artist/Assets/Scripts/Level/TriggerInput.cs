@@ -124,7 +124,10 @@ public class TriggerInput : MonoBehaviour
             }
             else
             {
-                washroom.GodOfWashroom();
+                if (!washroom.isTrigger())
+                {
+                    washroom.GodOfWashroom();
+                }
             }
         }
     }
@@ -179,7 +182,10 @@ public class TriggerInput : MonoBehaviour
             }
             else
             {
-                mb.Meditation();
+                if (!mb.isTrigger())
+                {
+                    mb.Meditation();
+                }
             }
         }
     }

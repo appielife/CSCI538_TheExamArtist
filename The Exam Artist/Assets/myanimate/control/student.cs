@@ -16,7 +16,7 @@ public class student : MonoBehaviour {
     //private bool notMoved = true;
     private float timeLeft = 15.0f, collideLeft = 0.5f;
     private int animationIndex = 2;
-    private bool writing = false, collide = false;
+    private bool writing = false, collide = false, start = false;
     private Vector3 original, chairOriginal;
 
     public void setAnimation(int i)
@@ -41,6 +41,9 @@ public class student : MonoBehaviour {
         original = gameObject.transform.localPosition;
         chair = gameObject.transform.parent.transform.Find("prop_sch_tablechair").transform.Find("prop_sch_chair").gameObject;
         chairOriginal = chair.transform.localPosition;
+
+        setChairPosition(new Vector3(0.0f, -0.091f, -0.141f));
+        setPosition(new Vector3(0.36f, 0.0f, 0.0f));
     }
 
     // Update is called once per frame
@@ -54,6 +57,11 @@ public class student : MonoBehaviour {
             }
             else
             {
+                if (!start)
+                {
+                    resetPosition();
+                    start = true;
+                }
                 if (collide)
                 {
                     if (collideLeft > 0)
@@ -74,42 +82,6 @@ public class student : MonoBehaviour {
                 ani.SetInteger("animation_int", animationIndex);
             }
         }
-
-        /*if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            ani.SetInteger("animation_int", 0);//idle
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            int index = Random.Range(7, 10);
-            ani.SetInteger("animation_int", index);//sit
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (character != null && notMoved)
-            {
-                Debug.Log(character.transform.localPosition);
-                character.transform.localPosition += new Vector3(0.7f, 0.0f, 0.0f);
-                notMoved = false;
-            }
-            int index = Random.Range(1, 3);
-            ani.SetInteger("animation_int", index);//write
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            ani.SetInteger("animation_int", 4);//depress
-            GameObject.FindGameObjectWithTag("backgroundmusic").GetComponents<AudioSource>()[0].Stop();
-            GameObject.FindGameObjectWithTag("backgroundmusic").GetComponents<AudioSource>()[1].Stop();
-            source[0].Play();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            ani.SetInteger("animation_int", 6);//dance
-            GameObject.FindGameObjectWithTag("backgroundmusic").GetComponents<AudioSource>()[0].Stop();
-            GameObject.FindGameObjectWithTag("backgroundmusic").GetComponents<AudioSource>()[1].Stop();
-            source[0].Stop();
-            source[1].Play();
-        }*/
     }
 
     public void setPosition(Vector3 position)
