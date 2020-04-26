@@ -13292,7 +13292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &285374420
 RectTransform:
   m_ObjectHideFlags: 0
@@ -58809,11 +58809,11 @@ MonoBehaviour:
   subject: 
   positions: []
   numQuestion: 10
-  randomseats: 0
+  randomseats: 1
   randomed: 0
   onPrepare: 1
   bribeList: []
-  illegalDetect: 0
+  illegalDetect: 1
   failed: 0
 --- !u!4 &1426615128
 Transform:
@@ -76746,7 +76746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1852051014
 MonoBehaviour:
   m_ObjectHideFlags: 0
