@@ -70,6 +70,26 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Bribe",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Meditate",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/NextReport",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PrevReport",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Freeze",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

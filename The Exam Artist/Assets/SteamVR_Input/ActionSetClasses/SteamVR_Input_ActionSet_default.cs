@@ -145,6 +145,46 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean Bribe
+        {
+            get
+            {
+                return SteamVR_Actions.default_Bribe;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean Meditate
+        {
+            get
+            {
+                return SteamVR_Actions.default_Meditate;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean NextReport
+        {
+            get
+            {
+                return SteamVR_Actions.default_NextReport;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean PrevReport
+        {
+            get
+            {
+                return SteamVR_Actions.default_PrevReport;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean Freeze
+        {
+            get
+            {
+                return SteamVR_Actions.default_Freeze;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

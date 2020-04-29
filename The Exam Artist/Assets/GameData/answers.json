@@ -1,29 +1,64 @@
 {
   "Answers": [
     {
-      "id": "26",
-      "YourAns": "A",
-      "MyAns": "A"
+      "id": "7",
+      "question_txt": "Dr Pepper shares what main ingredient of most antifreezes?",
+      "YourAns": "NA",
+      "MyAns": "A. Ethylene Glycol"
+    },
+    {
+      "id": "0",
+      "question_txt": " One of the essential minerals in the human body is salt. How much salt (NaCl) is in the average adult human body?",
+      "YourAns": "NA",
+      "MyAns": "C. 250 grams"
+    },
+    {
+      "id": "12",
+      "question_txt": "How many more times acidic is a solution of pOH 5 than a solution of pH 5?",
+      "YourAns": "NA",
+      "MyAns": "B. 1x10^(-4)"
+    },
+    {
+      "id": "1",
+      "question_txt": "If you fill a glass to the brim with ice water and the ice melts, what will happen?",
+      "YourAns": "NA",
+      "MyAns": "B. The water level will drop slightly as the ice melts."
+    },
+    {
+      "id": "4",
+      "question_txt": "Which element has the highest boiling point at 5933.2 Kelvin??",
+      "YourAns": "NA",
+      "MyAns": "B. W"
     },
     {
       "id": "5",
-      "YourAns": "C",
-      "MyAns": "C"
+      "question_txt": "Which suicidal 19th century chemist has the single line etched on his tombstone : S=k log W?",
+      "YourAns": "NA",
+      "MyAns": "C. Ludwig Boltzmann"
     },
     {
-      "id": "17",
-      "YourAns": "C",
-      "MyAns": "C"
-    },
-    {
-      "id": "7",
-      "YourAns": "D",
-      "MyAns": "D"
+      "id": "9",
+      "question_txt": "What are the products of acid-base neutralization?",
+      "YourAns": "NA",
+      "MyAns": "C. Water, Salt, Heat"
     },
     {
       "id": "13",
-      "YourAns": "A",
-      "MyAns": "A"
+      "question_txt": "Out of the following list, which is NOT a strong acid?",
+      "YourAns": "NA",
+      "MyAns": "C. Oxalic"
+    },
+    {
+      "id": "6",
+      "question_txt": "Which electron that would emit the greatest amount of energy by dropping electron levels?",
+      "YourAns": "NA",
+      "MyAns": "C. N=2 To N=1"
+    },
+    {
+      "id": "8",
+      "question_txt": "In a lead storage battery, what strong acid is consumed in a reaction which produces the voltage?",
+      "YourAns": "NA",
+      "MyAns": "B. Sulphuric Acid"
     }
   ]
 }

@@ -14,6 +14,31 @@ TagManager:
   - MainPlayer
   - MainMenu
   - HandSelectMenu
+  - StudentAction
+  - TeacherAction
+  - MainSelectHandler
+  - StudentPosition
+  - StudentCharacter
+  - Subject
+  - ProjectileTestPosition
+  - Chair
+  - TeacherHint
+  - ClipboardHint
+  - Projectile
+  - Student
+  - BribeOption
+  - MainPlayerPosition
+  - InstructionButton
+  - MainSubject
+  - MainChoice
+  - MainChoiceSelected
+  - TestSound
+  - toilet
+  - LevelScene
+  - MeditationWall
+  - JoggingCharacter
+  - OutsideCharacter
+  - HallwayCharacter
   layers:
   - Default
   - TransparentFX
