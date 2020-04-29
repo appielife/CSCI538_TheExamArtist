@@ -20,7 +20,7 @@ public class Instruction : MonoBehaviour
 
     public void showInstructionX()
     {
-        main.text = "Go to washroom for 10 seconds \n (cost 1 min)";
+        main.text = "Go to washroom for 10 seconds and at most 5 times\n (cost 1 min)";
         shadow.text = main.text;
     }
 
@@ -32,13 +32,19 @@ public class Instruction : MonoBehaviour
 
     public void showInstructionA()
     {
-        main.text = "Meditate to think about answer \n(cost 1 min)";
+        main.text = "Meditate to think about the current answer \n(cost 1 min)";
         shadow.text = main.text;
     }
 
     public void showInstructionB()
     {
         main.text = "Let your classmate(s) distract the teacher";
+        shadow.text = main.text;
+    }
+
+    public void showInstructionG()
+    {
+        main.text = "Hold to stop time for a total of 10 seconds";
         shadow.text = main.text;
     }
 }

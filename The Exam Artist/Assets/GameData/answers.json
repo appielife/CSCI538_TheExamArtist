@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
-      "id": "10",
-      "question_txt": "Which of the following is not an island country",
+      "id": "7",
+      "question_txt": "Dr Pepper shares what main ingredient of most antifreezes?",
       "YourAns": "NA",
-      "MyAns": "A. Malaysia"
+      "MyAns": "A. Ethylene Glycol"
+    },
+    {
+      "id": "0",
+      "question_txt": " One of the essential minerals in the human body is salt. How much salt (NaCl) is in the average adult human body?",
+      "YourAns": "NA",
+      "MyAns": "C. 250 grams"
+    },
+    {
+      "id": "12",
+      "question_txt": "How many more times acidic is a solution of pOH 5 than a solution of pH 5?",
+      "YourAns": "NA",
+      "MyAns": "B. 1x10^(-4)"
+    },
+    {
+      "id": "1",
+      "question_txt": "If you fill a glass to the brim with ice water and the ice melts, what will happen?",
+      "YourAns": "NA",
+      "MyAns": "B. The water level will drop slightly as the ice melts."
+    },
+    {
+      "id": "4",
+      "question_txt": "Which element has the highest boiling point at 5933.2 Kelvin??",
+      "YourAns": "NA",
+      "MyAns": "B. W"
     },
     {
       "id": "5",
-      "question_txt": "Colombo is the capital of",
+      "question_txt": "Which suicidal 19th century chemist has the single line etched on his tombstone : S=k log W?",
       "YourAns": "NA",
-      "MyAns": "C. Sri Lanka"
+      "MyAns": "C. Ludwig Boltzmann"
     },
     {
-      "id": "2",
-      "question_txt": "Which of the following statement is wrong",
+      "id": "9",
+      "question_txt": "What are the products of acid-base neutralization?",
       "YourAns": "NA",
-      "MyAns": "C. GDP 2019: Turkey < Saudi Arabia"
+      "MyAns": "C. Water, Salt, Heat"
     },
     {
-      "id": "8",
-      "question_txt": "Which of the following number, in sq mi, is closest to the actual area of Caribbean sea",
+      "id": "13",
+      "question_txt": "Out of the following list, which is NOT a strong acid?",
       "YourAns": "NA",
-      "MyAns": "C. 1.063 million"
-    },
-    {
-      "id": "15",
-      "question_txt": "Which of the following countries uses US Dollar as offical currency",
-      "YourAns": "NA",
-      "MyAns": "D. Republic of El Salvador"
-    },
-    {
-      "id": "19",
-      "question_txt": "Which of the following countries is not a Middle East Country",
-      "YourAns": "NA",
-      "MyAns": "D. None of the three"
-    },
-    {
-      "id": "17",
-      "question_txt": "What is the highest mountain in Europe",
-      "YourAns": "NA",
-      "MyAns": "B. Mount Elbrus"
-    },
-    {
-      "id": "11",
-      "question_txt": "Which of the following countries has tropical rainforest climate?",
-      "YourAns": "NA",
-      "MyAns": "A. Kenya"
+      "MyAns": "C. Oxalic"
     },
     {
       "id": "6",
-      "question_txt": "Which modern country was not a part of French Indochina?",
+      "question_txt": "Which electron that would emit the greatest amount of energy by dropping electron levels?",
       "YourAns": "NA",
-      "MyAns": "A. Thailand"
+      "MyAns": "C. N=2 To N=1"
     },
     {
-      "id": "14",
-      "question_txt": "Which of following countries does not have a king or queen right now",
+      "id": "8",
+      "question_txt": "In a lead storage battery, what strong acid is consumed in a reaction which produces the voltage?",
       "YourAns": "NA",
-      "MyAns": "D. Tunisia"
+      "MyAns": "B. Sulphuric Acid"
     }
   ]
 }

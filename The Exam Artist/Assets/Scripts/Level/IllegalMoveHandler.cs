@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Valve.VR;
 
 public class IllegalMoveHandler : MonoBehaviour
 {
@@ -9,21 +10,19 @@ public class IllegalMoveHandler : MonoBehaviour
     private AudioSource[] sound;
     public bool illegal = false;
     private bool soundOn = false;
-    public Text debugText;
     private float timeLeft = 0.0f;
     private LevelSetting setting;
+    private TimeFreezeBehavior tf;
 
     void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("MainPlayer");
-        GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
-        playerCam = SteamVRObjects.transform.Find("VRCamera").gameObject;
-        debugText = playerCam.transform.Find("Debug").gameObject.GetComponentInChildren<Text>();
+        playerCam = GameObject.FindGameObjectWithTag("MainCamera");
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         if (setting.washroomed)
         {
             timeLeft = 5.0f;
         }
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
     }
 
     void CameraMove()
@@ -48,26 +47,27 @@ public class IllegalMoveHandler : MonoBehaviour
             }
             else
             {
-                CameraMove();
-                sound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
-                if (illegal && !soundOn)
+                if (!tf.hold)
                 {
-                    if (!sound[2].isPlaying)
+                    CameraMove();
+                    sound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
+                    if (illegal && !soundOn)
                     {
-                        sound[2].Play();
+                        if (!sound[2].isPlaying)
+                        {
+                            sound[2].Play();
+                        }
+                        else
+                        {
+                            sound[2].UnPause();
+                        }
+                        soundOn = true;
                     }
-                    else
+                    if (!illegal)
                     {
-                        sound[2].UnPause();
+                        sound[2].Pause();
+                        soundOn = false;
                     }
-                    //debugText.text = "Illegal";
-                    soundOn = true;
-                }
-                if (!illegal)
-                {
-                    sound[2].Pause();
-                    //debugText.text = "Legal";
-                    soundOn = false;
                 }
             }
         }

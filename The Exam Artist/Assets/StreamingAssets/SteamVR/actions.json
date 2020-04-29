@@ -86,6 +86,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Freeze",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

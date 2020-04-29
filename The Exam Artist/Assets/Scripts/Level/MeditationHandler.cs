@@ -9,7 +9,7 @@ using Valve.VR;
 
 public class MeditationHandler : MonoBehaviour
 {
-    public GameObject level;
+    public GameObject level, projectile;
     public GameObject front, right, left, back;
     public MeditationBehavior meditation;
 
@@ -24,6 +24,7 @@ public class MeditationHandler : MonoBehaviour
     private JArray words;
     private float duration = 2.0f;
     private LevelSetting setting;
+    private bool isMeditate = false;
 
 
     void Awake()
@@ -47,11 +48,11 @@ public class MeditationHandler : MonoBehaviour
         }
         words = (JArray)words_odj["words"];
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-
     }
 
     private void OnEnable()
     {
+        isMeditate = true;
         if (!extended)
         {
             for (int i = 0; i < setting.question.getQuesCount(); i++)
@@ -70,6 +71,7 @@ public class MeditationHandler : MonoBehaviour
             texts[i].text = (string)words[index];
             show.Add(false);
         }
+        projectile = setting.projectile;
     }
 
     void Update()
@@ -130,7 +132,6 @@ public class MeditationHandler : MonoBehaviour
             sound[2].Stop();
             time = 15.0f;
             play = false;
-
             FadeOut();
             Invoke("FadeIn", duration);
         }
@@ -183,16 +184,21 @@ public class MeditationHandler : MonoBehaviour
 
     private void FadeOut()
     {
-        SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
     }
 
     private void FadeIn()
     {
-        SteamVR_Fade.Start(Color.black, 0f);
         gameObject.SetActive(false);
         level.SetActive(true);
+        isMeditate = false;
+        projectile.SetActive(true);
         SteamVR_Fade.Start(Color.clear, duration);
+    }
+
+    public bool inMeditation()
+    {
+        return isMeditate;
     }
 
 }

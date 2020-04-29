@@ -36,6 +36,9 @@ TagManager:
   - toilet
   - LevelScene
   - MeditationWall
+  - JoggingCharacter
+  - OutsideCharacter
+  - HallwayCharacter
   layers:
   - Default
   - TransparentFX

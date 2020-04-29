@@ -10,6 +10,7 @@ public class SceneHandler : MonoBehaviour
 
     private SteamVR_LaserPointer laserPointer;
     public Settings setting;
+    public GameObject SkillsOverlay;
     private AudioSource scribble;
 
     void Start()
@@ -46,6 +47,9 @@ public class SceneHandler : MonoBehaviour
             GameObject.Find("PlayerTable").transform.Find("BottleRight").gameObject.SetActive(true);
             GameObject.Find("Projectile").transform.Find("EraserLeft").gameObject.SetActive(true);
             GameObject.Find("Projectile").transform.Find("EraserRight").gameObject.SetActive(false);
+            Vector3 position = SkillsOverlay.transform.localPosition;
+            position.z += 1.526f;
+            SkillsOverlay.transform.localPosition = position;
         }
         scribble = GameObject.FindGameObjectWithTag("TestSound").GetComponent<AudioSource>();
     }
@@ -68,7 +72,10 @@ public class SceneHandler : MonoBehaviour
                         setting.click.Play();
                     }
                 }
-                b.onClick.Invoke();
+                if (b.enabled)
+                {
+                    b.onClick.Invoke();
+                }
             }
         }
 
@@ -86,7 +93,7 @@ public class SceneHandler : MonoBehaviour
                 b.colors = cb;
             }
         }
-        if (e.target.name == "TestPaper")
+        if (e.target.tag == "MainTestPaper")
         {
             laserPointer.thickness = 0.002f;
         }
@@ -104,7 +111,7 @@ public class SceneHandler : MonoBehaviour
                 b.colors = cb;
             }
         }
-        if (e.target.name == "TestPaper")
+        if (e.target.tag == "MainTestPaper")
         {
             laserPointer.thickness = 0.0f;
         }

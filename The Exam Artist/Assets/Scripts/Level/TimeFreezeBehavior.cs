@@ -3,63 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using Valve.VR;
 
 public class TimeFreezeBehavior : MonoBehaviour
 {
-    public Image imgCoolDown, imgExist;
-    public Text textCoolDown;
-    private GameObject teacherCharacter;
+    public Image imgCoolDown;
+    public Text limitNum;
+    private GameObject teacherCharacter, joggingCharacter, outsideCharacter, hallwayCharacter;
     private GameObject[] studentCharacters;
     private float teacherSpeed;
-    
-    private float coolDown = 5.0f, coolDownCounter = 5.0f;
-    private float existTime = 10.0f, existTimeCounter = 10.0f;
-    private bool exist = false, used = false;
+   
+    private bool exist = false, used = false, wasRunning = false;
+    private float limit = 10.0f;
+    public bool hold = false;
 
     private AudioSource[] sound;
     public AudioClip timeFreezeAudioClip;
-    // Start is called before the first frame update
+
+
     void Start()
     {
         imgCoolDown.fillAmount = 0.0f;
-        imgExist.fillAmount = 0.0f;
-        textCoolDown.text = "";
+        limitNum.text = limit.ToString();
 
         teacherCharacter = GameObject.FindGameObjectWithTag("TeacherAction");
         teacherSpeed = teacherCharacter.GetComponent<NavMeshAgent>().speed;
         studentCharacters = GameObject.FindGameObjectsWithTag("StudentCharacter");
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
+        joggingCharacter = GameObject.FindGameObjectWithTag("JoggingCharacter");
+        outsideCharacter = GameObject.FindGameObjectWithTag("OutsideCharacter");
+        hallwayCharacter = GameObject.FindGameObjectWithTag("HallwayCharacter");
+        imgCoolDown.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
     }
 
     void Update()
     {
-        if (existTimeCounter > 0 && exist == true && used == false)
+        if (hold && limit > 0)
         {
-            existTimeCounter -= Time.deltaTime;
-            imgExist.fillAmount = 1 - existTimeCounter / existTime;
-            textCoolDown.text = ((int)Mathf.Ceil(existTimeCounter)).ToString();
+            TimeFreeze();
+            limit -= Time.deltaTime;
+            limitNum.text = ((int)limit).ToString();
+            imgCoolDown.fillAmount = 1 - limit / 10.0f;
         }
-        else if (existTimeCounter <= 0 && exist == true && used == false)
+        else if ((!hold && exist) || limit < 0)
         {
-            existTimeCounter = existTime;
+            UnfreezeCharacters();
             exist = false;
-            imgExist.fillAmount = 0.0f;
-            //tableHint.text = "";
-            UnfreezeCharacters();         
-            used = true;
-        }
-        else if (coolDownCounter > 0 && used == true)
-        {
-            coolDownCounter -= Time.deltaTime;
-            imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
-            textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-        }
-        else if (coolDownCounter <= 0 && used == true)
-        {
-            coolDownCounter = coolDown;
-            textCoolDown.text = "";
-            imgCoolDown.fillAmount = 0.0f;
-            used = false;
+            if (limit < 0)
+            {
+                imgCoolDown.fillAmount = 1.0f;
+                limitNum.text = "";
+            }
         }
     }
 
@@ -75,11 +69,16 @@ public class TimeFreezeBehavior : MonoBehaviour
             {
                 studentCharacters[i].GetComponent<Animator>().enabled = false;
             }
+            joggingCharacter.GetComponent<Animator>().enabled = false;
+            hallwayCharacter.GetComponent<Animator>().enabled = false;
+            hallwayCharacter.GetComponent<male1>().enabled = false;
+            outsideCharacter.GetComponent<Animator>().enabled = false;
+            if (outsideCharacter.GetComponent<femaleoutside>().enabled)
+            {
+                wasRunning = true;
+                outsideCharacter.GetComponent<femaleoutside>().enabled = false;
+            }
             exist = true;
-        }
-        else
-        {
-            Debug.Log("Your skill need to be cooled down");
         }
     }
 
@@ -91,6 +90,14 @@ public class TimeFreezeBehavior : MonoBehaviour
         for (int i = 0; i < studentCharacters.Length; i++)
         {
             studentCharacters[i].GetComponent<Animator>().enabled = true;
+        }
+        joggingCharacter.GetComponent<Animator>().enabled = true;
+        hallwayCharacter.GetComponent<Animator>().enabled = true;
+        hallwayCharacter.GetComponent<male1>().enabled = true;
+        outsideCharacter.GetComponent<Animator>().enabled = true;
+        if (wasRunning)
+        {
+            outsideCharacter.GetComponent<femaleoutside>().enabled = true;
         }
     }
 

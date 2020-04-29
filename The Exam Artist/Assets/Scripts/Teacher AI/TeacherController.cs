@@ -20,7 +20,7 @@ public class TeacherController : MonoBehaviour
     public float MaxCheckTime = 5.5f;
     public bool collision = false, gameover = false;
 
-    private int behaviour = 1; 
+    private int behaviour = 1;
     private bool inEyesight = false, play = false;
     private float angle, minDistance = 0.2f, minAngle = 120f, minEyesight = 10000f;
     //private float minDistance = 10000f, 
@@ -63,6 +63,10 @@ public class TeacherController : MonoBehaviour
             }
             else
             {
+                if (!gameover)
+                {
+                    eyesightCheck();
+                }
                 switch (behaviour)
                 {
                     case 0:
@@ -85,10 +89,6 @@ public class TeacherController : MonoBehaviour
                     case 5:
                         bribeBehavior();
                         break;
-                }
-                if (!gameover)
-                {
-                    eyesightCheck();
                 }
             }
         }
@@ -130,8 +130,6 @@ public class TeacherController : MonoBehaviour
         {
             if (illegalmove.illegal && inEyesight)
             {
-                teachersound[2].PlayOneShot(wow, 0.3f);
-                gameover = true;
                 teacher.SetDestination(gameoverTarget.transform.position);
             }
             else
@@ -157,6 +155,7 @@ public class TeacherController : MonoBehaviour
                 //Debug.Log(Vector3.Distance(teacher.transform.position, destination.position));
                 if (Vector3.Distance(teacher.transform.position, destination.position) < minDistance)
                 {
+                    Debug.Log("Reached");
                     teacher.ResetPath();
                     behaviour = 3;
                     target.transform.position = GetRandomPosition();
@@ -182,7 +181,12 @@ public class TeacherController : MonoBehaviour
             inEyesight = true;
             if (illegalmove.illegal)
             {
+                teachersound[2].PlayOneShot(wow, 0.3f);
+                gameover = true;
+                test.gameOver();
                 behaviour = 3;
+                teacher.speed = 2.0f;
+                MaxPauseTime = 3.0f;
             }
         }
         else
@@ -193,10 +197,6 @@ public class TeacherController : MonoBehaviour
 
     void Pausing()
     {
-        if (collision)
-        {
-            collision = false;
-        }
         teachersound[1].Pause();
         if (!freezeSkillTrigger.isExisting())
         {
@@ -210,30 +210,33 @@ public class TeacherController : MonoBehaviour
             }
             else
             {
-                if (giftSkillTrigger.isTrigger() == true)
+                if (timePaused >= MaxPauseTime)
                 {
-                    setBribeTarget();
-                    teacher.SetDestination(giftTarget.transform.position);
-                    ani.SetInteger("animation_int", 1);
-                    behaviour = 5;
+                    behaviour = 1;
+                    timePaused = 0.0f;
+                    if (collision)
+                    {
+                        collision = false;
+                        teacher.speed = 2.0f;
+                        MaxPauseTime = 3.0f;
+                    }
                 }
                 else
                 {
-                    if (timePaused >= MaxPauseTime)
+                    if (collision)
                     {
-                        behaviour = 1;
-                        timePaused = 0.0f;
+                        teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+                        ani.SetInteger("animation_int", 10);
                     }
                     else
                     {
                         int index = Random.Range(2, 3);
                         ani.SetInteger("animation_int", index);
                         teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
-                        teacher.SetDestination(teacher.transform.position);
-                        //teacher.ResetPath();
                     }
+                    teacher.SetDestination(teacher.transform.position);
+                    //teacher.ResetPath();
                 }
-
             }
         }
     }
@@ -284,11 +287,16 @@ public class TeacherController : MonoBehaviour
 
     public void setTarget(GameObject t)
     {
-        target.transform.position = t.transform.position;
+        if (!gameover)
+        {
+            target.transform.position = t.transform.position;
 
-        //Debug.Log("Collide: " + target.transform.position);
-        behaviour = 1;
-        collision = true;
+            //Debug.Log("Collide: " + target.transform.position);
+            behaviour = 1;
+            teacher.speed = 4.0f;
+            MaxPauseTime = 5.0f;
+            collision = true;
+        }
     }
 
     void setBribeTarget()

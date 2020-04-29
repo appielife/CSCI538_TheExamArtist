@@ -27,6 +27,7 @@ public class GiftBlindEyesBehavior : MonoBehaviour
     private AudioSource[] sound;
     public AudioClip[] giftAudioClip = new AudioClip[3];
     static System.Random songPlayer = new System.Random();
+    private TimeFreezeBehavior tf;
 
     void Start()
     {
@@ -37,37 +38,42 @@ public class GiftBlindEyesBehavior : MonoBehaviour
 
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         bribeList = setting.bribeList; // Link Reference
+
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
     }
 
 
     void Update()
     {
-        if (existTimeCounter > 0 && exist == true && used == false)
+        if (!tf.hold)
         {
-            existTimeCounter -= Time.deltaTime;
-            imgExist.fillAmount = 1 - existTimeCounter / existTime;
-            textCoolDown.text = ((int)Mathf.Ceil(existTimeCounter)).ToString();
-        }
-        else if (existTimeCounter <= 0 && exist == true && used == false)
-        {
-            existTimeCounter = existTime;
-            exist = false;
-            imgExist.fillAmount = 0.0f;
-            used = true;
-        }
-        else if (coolDownCounter > 0 && used == true)
-        {
-            coolDownCounter -= Time.deltaTime;
-            imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
-            textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-            //Debug.Log(coolDownCounter[0]);
-        }
-        else if (coolDownCounter <= 0 && used == true)
-        {
-            coolDownCounter = coolDown;
-            textCoolDown.text = "";
-            imgCoolDown.fillAmount = 0.0f;
-            used = false;
+            if (existTimeCounter > 0 && exist == true && used == false)
+            {
+                existTimeCounter -= Time.deltaTime;
+                imgExist.fillAmount = 1 - existTimeCounter / existTime;
+                textCoolDown.text = ((int)Mathf.Ceil(existTimeCounter)).ToString();
+            }
+            else if (existTimeCounter <= 0 && exist == true && used == false)
+            {
+                existTimeCounter = existTime;
+                exist = false;
+                imgExist.fillAmount = 0.0f;
+                used = true;
+            }
+            else if (coolDownCounter > 0 && used == true)
+            {
+                coolDownCounter -= Time.deltaTime;
+                imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
+                textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
+                //Debug.Log(coolDownCounter[0]);
+            }
+            else if (coolDownCounter <= 0 && used == true)
+            {
+                coolDownCounter = coolDown;
+                textCoolDown.text = "";
+                imgCoolDown.fillAmount = 0.0f;
+                used = false;
+            }
         }
     }
 

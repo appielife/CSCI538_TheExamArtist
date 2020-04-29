@@ -19,9 +19,10 @@ public class MagicCheatSheetBehavior : MonoBehaviour
     private Text currentHintShown;
     private Text cheatText;
     static string[] choices = { "A", "B", "C", "D" };
-    private Text tableHint;
+    //private Text tableHint;
     private HintsHandle hintHandle;
     private List<JToken> hintJToken = new List<JToken>();
+    private TimeFreezeBehavior tf;
 
     private void loadResources()
     {
@@ -38,8 +39,10 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         GameObject cheatsheet = GameObject.Find("CheatSheet");
         cheatText = cheatsheet.transform.Find("Hint").GetComponentInChildren<Text>();
 
-        tableHint = GameObject.Find("TableHint").GetComponentInChildren<Text>();
+        //tableHint = GameObject.Find("TableHint").GetComponentInChildren<Text>();
         hintHandle = GameObject.Find("HintHandle").GetComponent<HintsHandle>();
+
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
     }
 
     void Start()
@@ -49,7 +52,7 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
-        tableHint.text = "";
+        //tableHint.text = "";
         cheatText.text = "";
 
         GameObject[] hints = GameObject.FindGameObjectsWithTag("Hint");
@@ -68,44 +71,42 @@ public class MagicCheatSheetBehavior : MonoBehaviour
 
     void Update()
     {
-        if (existTimeCounter > 0 && exist == true && used == false)
+        if (!tf.hold)
         {
-            existTimeCounter -= Time.deltaTime;
-            imgExist.fillAmount = 1 - existTimeCounter / existTime;
-            textCoolDown.text = ((int)Mathf.Ceil(existTimeCounter)).ToString();
-        }
-        else if (existTimeCounter <= 0 && exist == true && used == false)
-        {
-            existTimeCounter = existTime;
-            exist = false;
-            imgExist.fillAmount = 0.0f;
-            //tableHint.text = "";
-            cheatText.text = "";
-            currentHintShown.text = "";
-            used = true; 
-        }
-        else if (coolDownCounter > 0 && used == true)
-        {
-            coolDownCounter -= Time.deltaTime;
-            imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
-            textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-        }
-        else if (coolDownCounter <= 0 && used == true)
-        {
-            coolDownCounter = coolDown;
-            textCoolDown.text = "";
-            imgCoolDown.fillAmount = 0.0f;
-            used = false;
+            if (existTimeCounter > 0 && exist == true && used == false)
+            {
+                existTimeCounter -= Time.deltaTime;
+                imgExist.fillAmount = 1 - existTimeCounter / existTime;
+                textCoolDown.text = ((int)Mathf.Ceil(existTimeCounter)).ToString();
+            }
+            else if (existTimeCounter <= 0 && exist == true && used == false)
+            {
+                existTimeCounter = existTime;
+                exist = false;
+                imgExist.fillAmount = 0.0f;
+                //tableHint.text = "";
+                cheatText.text = "";
+                currentHintShown.text = "";
+                used = true;
+            }
+            else if (coolDownCounter > 0 && used == true)
+            {
+                coolDownCounter -= Time.deltaTime;
+                imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
+                textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
+            }
+            else if (coolDownCounter <= 0 && used == true)
+            {
+                coolDownCounter = coolDown;
+                textCoolDown.text = "";
+                imgCoolDown.fillAmount = 0.0f;
+                used = false;
+            }
         }
     }
 
     public void MagicCheatSheet()
     {
-        /*if (!increased)
-        {
-            IncreaseHint();
-            increased = true;
-        }*/
         if (exist == false && used == false)
         {
             int temp_ques_id = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesId();

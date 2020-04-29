@@ -420,6 +420,19 @@ public class TestPaperBehavior : MonoBehaviour
         return answer;
     }
 
+    public void gameOver()
+    {
+        testPage.SetActive(true);
+        testPage.transform.Find("question").gameObject.SetActive(false);
+        testPage.transform.Find("choices").gameObject.SetActive(false);
+        testPage.transform.Find("PageNavigator").gameObject.SetActive(false);
+        testPage.transform.Find("SubmitTool").gameObject.SetActive(false);
+        testPage.transform.Find("GameOverText").gameObject.SetActive(true);
+        submitPage.SetActive(false);
+        bribeSkillPage.SetActive(false);
+    }
+
+
     public void writeAnsToJson()
     {
         char[] abcd = { 'A', 'B', 'C', 'D' };

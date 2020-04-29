@@ -11,6 +11,7 @@ public class TriggerInput : MonoBehaviour
     public SteamVR_Action_Boolean Spressed;
     public SteamVR_Action_Boolean Apressed;
     public SteamVR_Action_Boolean Bpressed;
+    public SteamVR_Action_Boolean Gpressed;
     public SteamVR_Action_Boolean LeftEast;
     public SteamVR_Action_Boolean LeftWest;
     public SteamVR_Action_Boolean RightEast;
@@ -26,9 +27,14 @@ public class TriggerInput : MonoBehaviour
     public GiftBlindEyesBehavior gbe;
     public MeditationBehavior mb;
     public TeacherController tc;
+    public TimeFreezeBehavior tf;
+    public Washroom wash;
+    public MeditationHandler mh;
 
-    private bool show = false, onPrepare = true, gameover = false;
+    private bool onPrepare = true, gameover = false, freeze = false;
     public float offset;
+    private float holdTime = 2.0f;
+    private List<Sprite> bribeList = new List<Sprite>();
 
     void OnDestroy()
     {
@@ -40,6 +46,10 @@ public class TriggerInput : MonoBehaviour
         Spressed.RemoveOnStateDownListener(TriggerDownS, right);
         Apressed.RemoveOnStateDownListener(TriggerDownA, right);
         Bpressed.RemoveOnStateDownListener(TriggerDownB, right);
+        Gpressed.RemoveOnStateDownListener(TriggerDownG, left);
+        Gpressed.RemoveOnStateUpListener(TriggerUpG, left);
+        Gpressed.RemoveOnStateDownListener(TriggerDownG, right);
+        Gpressed.RemoveOnStateUpListener(TriggerUpG, right);
 
         LeftEast.RemoveOnStateDownListener(TriggerDownR, left);
         LeftWest.RemoveOnStateDownListener(TriggerDownL, left);
@@ -61,6 +71,9 @@ public class TriggerInput : MonoBehaviour
         onPrepare = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().onPrepare;
 
         tc = GameObject.FindGameObjectWithTag("TeacherAction").GetComponent<TeacherController>();
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
+
+        bribeList = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().bribeList;
 
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
@@ -70,6 +83,10 @@ public class TriggerInput : MonoBehaviour
         Spressed.AddOnStateDownListener(TriggerDownS, right);
         Apressed.AddOnStateDownListener(TriggerDownA, right);
         Bpressed.AddOnStateDownListener(TriggerDownB, right);
+        Gpressed.AddOnStateDownListener(TriggerDownG, left);
+        Gpressed.AddOnStateUpListener(TriggerUpG, left);
+        Gpressed.AddOnStateDownListener(TriggerDownG, right);
+        Gpressed.AddOnStateUpListener(TriggerUpG, right);
 
         LeftEast.AddOnStateDownListener(TriggerDownR, left);
         LeftWest.AddOnStateDownListener(TriggerDownL, left);
@@ -93,6 +110,21 @@ public class TriggerInput : MonoBehaviour
             {
                 gameover = tc.gameover;
             }
+            if (freeze)
+            {
+                if (holdTime > 0)
+                {
+                    holdTime -= Time.deltaTime;
+                }
+                else
+                {
+                    tf.hold = true;
+                }
+            }
+            else
+            {
+                holdTime = 2.0f;
+            }
         }
     }
 
@@ -100,15 +132,21 @@ public class TriggerInput : MonoBehaviour
     {
         if (offset < 0 && !gameover)
         {
-            if (test.isBribeSkillActive())
+            if (!wash.inWashroom() && !mh.inMeditation() && !freeze)
             {
-                GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt1").gameObject;
-                GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
-                test.ChooseBribee(image);
-            }
-            else
-            {
-                hint.MagicCheatSheet();
+                if (test.isBribeSkillActive())
+                {
+                    if (bribeList.Count >= 1)
+                    {
+                        GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt1").gameObject;
+                        GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
+                        test.ChooseBribee(image);
+                    }
+                }
+                else
+                {
+                    hint.MagicCheatSheet();
+                }
             }
         }
     }
@@ -116,17 +154,20 @@ public class TriggerInput : MonoBehaviour
     {
         if (offset < 0 && !gameover)
         {
-            if (test.isBribeSkillActive())
+            if(!wash.inWashroom() && !mh.inMeditation() && !freeze)
             {
-                GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt2").gameObject;
-                GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
-                test.ChooseBribee(image);
-            }
-            else
-            {
-                if (!washroom.isTrigger())
+                if (test.isBribeSkillActive())
                 {
-                    washroom.GodOfWashroom();
+                    if (bribeList.Count >= 2)
+                    {
+                        GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt2").gameObject;
+                        GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
+                        test.ChooseBribee(image);
+                    }
+                }
+                else
+                {
+                     washroom.GodOfWashroom();
                 }
             }
         }
@@ -135,16 +176,20 @@ public class TriggerInput : MonoBehaviour
     {
         if (offset < 0 && !gameover)
         {
-            if (show) hns.Hide();
-            show = false;
+            if (!wash.inWashroom() && !mh.inMeditation())
+            {
+                hns.Hide();
+            }
         }
     }
     public void TriggerDownS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
         {
-            if (!show) hns.Show();
-            show = true;
+            if (!wash.inWashroom() && !mh.inMeditation())
+            {
+                hns.Show();
+            }
         }
     }
     public void TriggerDownL(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -155,7 +200,10 @@ public class TriggerInput : MonoBehaviour
         }
         if (offset < 0 && !gameover)
         {
-            test.previous();
+            if (!wash.inWashroom() && !mh.inMeditation())
+            {
+                test.previous();
+            }
         }
     }
     public void TriggerDownR(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -166,7 +214,10 @@ public class TriggerInput : MonoBehaviour
         }
         if (offset < 0 && !gameover)
         {
-            test.next();
+            if (!wash.inWashroom() && !mh.inMeditation())
+            {
+                test.next();
+            }
         }
     }
 
@@ -174,15 +225,18 @@ public class TriggerInput : MonoBehaviour
     {
         if (offset < 0 && !gameover)
         {
-            if (test.isBribeSkillActive())
+            if (!wash.inWashroom() && !mh.inMeditation() && !freeze)
             {
-                GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt3").gameObject;
-                GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
-                test.ChooseBribee(image);
-            }
-            else
-            {
-                if (!mb.isTrigger())
+                if (test.isBribeSkillActive())
+                {
+                    if (bribeList.Count >= 3)
+                    {
+                        GameObject option = GameObject.Find("BribeSkillPage").transform.Find("Opt3").gameObject;
+                        GameObject image = option.transform.Find("Canvas").transform.Find("Image").gameObject;
+                        test.ChooseBribee(image);
+                    }
+                }
+                else
                 {
                     mb.Meditation();
                 }
@@ -194,7 +248,41 @@ public class TriggerInput : MonoBehaviour
     {
         if (offset < 0 && !gameover)
         {
-            test.showBribeSkillPage();
+            if (!wash.inWashroom() && !mh.inMeditation() && !freeze)
+            {
+                if (test.isBribeSkillActive())
+                {
+                    test.backToTest();
+                }
+                else
+                {
+                    test.showBribeSkillPage();
+                }
+            }
+        }
+    }
+
+    public void TriggerDownG(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        if (offset < 0 && !gameover)
+        {
+            if (!wash.inWashroom() && !mh.inMeditation())
+            {
+                freeze = true;
+                //tf.hold = true;
+            }
+        }
+    }
+
+    public void TriggerUpG(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        if (offset < 0 && !gameover)
+        {
+            if (!wash.inWashroom() && !mh.inMeditation())
+            {
+                freeze = false;
+                tf.hold = false;
+            }
         }
     }
 

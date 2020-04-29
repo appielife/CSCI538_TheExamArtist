@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 public class LevelSetting : MonoBehaviour
 {
     [Tooltip("This is used to store grabbed answer or not")]
-    public bool grabAnswer = false;
+    public bool answerGrabbed = false;
     [Tooltip("This is used to store talking and starting time")]
     public float offset, initialTime = 300.0f;
     [Tooltip("This is used to store remaining time")]
@@ -49,6 +49,8 @@ public class LevelSetting : MonoBehaviour
     public bool illegalDetect = true;
     [Tooltip("Used to know if got caught")]
     public bool failed = false;
+    [Tooltip("Used to know which projectile")]
+    public GameObject projectile;
 
     private void Start()
     {
@@ -59,6 +61,7 @@ public class LevelSetting : MonoBehaviour
         {
             setting = GameObject.Find("Settings").GetComponent<Settings>();
         }
+        projectile = GameObject.FindGameObjectWithTag("Projectile");
     }
 
     private void Update()
@@ -69,11 +72,11 @@ public class LevelSetting : MonoBehaviour
         }
         else
         {
-            if (!grabAnswer)
+            if (!answerGrabbed)
             {
                 answer = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>().getAllAnswer();
                 //setQuestion();
-                grabAnswer = true;
+                answerGrabbed = true;
             }
         }
     }
@@ -106,7 +109,7 @@ public class LevelSetting : MonoBehaviour
     public void resetTemp()
     {
         //Debug.Log("reset");
-        grabAnswer = false;
+        answerGrabbed = false;
         question = null;
         quesTrack = null;
         scoreTrack = null;

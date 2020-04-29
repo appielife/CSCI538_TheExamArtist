@@ -830,7 +830,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956321923}
   m_LocalRotation: {x: 0.50000006, y: -0.50000006, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 10.17, y: 3.51, z: 9.06}
+  m_LocalPosition: {x: 10.02, y: 3.51, z: 9.06}
   m_LocalScale: {x: 2.0663, y: 2.0663, z: 1.462744}
   m_Children: []
   m_Father: {fileID: 88825461}
@@ -1401,6 +1401,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 144230, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 160596, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1411,7 +1419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -8.03
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1443,6 +1451,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012749712888, guid: dc06161b6d97feb419f45f03b62e14b9,
+        type: 3}
+      propertyPath: doNotDestroy
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1672,7 +1685,7 @@ MonoBehaviour:
   internalProcessArgs: 
   loadAdditive: 0
   loadAsync: 1
-  loadingScreen: {fileID: 0}
+  loadingScreen: {fileID: 2800000, guid: e629537f73a8d2c4895e437b07957799, type: 3}
   progressBarEmpty: {fileID: 0}
   progressBarFull: {fileID: 0}
   loadingScreenWidthInMeters: 6
@@ -1688,11 +1701,11 @@ MonoBehaviour:
   bottom: {fileID: 0}
   backgroundColor: {r: 0, g: 0, b: 0, a: 1}
   showGrid: 0
-  fadeOutTime: 0.5
-  fadeInTime: 0.5
+  fadeOutTime: 1
+  fadeInTime: 1
   postLoadSettleTime: 0
-  loadingScreenFadeInTime: 0.1
-  loadingScreenFadeOutTime: 0.1
+  loadingScreenFadeInTime: 1
+  loadingScreenFadeOutTime: 1
   autoTriggerOnEnable: 1
 --- !u!4 &1534662769
 Transform:

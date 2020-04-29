@@ -154,6 +154,7 @@ public class Navigator : MonoBehaviour
         {
             LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             setting.resetTemp();
+            Destroy(GameObject.Find("LevelSetting"));
         }
     }
     public void Continue()

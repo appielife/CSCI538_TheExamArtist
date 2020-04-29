@@ -17,9 +17,10 @@ public class MeditationBehavior : MonoBehaviour
     private bool used = false, enoughTime = true;
     //private int limit = 5;
     private float duration = 2.0f;
-    public GameObject wall, level, player;
+    public GameObject wall, level, player, projectile;
     public int correctAns;
     private LevelSetting setting;
+    private TimeFreezeBehavior tf;
 
     void Start()
     {
@@ -29,32 +30,37 @@ public class MeditationBehavior : MonoBehaviour
         imgCoolDown.fillAmount = 0.0f;
         textCoolDown.text = "";
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
     }
 
     void Update()
     {
-        if (timer.GetComponent<Timer>().timeLeft < 60 && enoughTime)
+        if (!tf.hold)
         {
-            imgCoolDown.fillAmount = 1.0f;
-            imgCoolDown.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
-            textCoolDown.text = "";
-            enoughTime = false;
-        }
-        else
-        {
-            if (coolDownCounter > 0 && used == true)
+            if (timer.GetComponent<Timer>().timeLeft < 60 && enoughTime)
             {
-                coolDownCounter -= Time.deltaTime;
-                imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
-                textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-                //Debug.Log(coolDownCounter[0]);
-            }
-            else if (coolDownCounter <= 0 && used == true)
-            {
-                coolDownCounter = coolDown;
+                imgCoolDown.fillAmount = 1.0f;
+                imgCoolDown.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
                 textCoolDown.text = "";
-                imgCoolDown.fillAmount = 0.0f;
-                used = false;
+                enoughTime = false;
+            }
+            else if (enoughTime)
+            {
+                if (coolDownCounter > 0 && used == true)
+                {
+                    coolDownCounter -= Time.deltaTime;
+                    imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
+                    textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
+                    //Debug.Log(coolDownCounter[0]);
+                }
+                else if (coolDownCounter <= 0 && used == true)
+                {
+                    coolDownCounter = coolDown;
+                    textCoolDown.text = "";
+                    imgCoolDown.fillAmount = 0.0f;
+                    used = false;
+                }
             }
         }
     }
@@ -88,6 +94,8 @@ public class MeditationBehavior : MonoBehaviour
                 gbe.ReduceCoolDownCounter(60);
             }
 
+            projectile = setting.projectile;
+
             FadeOut();
             Invoke("FadeIn", duration);
 
@@ -102,15 +110,14 @@ public class MeditationBehavior : MonoBehaviour
 
     private void FadeOut()
     {
-        SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
     }
 
     private void FadeIn()
     {
-        SteamVR_Fade.Start(Color.black, 0f);
         level.SetActive(false);
         wall.SetActive(true);
+        projectile.SetActive(false);
         SteamVR_Fade.Start(Color.clear, duration);
     }
 

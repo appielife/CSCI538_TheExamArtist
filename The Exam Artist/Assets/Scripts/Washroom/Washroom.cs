@@ -8,21 +8,22 @@ using Valve.VR;
 public class Washroom : MonoBehaviour
 {
     public LevelSetting setting;
-    public GameObject LoadSceneHandler, current, Level;
+    public GameObject LoadSceneHandler, current, Level, projectile;
     public float timer;
     private GameObject paper;
     private float duration = 2.0f;
-    private bool back = false;
+    private bool isWashroom = false;
 
     void OnEnable()
     {
-
-        back = false;
+        isWashroom = true;
         List<int> randomArray = new List<int>();
         if (GameObject.Find("LevelSetting") != null)
         {
             setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             timer = setting.washroomDuration;
+            projectile = setting.projectile;
+
             paper = GameObject.Find("Paper");
 
             int time = (int)Mathf.Ceil((float)setting.timeLeft / 60.0f);
@@ -78,9 +79,8 @@ public class Washroom : MonoBehaviour
             }
             else
             {
-                if (!back)
+                if (isWashroom)
                 {
-                    back = true;
                     FadeOut();
                     Invoke("Change", duration);
                     Invoke("FadeIn", duration * 2);
@@ -93,14 +93,13 @@ public class Washroom : MonoBehaviour
 
     private void FadeOut()
     {
-        SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
     }
 
     private void FadeIn()
     {
-        SteamVR_Fade.Start(Color.black, 0f);
         SteamVR_Fade.Start(Color.clear, duration);
+        isWashroom = false;
     }
 
 
@@ -108,5 +107,11 @@ public class Washroom : MonoBehaviour
     {
         Level.SetActive(true);
         current.SetActive(false);
+        projectile.SetActive(true);
+    }
+
+    public bool inWashroom()
+    {
+        return isWashroom;
     }
 }
