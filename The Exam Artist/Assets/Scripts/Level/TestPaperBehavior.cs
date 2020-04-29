@@ -155,6 +155,10 @@ public class TestPaperBehavior : MonoBehaviour
         question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
+        if (quesTrack[tempQuestion].choice > -1)
+        {
+            setSelectedTag(quesTrack[tempQuestion].choice);
+        }
     }
 
     public void previous()
@@ -188,6 +192,10 @@ public class TestPaperBehavior : MonoBehaviour
         question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
+        if(quesTrack[tempQuestion].choice > -1)
+        {
+            setSelectedTag(quesTrack[tempQuestion].choice);
+        }
     }
 
     public void startTest()
@@ -469,6 +477,25 @@ public class TestPaperBehavior : MonoBehaviour
         /*FadeIn();
         Invoke("FadeOut", 2.0f);*/
         LoadSceneHandler.SetActive(true);
+    }
+
+    public void setSelectedTag(int i)
+    {
+        Button btn = choiceA.GetComponentInChildren<Button>();
+        switch (i)
+        {
+            case 1:
+                btn = choiceB.GetComponentInChildren<Button>();
+                break;
+            case 2:
+                btn = choiceC.GetComponentInChildren<Button>();
+                break;
+            case 3:
+                btn = choiceD.GetComponentInChildren<Button>();
+                break;
+
+        }
+        btn.tag = "MainChoiceSelected";
     }
 
     public void reset()
