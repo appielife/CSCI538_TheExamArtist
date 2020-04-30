@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
-      "id": "7",
-      "question_txt": "Dr Pepper shares what main ingredient of most antifreezes?",
+      "id": "20",
+      "question_txt": "I said to drink water, but my chemist friend died. Why?",
       "YourAns": "NA",
-      "MyAns": "A. Ethylene Glycol"
+      "MyAns": "D. He drank something weird"
     },
     {
-      "id": "0",
-      "question_txt": " One of the essential minerals in the human body is salt. How much salt (NaCl) is in the average adult human body?",
+      "id": "18",
+      "question_txt": "Why did the attacking army use acid?",
       "YourAns": "NA",
-      "MyAns": "C. 250 grams"
+      "MyAns": "B. To neutralize the enemy's base"
+    },
+    {
+      "id": "10",
+      "question_txt": "Butanoic anhydride can be produced by the reaction of butanoic acid with which of the following compounds?",
+      "YourAns": "NA",
+      "MyAns": "A.  Butanoic acid"
+    },
+    {
+      "id": "3",
+      "question_txt": "Where was Stephanie Kwolek born?",
+      "YourAns": "NA",
+      "MyAns": "A. Philadelphia"
     },
     {
       "id": "12",
-      "question_txt": "How many more times acidic is a solution of pOH 5 than a solution of pH 5?",
+      "question_txt": "What is the most specific characterization of the reaction shown?\nCa(OH)2 (aq) + H2SO4 (aq) → CaSO4 (aq) + H2O (l)",
       "YourAns": "NA",
-      "MyAns": "B. 1x10^(-4)"
-    },
-    {
-      "id": "1",
-      "question_txt": "If you fill a glass to the brim with ice water and the ice melts, what will happen?",
-      "YourAns": "NA",
-      "MyAns": "B. The water level will drop slightly as the ice melts."
-    },
-    {
-      "id": "4",
-      "question_txt": "Which element has the highest boiling point at 5933.2 Kelvin??",
-      "YourAns": "NA",
-      "MyAns": "B. W"
-    },
-    {
-      "id": "5",
-      "question_txt": "Which suicidal 19th century chemist has the single line etched on his tombstone : S=k log W?",
-      "YourAns": "NA",
-      "MyAns": "C. Ludwig Boltzmann"
+      "MyAns": "A. Neutralization"
     },
     {
       "id": "9",
-      "question_txt": "What are the products of acid-base neutralization?",
+      "question_txt": "All of the following are true with respect to carbonyls EXCEPT:",
       "YourAns": "NA",
-      "MyAns": "C. Water, Salt, Heat"
+      "MyAns": "D. the π electrons are mobile and are pulled toward the carbonyl carbon."
     },
     {
-      "id": "13",
-      "question_txt": "Out of the following list, which is NOT a strong acid?",
+      "id": "11",
+      "question_txt": "What would be the charge of aspartic acid at pH 7?",
       "YourAns": "NA",
-      "MyAns": "C. Oxalic"
+      "MyAns": "A. Negative"
     },
     {
-      "id": "6",
-      "question_txt": "Which electron that would emit the greatest amount of energy by dropping electron levels?",
+      "id": "15",
+      "question_txt": "Which of the following actions does NOT affect the equilibrium position of a reaction?",
       "YourAns": "NA",
-      "MyAns": "C. N=2 To N=1"
+      "MyAns": "A. Adding or removing a catalyst."
+    },
+    {
+      "id": "1",
+      "question_txt": "Which one of the following is the true covalent oxide of iodine?",
+      "YourAns": "NA",
+      "MyAns": "B. I2O5"
     },
     {
       "id": "8",
-      "question_txt": "In a lead storage battery, what strong acid is consumed in a reaction which produces the voltage?",
+      "question_txt": "An electron is known to be in the n = 4 shell and the l = 2 subshell. How many possible combinations of quantum numbers could this electron have?",
       "YourAns": "NA",
-      "MyAns": "B. Sulphuric Acid"
+      "MyAns": "D. 10"
     }
   ]
 }

@@ -474,9 +474,14 @@ public class TestPaperBehavior : MonoBehaviour
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        /*FadeIn();
-        Invoke("FadeOut", 2.0f);*/
-        LoadSceneHandler.SetActive(true);
+        if (SteamVR.active)
+        {
+            LoadSceneHandler.SetActive(true);
+        }
+        else
+        {
+            Initiate.Fade("GameOver", Color.black, 0.5f);
+        }
     }
 
     public void setSelectedTag(int i)

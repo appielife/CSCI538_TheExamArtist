@@ -13,6 +13,7 @@ public class Navigator : MonoBehaviour
     private Volume volume;
     private LevelSetting levelsetting;
     private ScoreCalculate report;
+    public GameObject LoadSceneHandler;
 
     void Start()
     {
@@ -94,13 +95,10 @@ public class Navigator : MonoBehaviour
 
     private void FadeIn()
     {
-        SteamVR_Fade.Start(Color.clear, 0.0f);
         SteamVR_Fade.Start(Color.black, 2.0f);
-        SceneManager.LoadScene(1);
     }
     private void FadeOut()
     {
-        SteamVR_Fade.Start(Color.black, 0.0f);
         SteamVR_Fade.Start(Color.clear, 2.0f);
     }
 
@@ -133,14 +131,26 @@ public class Navigator : MonoBehaviour
     public void Left()
     {
         if (setting != null) { setting.setHand("LeftHand"); }
-        /*FadeIn();
-        Invoke("FadeOut", 5.0f);*/
+        if (SteamVR.active)
+        {
+            LoadSceneHandler.SetActive(true);
+        }
+        else
+        {
+            Initiate.Fade("Level 1", Color.black, 0.5f);
+        }
     }
     public void Right()
     {
         if (setting != null) { setting.setHand("RightHand"); }
-        /*FadeIn();
-        Invoke("FadeOut", 5.0f);*/
+        if (SteamVR.active)
+        {
+            LoadSceneHandler.SetActive(true);
+        }
+        else
+        {
+            Initiate.Fade("Level 1", Color.black, 0.5f);
+        }
     }
     public void Back()
     {
@@ -155,6 +165,14 @@ public class Navigator : MonoBehaviour
             LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             setting.resetTemp();
             Destroy(GameObject.Find("LevelSetting"));
+        }
+        if (SteamVR.active)
+        {
+            LoadSceneHandler.SetActive(true);
+        }
+        else
+        {
+            Initiate.Fade("Level 1", Color.black, 0.5f);
         }
     }
     public void Continue()
