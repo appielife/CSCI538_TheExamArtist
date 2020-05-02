@@ -20,11 +20,14 @@ public class ScoreCalculate : MonoBehaviour
 {
     public Text score;
     public Text report;
+    public GameObject fail;
+    public GameObject yourscore;
     private JObject ans_obj;
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();
     private List<string> reporttext = new List<string>();
     private int index = 0;
+    private bool failed = false;
 
     private void Start()
     {
@@ -35,6 +38,15 @@ public class ScoreCalculate : MonoBehaviour
         GameObject scorereport = GameObject.Find("BlackBoard").transform.Find("ScoreReport").gameObject;
         scorereport.transform.Find("PrevReport").GetComponentInChildren<Text>().text = '\u25B2'.ToString();
         scorereport.transform.Find("NextReport").GetComponentInChildren<Text>().text = '\u25BC'.ToString();
+        if (GameObject.Find("LevelSetting"))
+        {
+            failed = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().failed;
+        }
+        if (failed)
+        {
+            yourscore.SetActive(false);
+            fail.SetActive(true);
+        }
     }
 
 
@@ -69,6 +81,7 @@ public class ScoreCalculate : MonoBehaviour
         }
         report.text = reporttext[index];
     }
+
     public void prevReport()
     {
         if (index - 1 > 0) {
@@ -93,7 +106,6 @@ public class ScoreCalculate : MonoBehaviour
         return ans_arr;
     }
 
-
     public int getCorrectAnswersCount()
     {
         //to get data from json file
@@ -112,19 +124,16 @@ public class ScoreCalculate : MonoBehaviour
         return corr_count;
     }
 
-
     // to getcount of questios not anseed
     public int getUnansweredCount()
     {
         int count = 0;
-        // 
         for (int i = 0; i < ans_arr.Count; i++)
         {
             // if the answer is equal to NA abbrevation for not answered
             if ((ans_arr[i]["YourAns"].ToString()) == "NA")
             {
                 count = count + 1;
-
             }
         }
         return count;

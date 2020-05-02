@@ -14,15 +14,27 @@ public class RandomSeat : MonoBehaviour
         if (setting.randomseats)
         {
             getPosition();
-            for (int i = 0; i < 12; i++)
+            if (!setting.randomed)
             {
-                positions.Add(GameObject.Find(names[i]).transform.position);
-                Debug.Log(positions[i]);
+                for (int i = 0; i < 12; i++)
+                {
+                    positions.Add(GameObject.Find(names[i]).transform.position);
+                }
+                randomize();
+                for (int i = 0; i < 12; i++)
+                {
+                    GameObject.Find(names[i]).transform.position = positions[i];
+                }
+                setting.randomed = true;
+                setting.setPositions(positions);
             }
-            randomize();
-            for (int i = 0; i < 12; i++)
+            else
             {
-                GameObject.Find(names[i]).transform.position = positions[i];
+                positions = setting.positions;
+                for (int i = 0; i < 12; i++)
+                {
+                    GameObject.Find(names[i]).transform.position = positions[i];
+                }
             }
         }
     }
@@ -41,22 +53,13 @@ public class RandomSeat : MonoBehaviour
 
     void getPosition()
     {
-        string current = "";
-        for (int i = 0; i < 12; i++)
+        GameObject[] students = GameObject.FindGameObjectsWithTag("Student");
+        GameObject player = GameObject.FindGameObjectWithTag("MainPlayerPosition");
+        
+        for (int i = 0; i < students.Length; i++)
         {
-            if (i < 5)
-            {
-                current = "Student" + (i + 1).ToString();
-            }
-            else if (i == 5)
-            {
-                current = "PlayerStudent";
-            }
-            else
-            {
-                current = "Student" + i.ToString();
-            }
-            names.Add(current);
+            names.Add(students[i].name);
         }
+        names.Add(player.name);
     }
 }

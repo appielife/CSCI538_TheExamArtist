@@ -25,6 +25,20 @@ TagManager:
   - TeacherHint
   - ClipboardHint
   - Projectile
+  - Student
+  - BribeOption
+  - MainPlayerPosition
+  - InstructionButton
+  - MainSubject
+  - MainChoice
+  - MainChoiceSelected
+  - TestSound
+  - toilet
+  - LevelScene
+  - MeditationWall
+  - JoggingCharacter
+  - OutsideCharacter
+  - HallwayCharacter
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,7 @@ public class Settings : MonoBehaviour
     public GameObject setting;
     private string hand = "LeftHand";
     private int volume = 50;
+    public AudioSource click;
 
     void Start()
     {

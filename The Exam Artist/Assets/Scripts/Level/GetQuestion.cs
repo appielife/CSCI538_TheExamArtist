@@ -95,8 +95,22 @@ public class GetQuestion
                 return i;
             }
         }
-        Debug.Log("Error");
+        //Debug.Log("Error");
         return -1;
+    }
+
+    public string getQuestionCorrectAnsContext(int idx)
+    {
+        JArray options = (JArray)ques[idx]["options"];
+        for (int i = 0; i < options.Count; i++)
+        {
+            if ((string)((JObject)options[i])["isCorrect"] == "True")
+            {
+                return (string)((JObject)options[i])["option_txt"];
+            }
+        }
+        //Debug.Log("Error");
+        return "";
     }
 
     //Call this function to get your questions array in JArray format

@@ -9,102 +9,111 @@ public class TeacherController : MonoBehaviour
 {
     public float speed = 2.0f;
     public NavMeshAgent teacher;
-    public GameObject student, gameoverTarget, giftTarget;
+    public GameObject student, gameoverTarget;
     public Animator ani;
-    //public Text text;
     public Random ran = new Random();
     public AudioClip wow;
-    public TestPaperBehavior test;
     public IllegalMoveHandler illegalmove;
     public GiftBlindEyesBehavior giftSkillTrigger;
-    public ClapBombBehavior clapBombTrigger;
-
-    private int behaviour = 1; // moving
-    private bool inEyesight = false, gameover = false, play = false;
-    private float angle, minDistance = 0.2f;
-    //private float minDistance = 10000f, minAngle = 120f
-    private GameObject target;
-    private AudioSource[] studentsound, teachersound;
-    private float timePaused = 0.0f;
-    float timeChecked = 0.0f;
+    public TimeFreezeBehavior freezeSkillTrigger;
     public float MaxPauseTime = 3.0f;
     public float MaxCheckTime = 5.5f;
+    public bool collision = false, gameover = false;
 
+    private int behaviour = 1;
+    private bool inEyesight = false, play = false;
+    private float angle, minDistance = 0.2f, minAngle = 120f, minEyesight = 10000f;
+    //private float minDistance = 10000f, 
+    private GameObject target, giftTarget;
+    private AudioSource[] studentsound, teachersound;
+    private float timePaused = 0.0f;
+    //private float timeChecked = 0.0f;
     private float timeLeft = 15.0f;
+    private TestPaperBehavior test;
+    private LevelSetting setting;
 
     void Start()
     {
         studentsound = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
         teachersound = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
-        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+
+        freezeSkillTrigger = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
+        test = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
+
+        setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
         teacher.speed = speed;
         target = GameObject.Find("target1");
         target.transform.position = GetRandomPosition();
-        
-        setBribeTarget();
     }
 
     void Update()
     {
-        if (timeLeft > 0)
+        if (!test.onPrepare)
         {
-            if (!play)
+            if (timeLeft > 0)
             {
-                ani.SetInteger("animation_int", 9);
-                teachersound[0].Play();
-                play = true;
+                if (!play)
+                {
+                    ani.SetInteger("animation_int", 9);
+                    teachersound[0].Play();
+                    play = true;
+                }
+                timeLeft -= Time.deltaTime;
             }
-            timeLeft -= Time.deltaTime;
-        }
-        else
-        {
-            switch (behaviour)
+            else
             {
-                case 0:
-                    behaviour = 1;   //switch behavior from initialization to move
-                    break;
-                case 1:
-                    Moving();  // move
-                    break;
-                case 2:
-                case 3:
-                    Pausing();
-                    break;
-                case 4:
-                    teacher.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                    behaviour = 2;
-                    teachersound[1].Pause();
-                    test.writeAnsToJson();
-                    break;
-                case 5:
-                    bribeBehavior();
-                    break;
-                case 6:
-                    checkStudentBehavior();
-                    break;
-
-            }
-            if (!gameover)
-            {
-                eyesightCheck();
+                if (!gameover)
+                {
+                    eyesightCheck();
+                }
+                switch (behaviour)
+                {
+                    case 0:
+                        behaviour = 1;   //switch behavior from initialization to move
+                        break;
+                    case 1:
+                        Moving();  // move
+                        break;
+                    case 2:
+                    case 3:
+                        Pausing();
+                        break;
+                    case 4:
+                        setting.setFailed(true);
+                        teacher.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                        behaviour = 2;
+                        teachersound[1].Pause();
+                        test.writeAnsToJson();
+                        break;
+                    case 5:
+                        bribeBehavior();
+                        break;
+                }
             }
         }
     }
 
     void Moving()
     {
-        if (!teachersound[1].isPlaying)
+        if (!freezeSkillTrigger.isExisting())
         {
-            teachersound[1].Play();
+            if (!teachersound[1].isPlaying)
+            {
+                teachersound[1].Play();
+            }
+            else
+            {
+                teachersound[1].UnPause();
+            }
         }
         else
         {
-            teachersound[1].UnPause();
+            teachersound[1].Pause();
         }
         Transform destination = target.transform;
-        //teacher.SetDestination(destination.position);
-        //Debug.Log(teacher.transform.position + "," + destination.position + "," + teacher.destination);
+        // teacher.SetDestination(destination.position);
+        // Debug.Log(target.transform.position);
         ani.SetInteger("animation_int", 1);
         if (gameover)
         {
@@ -121,33 +130,22 @@ public class TeacherController : MonoBehaviour
         {
             if (illegalmove.illegal && inEyesight)
             {
-                teachersound[2].PlayOneShot(wow, 0.3f);
-                gameover = true;
                 teacher.SetDestination(gameoverTarget.transform.position);
             }
             else
             {
-                if (clapBombTrigger.targetStudentPos != null)
+                if (giftSkillTrigger.isTrigger() == true)
                 {
-                    Debug.Log("CLAP");
-                    teacher.SetDestination(clapBombTrigger.targetStudentPos.transform.position);
-                    behaviour = 6;
-                }
-                else if (giftSkillTrigger.isTrigger() == true)
-                {
-                    Debug.Log("GIFT");
+                    setBribeTarget();
                     teacher.SetDestination(giftTarget.transform.position);
                     behaviour = 5;
                 }
                 else
                 {
-                    //teacher.destination = destination.position;
                     teacher.SetDestination(destination.position);
-                    //Debug.Log("Set:" + destination.position + " into " + teacher.destination);
-                    if (!teacher.hasPath)
+                    if (!teacher.hasPath && !collision)
                     {
                         target.transform.position = GetRandomPosition();
-                        teacher.SetDestination(destination.position);
                     }
                 }
             }
@@ -157,7 +155,7 @@ public class TeacherController : MonoBehaviour
                 //Debug.Log(Vector3.Distance(teacher.transform.position, destination.position));
                 if (Vector3.Distance(teacher.transform.position, destination.position) < minDistance)
                 {
-                    //Debug.Log(teacher.transform.position);
+                    Debug.Log("Reached");
                     teacher.ResetPath();
                     behaviour = 3;
                     target.transform.position = GetRandomPosition();
@@ -178,32 +176,67 @@ public class TeacherController : MonoBehaviour
         Vector3 forwardLocalVect = forwardLocalPos - teaPos;
         forwardLocalVect.y = 0;
         float angle = Vector3.Angle(srcLocalVect, forwardLocalVect);
+        if (distance < minEyesight && angle < minAngle / 2)
+        {
+            inEyesight = true;
+            if (illegalmove.illegal)
+            {
+                teachersound[2].PlayOneShot(wow, 0.3f);
+                gameover = true;
+                test.gameOver();
+                behaviour = 3;
+                teacher.speed = 2.0f;
+                MaxPauseTime = 3.0f;
+            }
+        }
+        else
+        {
+            inEyesight = false;
+        }
     }
 
     void Pausing()
     {
-        timePaused += Time.deltaTime;
         teachersound[1].Pause();
-        if (gameover)
+        if (!freezeSkillTrigger.isExisting())
         {
-            //int index = Random.Range(5, 7);
-            ani.SetInteger("animation_int", 3);
-            behaviour = 1;
-        }
-        else
-        {
-            if (timePaused >= MaxPauseTime)
+            timePaused += Time.deltaTime;
+
+            if (gameover)
             {
+                //int index = Random.Range(5, 7);
+                ani.SetInteger("animation_int", 3);
                 behaviour = 1;
-                timePaused = 0.0f;
             }
             else
             {
-                int index = Random.Range(2, 3);
-                ani.SetInteger("animation_int", index);
-                teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
-                teacher.SetDestination(teacher.transform.position);
-                //teacher.ResetPath();
+                if (timePaused >= MaxPauseTime)
+                {
+                    behaviour = 1;
+                    timePaused = 0.0f;
+                    if (collision)
+                    {
+                        collision = false;
+                        teacher.speed = 2.0f;
+                        MaxPauseTime = 3.0f;
+                    }
+                }
+                else
+                {
+                    if (collision)
+                    {
+                        teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+                        ani.SetInteger("animation_int", 10);
+                    }
+                    else
+                    {
+                        int index = Random.Range(2, 3);
+                        ani.SetInteger("animation_int", index);
+                        teacher.transform.Rotate(new Vector3(0, -30 * Time.deltaTime, 0));
+                    }
+                    teacher.SetDestination(teacher.transform.position);
+                    //teacher.ResetPath();
+                }
             }
         }
     }
@@ -222,7 +255,7 @@ public class TeacherController : MonoBehaviour
         }
     }
 
-    void Checking()
+    /*void Checking()
     {
         timeChecked += Time.deltaTime;
         teachersound[1].Pause();
@@ -250,17 +283,25 @@ public class TeacherController : MonoBehaviour
             teacher.transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
             Checking();
         }
-    }
+    }*/
 
     public void setTarget(GameObject t)
     {
-        target = t;
+        if (!gameover)
+        {
+            target.transform.position = t.transform.position;
+
+            //Debug.Log("Collide: " + target.transform.position);
+            behaviour = 1;
+            teacher.speed = 4.0f;
+            MaxPauseTime = 5.0f;
+            collision = true;
+        }
     }
 
     void setBribeTarget()
     {
-        int index = Random.Range(1, 11);
-        giftTarget = GameObject.FindGameObjectsWithTag("StudentPosition")[index];
+        giftTarget = GameObject.Find("Student" + giftSkillTrigger.target).transform.Find("Position").gameObject;
     }
 
     public Vector3 GetRandomPosition()

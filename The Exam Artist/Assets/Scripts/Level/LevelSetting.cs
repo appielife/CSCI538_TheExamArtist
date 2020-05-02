@@ -5,52 +5,63 @@ using UnityEngine.UI;
 using UnityEditor;
 using Newtonsoft.Json.Linq;
 
-public class ReadOnlyAttribute : PropertyAttribute { }
-
-[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
-public class ReadOnlyDrawer : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty property,
-                                            GUIContent label)
-    {
-        return EditorGUI.GetPropertyHeight(property, label, true);
-    }
-
-    public override void OnGUI(Rect position,
-                               SerializedProperty property,
-                               GUIContent label)
-    {
-        GUI.enabled = false;
-        EditorGUI.PropertyField(position, property, label, true);
-        GUI.enabled = true;
-    }
-}
-
 public class LevelSetting : MonoBehaviour
 {
-    [ReadOnly] public bool start = false;
+    [Tooltip("This is used to store grabbed answer or not")]
+    public bool answerGrabbed = false;
+    [Tooltip("This is used to store talking and starting time")]
     public float offset, initialTime = 300.0f;
-    [ReadOnly] public float timeLeft = -1.0f;
-    [ReadOnly] public string[] answer;
-    [ReadOnly] public bool washroomed = false;
-    [ReadOnly] public GetQuestion question;
-    [ReadOnly] public MultipleChoiceBehavior[] quesTrack;
-    [ReadOnly] public int[] scoreTrack;
-    [ReadOnly] public Settings setting;
-    [ReadOnly] public string subject;
+    [Tooltip("This is used to store remaining time")]
+    public float timeLeft = -1.0f;
+    [Tooltip("This is used to store answers")]
+    public string[] answer;
+    [Tooltip("This is used to determine if went to washroom")]
+    public bool washroomed = false;
+    [Tooltip("Set time staying in washroom")]
+    public float washroomDuration = 10.0f;
+    [Tooltip("This is used to store unanswered questions")]
+    public List<int> unansweredQues;
+    [Tooltip("This is used to store questions")]
+    public GetQuestion question;
+    [Tooltip("This is used to store current questions")]
+    public MultipleChoiceBehavior[] quesTrack;
+    [Tooltip("This is used to store score")]
+    public int[] scoreTrack;
+    [Tooltip("This is used to store hand and volume setting")]
+    public Settings setting;
+    [Tooltip("This is used to store subject")]
+    public string subject;
+    [Tooltip("This is used to store student positions")]
+    public List<Vector3> positions = new List<Vector3>();
+    [Tooltip("Set number of questions")]
     public int numQuestion = 5;
+    [Tooltip("Check to enable random seats")]
     public bool randomseats = false;
+    [Tooltip("This is used for randomseats")]
+    public bool randomed = false;
+    [Tooltip("This is used to store hints")]
     public List<JToken> hints = new List<JToken>();
+    [Tooltip("Check to enable prepare page")]
+    public bool onPrepare = true;
+    [Tooltip("This is used to store bribe list")]
+    public List<Sprite> bribeList = new List<Sprite>();
+    [Tooltip("Check to enable illegal detection")]
+    public bool illegalDetect = true;
+    [Tooltip("Used to know if got caught")]
+    public bool failed = false;
+    [Tooltip("Used to know which projectile")]
+    public GameObject projectile;
 
     private void Start()
     {
         timeLeft = -1.0f;
         question = null;
-        DontDestroyOnLoad(GameObject.Find("LevelSetting"));
+        DontDestroyOnLoad(gameObject);
         if (GameObject.Find("Settings"))
         {
             setting = GameObject.Find("Settings").GetComponent<Settings>();
         }
+        projectile = GameObject.FindGameObjectWithTag("Projectile");
     }
 
     private void Update()
@@ -61,11 +72,11 @@ public class LevelSetting : MonoBehaviour
         }
         else
         {
-            if (!start)
+            if (!answerGrabbed)
             {
                 answer = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>().getAllAnswer();
                 //setQuestion();
-                start = true;
+                answerGrabbed = true;
             }
         }
     }
@@ -86,6 +97,7 @@ public class LevelSetting : MonoBehaviour
         question = test.setQuestion();
         quesTrack = test.setQuesTrack();
         scoreTrack = test.setScoreTrack();
+        unansweredQues = test.setUnansweredQues();
     }
 
     public void setHint()
@@ -96,25 +108,44 @@ public class LevelSetting : MonoBehaviour
 
     public void resetTemp()
     {
-        Debug.Log("reset");
-        start = false;
+        //Debug.Log("reset");
+        answerGrabbed = false;
         question = null;
         quesTrack = null;
         scoreTrack = null;
+        unansweredQues = null;
         washroomed = false;
         timeLeft = -1.0f;
         offset = 15.0f;
+        onPrepare = true;
+        randomed = false;
+        bribeList = new List<Sprite>();
     }
 
     public void setSubject(string s)
     {
         subject = s;
-        GameObject.Find("Subject").GetComponent<Text>().text = s.ToUpper() + " QUIZ !";
+        GameObject.Find("Subject").GetComponent<Text>().text = s.ToUpper() + " TEST !";
         GameObject[] test = GameObject.FindGameObjectsWithTag("Subject");
         for(int i = 0; i< test.Length; i++)
         {
             test[i].GetComponent<Text>().text = s;
         }
+    }
+
+    public void setOnPrepare(bool b)
+    {
+        onPrepare = b;
+    }
+
+    public void setPositions(List<Vector3> positions)
+    {
+        this.positions = positions;
+    }
+
+    public void setFailed(bool b)
+    {
+        failed = b;
     }
 
 }

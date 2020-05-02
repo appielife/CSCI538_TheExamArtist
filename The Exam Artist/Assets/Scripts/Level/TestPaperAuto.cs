@@ -10,9 +10,12 @@ public class TestPaperAuto : MonoBehaviour
 {
     public GameObject testPaper;
     public GameObject questionTextObj;
-    public GameObject Choices3D;
+    //public GameObject Choices3D;
     public GameObject choiceA, choiceB, choiceC, choiceD;
-    private MeshRenderer[] choiceMesh;
+
+    private TimeFreezeBehavior tf;
+    private TestPaperBehavior playerTest;
+    //private MeshRenderer[] choiceMesh;
     private GetQuestion question;
     private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
@@ -28,54 +31,62 @@ public class TestPaperAuto : MonoBehaviour
 
     void Start()
     {
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
+        playerTest = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
         testPage = testPaper.transform.Find("TestPage").gameObject;
         initialPage = testPaper.transform.Find("InitialPage").gameObject;
 
         testPage.SetActive(false);
         initialPage.SetActive(true);
-        Choices3D.SetActive(false);
+        //Choices3D.SetActive(false);
 
         offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
 
         mainSelectHandler = GameObject.FindGameObjectWithTag("MainSelectHandler");
         timeChange = frequency;
-        choiceMesh = Choices3D.GetComponentsInChildren<MeshRenderer>();
+        //choiceMesh = Choices3D.GetComponentsInChildren<MeshRenderer>();
     }
 
     void Update()
     {
-        if (offset > 0)
+        if (!playerTest.onPrepare)
         {
-            offset -= Time.deltaTime;
-        }
-        else
-        {
-            if (!start)
+            if (offset > 0)
             {
-                initialPage.SetActive(false);
-                testPage.SetActive(true);
-                //Choices3D.SetActive(true);
-                if (question == null)
-                {
-                    question = mainSelectHandler.GetComponent<TestPaperBehavior>().question.copy();
-                    quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
-                    next();
-                }
-                start = true;
-            }
-            if (slowDown == true)
-            {
-                timeChange -= Time.deltaTime / 2;
+                offset -= Time.deltaTime;
             }
             else
             {
-                timeChange -= Time.deltaTime;
-            }
+                if (!start)
+                {
+                    initialPage.SetActive(false);
+                    testPage.SetActive(true);
+                    //Choices3D.SetActive(true);
+                    if (question == null)
+                    {
+                        question = mainSelectHandler.GetComponent<TestPaperBehavior>().question.copy();
+                        quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
+                        next();
+                    }
+                    start = true;
+                }
+                if (!tf.isExisting())
+                {
+                    if (slowDown == true)
+                    {
+                        timeChange -= Time.deltaTime / 2;
+                    }
+                    else
+                    {
+                        timeChange -= Time.deltaTime;
+                    }
 
-            if (timeChange <= 0)
-            {
-                timeChange = frequency;
-                next();
+                    if (timeChange <= 0)
+                    {
+                        timeChange = frequency;
+                        next();
+                    }
+                }
             }
         }
     }
@@ -102,7 +113,7 @@ public class TestPaperAuto : MonoBehaviour
         int correctAns = quesTrack[tempQuestion].correctAns;
         quesTrack[tempQuestion].select(choices[correctAns], correctAns);
         Color higlight = new Color(1.0f, 0.0f, 0.0f, 1.0f);
-        choiceMesh[correctAns].material.color = higlight;
+        //choiceMesh[correctAns].material.color = higlight;
     }
 
     public void reset()
@@ -118,11 +129,10 @@ public class TestPaperAuto : MonoBehaviour
         B.colors = cb;
         C.colors = cb;
         D.colors = cb;
-        for(int i = 0; i < choiceMesh.Length; i++)
+        /*for(int i = 0; i < choiceMesh.Length; i++)
         {
             choiceMesh[i].material.color = white;
-        }
-
+        }*/
     }
 }
 

@@ -99,7 +99,11 @@ namespace Valve.VR.InteractionSystem
 				GUI.Label( new Rect( 10.0f, 10.0f, 600.0f, 400.0f ),
 					"WASD EQ/Arrow Keys to translate the camera\n" +
 					"Right mouse click to rotate the camera\n" +
-					"Left mouse click for standard interactions.\n" );
+					"Left mouse click for standard interactions.\n" +
+                    "---------------------------------------------\n" + 
+                    "In Level:\n" +
+                    "Space bar to show skills on table. Click to use skills\n" +
+                    "Hold F or freeze skill icon for 2 seconds to use freeze skill.\n");
 			}
 		}
 	}

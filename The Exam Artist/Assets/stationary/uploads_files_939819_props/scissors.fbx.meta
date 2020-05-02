@@ -33,7 +33,12 @@ ModelImporter:
   - first:
       74: 3311252802785410893
     second: scissors|Plane.011|Take 001|BaseLayer.001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: props
+    second: {fileID: 2100000, guid: e96f925b29f63ad44807906724ee7864, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

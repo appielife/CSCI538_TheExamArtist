@@ -9,10 +9,11 @@ public class Navigator : MonoBehaviour
 {
     private SteamVR_LaserPointer laserPointerL;
     private SteamVR_LaserPointer laserPointerR;
-    private Settings hand;
+    private Settings setting;
     private Volume volume;
     private LevelSetting levelsetting;
     private ScoreCalculate report;
+    public GameObject LoadSceneHandler;
 
     void Start()
     {
@@ -34,7 +35,11 @@ public class Navigator : MonoBehaviour
         laserPointerR.PointerOut += PointerOutside;
         laserPointerR.PointerClick += PointerClick;
 
-        hand = (GameObject.Find("Settings")) ? GameObject.Find("Settings").GetComponent<Settings>() : null;
+        setting = null;
+        if (GameObject.Find("Settings"))
+        {
+            setting = GameObject.Find("Settings").GetComponent<Settings>();
+        }
         if (GameObject.Find("VolumeHandler"))
         {
             volume = GameObject.Find("VolumeHandler").GetComponent<Volume>();
@@ -50,63 +55,12 @@ public class Navigator : MonoBehaviour
     {
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
-            GameObject blackboard = GameObject.Find("BlackBoard");
-            switch (e.target.name)
+
+            Button b = e.target.gameObject.GetComponent<Button>();
+            b.onClick.Invoke();
+            if (setting != null)
             {
-                case "Play":
-                    Play();
-                    break;
-                case "Options":
-                    Options();
-                    break;
-                case "Quit":
-                    Quit();
-                    break;
-                case "ToneDown":
-                    volume.ToneDown();
-                    break;
-                case "ToneUp":
-                    volume.ToneUp();
-                    break;
-                case "Return":
-                    Return();
-                    break;
-                case "Left":
-                    if (hand != null) { hand.setHand("LeftHand"); }
-                    FadeIn();
-                    Invoke("FadeOut", 5.0f);
-                    break;
-                case "Right":
-                    if (hand != null) { hand.setHand("RightHand"); }
-                    FadeIn();
-                    Invoke("FadeOut", 5.0f);
-                    break;
-                case "Back":
-                    Back();
-                    break;
-                case "Continue":
-                    Continue();
-                    break;
-                case "TryAgain":
-                    LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-                    setting.resetTemp();
-                    FadeIn();
-                    Invoke("FadeOut", 5.0f);
-                    break;
-                case "ShowReport":
-                    ShowReport();
-                    break;
-                case "DecideBack":
-                    DecideBack();
-                    break;
-                case "PrevReport":
-                    PrevReport();
-                    break;
-                case "NextReport":
-                    NextReport();
-                    break;
-                default:
-                    break;
+                setting.click.Play();
             }
         }
     }
@@ -117,6 +71,10 @@ public class Navigator : MonoBehaviour
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;
             cb.normalColor = new Color(0.13f, 0.22f, 0.2f, 1.0f);
+            if (e.target.tag == "InstructionButton")
+            {
+                cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            }
             b.colors = cb;
         }
     }
@@ -127,19 +85,20 @@ public class Navigator : MonoBehaviour
             Button b = e.target.gameObject.GetComponent<Button>();
             ColorBlock cb = b.colors;
             cb.normalColor = new Color(0.13f, 0.22f, 0.2f, 0.0f);
+            if (e.target.tag == "InstructionButton")
+            {
+                cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            }
             b.colors = cb;
         }
     }
 
     private void FadeIn()
     {
-        SteamVR_Fade.Start(Color.clear, 0.0f);
         SteamVR_Fade.Start(Color.black, 2.0f);
     }
     private void FadeOut()
     {
-        SteamVR_Fade.Start(Color.black, 0.0f);
-        SceneManager.LoadScene(1);
         SteamVR_Fade.Start(Color.clear, 2.0f);
     }
 
@@ -171,13 +130,27 @@ public class Navigator : MonoBehaviour
     }
     public void Left()
     {
-        if (hand != null) { hand.setHand("LeftHand"); }
-        SceneManager.LoadScene(1);
+        if (setting != null) { setting.setHand("LeftHand"); }
+        if (SteamVR.active)
+        {
+            LoadSceneHandler.SetActive(true);
+        }
+        else
+        {
+            Initiate.Fade("Level 1", Color.black, 0.5f);
+        }
     }
     public void Right()
     {
-        if (hand != null) { hand.setHand("RightHand"); }
-        SceneManager.LoadScene(1);
+        if (setting != null) { setting.setHand("RightHand"); }
+        if (SteamVR.active)
+        {
+            LoadSceneHandler.SetActive(true);
+        }
+        else
+        {
+            Initiate.Fade("Level 1", Color.black, 0.5f);
+        }
     }
     public void Back()
     {
@@ -191,8 +164,16 @@ public class Navigator : MonoBehaviour
         {
             LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             setting.resetTemp();
+            Destroy(GameObject.Find("LevelSetting"));
         }
-        SceneManager.LoadScene(1);
+        if (SteamVR.active)
+        {
+            LoadSceneHandler.SetActive(true);
+        }
+        else
+        {
+            Initiate.Fade("Level 1", Color.black, 0.5f);
+        }
     }
     public void Continue()
     {

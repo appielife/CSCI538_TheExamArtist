@@ -8,17 +8,19 @@ using UnityEngine.SceneManagement;
 public class GodOfWashroomBehavior : MonoBehaviour
 {
     public Image imgCoolDown;
-    public Text textCoolDown;
+    public Text textCoolDown, limitText;
     public GameObject timer;
     public GameObject testPaper;
     private AudioSource[] sound;
     public AudioClip[] washroomAudioClips = new AudioClip[7];
-    private float coolDown = 10.0f;
-    private float coolDownCounter = 10.0f;
-    private bool used = false;
+    private float coolDown = 14.0f;
+    private float coolDownCounter = 14.0f;
+    private bool used = false, enoughTime = true;
     private int limit = 5;
     private float duration = 2.0f;
     private LevelSetting setting;
+    public GameObject LoadSceneHandler, Washroom, Level, projectile;
+    private TimeFreezeBehavior tf;
 
     private void loadResources()
     {
@@ -30,6 +32,8 @@ public class GodOfWashroomBehavior : MonoBehaviour
 
         imgCoolDown = resources.transform.Find("CDImg").gameObject.GetComponent<Image>();
         textCoolDown = resources.transform.Find("CDText").gameObject.GetComponent<Text>();
+
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
     }
 
     void Start()
@@ -43,23 +47,43 @@ public class GodOfWashroomBehavior : MonoBehaviour
         {
             used = true;
         }
+        limitText.text = limit.ToString();
     }
 
     void Update()
     {
-       if (coolDownCounter > 0 && used == true)
+        if (!tf.hold)
         {
-            coolDownCounter -= Time.deltaTime;
-            imgCoolDown.fillAmount = 1  - coolDownCounter / coolDown;
-            textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-            //Debug.Log(coolDownCounter[0]);
-        }
-        else if (coolDownCounter <= 0 && used == true)
-        {
-            coolDownCounter = coolDown;
-            textCoolDown.text = "";
-            imgCoolDown.fillAmount = 0.0f;
-            used = false;
+            if (timer.GetComponent<Timer>().timeLeft < 60 && enoughTime || limit == 0)
+            {
+                imgCoolDown.fillAmount = 1.0f;
+                imgCoolDown.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
+                textCoolDown.text = "";
+                enoughTime = false;
+                //Debug.Log("Not enough time to go to washroom!");
+            }
+            else
+            {
+                if (coolDownCounter > 0 && used == true)
+                {
+                    coolDownCounter -= Time.deltaTime;
+                    imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
+                    textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
+                    //Debug.Log(coolDownCounter[0]);
+                }
+                else if (coolDownCounter <= 0 && used == true)
+                {
+                    coolDownCounter = coolDown;
+                    textCoolDown.text = "";
+                    imgCoolDown.fillAmount = 0.0f;
+                    used = false;
+                    limitText.text = limit.ToString();
+                    if (limit == 0)
+                    {
+                        limitText.text = "";
+                    }
+                }
+            }
         }
     }
 
@@ -67,28 +91,30 @@ public class GodOfWashroomBehavior : MonoBehaviour
     {
         if (used == false && limit > 0)
         {
-            if (timer.GetComponent<Timer>().timeLeft < 150)
+            if (timer.GetComponent<Timer>().timeLeft < 60)
             {
                 sound[0].PlayOneShot(washroomAudioClips[6], 1.0f);
                 //Debug.Log("Not enough time to go to washroom!");
             }
             else
             {
-                FadeIn();
-                Invoke("FadeOut", duration);
-                timer.GetComponent<Timer>().timeLeft -= (120 - duration);
+                limitText.text = "";
+                limit--;
+                timer.GetComponent<Timer>().timeLeft -= (60 - duration);
                 used = true;
-
-                //int correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-                //sound[0].PlayOneShot(washroomAudioClips[correctAns], 1.0f);
-                //Debug.Log("The correct answer is " + correctAns.ToString());
-                limit -= 1;
 
                 setting.timeLeft = timer.GetComponent<Timer>().timeLeft;
                 setting.setWashroom();
                 setting.setQuestion();
                 setting.setHint();
-                SceneManager.LoadScene(3);
+
+                projectile = setting.projectile;
+
+                FadeOut();
+                Invoke("Change", duration);
+                Invoke("FadeIn", duration * 2);
+
+                //LoadSceneHandler.SetActive(true);
             }
         }
         else
@@ -128,15 +154,20 @@ public class GodOfWashroomBehavior : MonoBehaviour
         }
     }
 
-    private void FadeIn()
+    private void FadeOut()
     {
-        SteamVR_Fade.Start(Color.clear, 0f);
         SteamVR_Fade.Start(Color.black, duration);
     }
 
-    private void FadeOut()
+    private void FadeIn()
     {
-        SteamVR_Fade.Start(Color.black, 0f);
         SteamVR_Fade.Start(Color.clear, duration);
+    }
+
+    private void Change()
+    {
+        Washroom.SetActive(true);
+        Level.SetActive(false);
+        projectile.SetActive(false);
     }
 }

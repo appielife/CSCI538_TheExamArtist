@@ -53,6 +53,12 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_Meditate;
         
+        private static SteamVR_Action_Boolean p_default_NextReport;
+        
+        private static SteamVR_Action_Boolean p_default_PrevReport;
+        
+        private static SteamVR_Action_Boolean p_default_Freeze;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         private static SteamVR_Action_Vector2 p_platformer_Move;
@@ -223,6 +229,30 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean default_NextReport
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_NextReport.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_PrevReport
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_PrevReport.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_Freeze
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Freeze.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         public static SteamVR_Action_Vibration default_Haptic
         {
             get
@@ -348,6 +378,9 @@ namespace Valve.VR
                     SteamVR_Actions.default_PrevQuestion,
                     SteamVR_Actions.default_Bribe,
                     SteamVR_Actions.default_Meditate,
+                    SteamVR_Actions.default_NextReport,
+                    SteamVR_Actions.default_PrevReport,
+                    SteamVR_Actions.default_Freeze,
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
@@ -380,6 +413,9 @@ namespace Valve.VR
                     SteamVR_Actions.default_PrevQuestion,
                     SteamVR_Actions.default_Bribe,
                     SteamVR_Actions.default_Meditate,
+                    SteamVR_Actions.default_NextReport,
+                    SteamVR_Actions.default_PrevReport,
+                    SteamVR_Actions.default_Freeze,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -414,6 +450,9 @@ namespace Valve.VR
                     SteamVR_Actions.default_PrevQuestion,
                     SteamVR_Actions.default_Bribe,
                     SteamVR_Actions.default_Meditate,
+                    SteamVR_Actions.default_NextReport,
+                    SteamVR_Actions.default_PrevReport,
+                    SteamVR_Actions.default_Freeze,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset,
@@ -448,6 +487,9 @@ namespace Valve.VR
                     SteamVR_Actions.default_PrevQuestion,
                     SteamVR_Actions.default_Bribe,
                     SteamVR_Actions.default_Meditate,
+                    SteamVR_Actions.default_NextReport,
+                    SteamVR_Actions.default_PrevReport,
+                    SteamVR_Actions.default_Freeze,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -481,6 +523,9 @@ namespace Valve.VR
             SteamVR_Actions.p_default_PrevQuestion = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/PrevQuestion")));
             SteamVR_Actions.p_default_Bribe = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Bribe")));
             SteamVR_Actions.p_default_Meditate = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Meditate")));
+            SteamVR_Actions.p_default_NextReport = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/NextReport")));
+            SteamVR_Actions.p_default_PrevReport = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/PrevReport")));
+            SteamVR_Actions.p_default_Freeze = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Freeze")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_platformer_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/platformer/in/Move")));
             SteamVR_Actions.p_platformer_Jump = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/platformer/in/Jump")));
