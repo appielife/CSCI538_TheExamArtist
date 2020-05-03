@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/******************************************
+Script to control set voulme in Menu scene
+******************************************/
+
 public class Volume : MonoBehaviour
 {
-    public Slider slider;
     public Text volumeText;
     public float volume;
     private Settings setting;
@@ -14,30 +17,29 @@ public class Volume : MonoBehaviour
 
     void Start()
     {
-        slider.value = volume / 100.0f;
         volumeText.text = ((int)volume).ToString();
         setting = GameObject.Find("Settings").GetComponent<Settings>();
         sound = GameObject.Find("Sound").GetComponent<AudioSource>();
     }
 
+    // Function for ToneUp button
     public void ToneUp()
     {
         if (volume < 100)
         {
             volume++;
-            //slider.value = volume / 100.0f;
             volumeText.text = ((int)volume).ToString();
             setting.setVolume((int)volume);
             sound.volume = initial * ((float)(setting.getVolume() - 50) / (float)50 + 1);
         }
     }
-
+    
+    // Function for ToneDown button
     public void ToneDown()
     {
         if (volume > 0)
         {
             volume--;
-            //slider.value = volume / 100.0f;
             volumeText.text = ((int)volume).ToString();
             setting.setVolume((int)volume);
             sound.volume = initial * ((float)(setting.getVolume() - 50) / (float)50 + 1);

@@ -8,30 +8,45 @@ using Newtonsoft.Json.Linq;
 using UnityEngine.SceneManagement;
 using Valve.VR;
 
+/************************************************************* 
+Script to control player's test behavior:
+Switches to next question with correct answer every X seconds.
+Gets question from main test paper
+*************************************************************/
+
 public class TestPaperBehavior : MonoBehaviour
 {
-    private GameObject preparePage, testPage, submitPage, initialPage, bribePage, bribeSkillPage;
-    private GiftBlindEyesBehavior gbe;
-    public GameObject questionTextObj, choiceA, choiceB, choiceC, choiceD;
-    public GetQuestion question = new GetQuestion();
-    public string JSON_file;
-    public List<int> unansweredQues = new List<int>();
-    private int tempQuestion = -1;
-    private MultipleChoiceBehavior[] quesTrack;
-    private int[] scoreTrack;
-    private int bribePageCounter = -1;
-
-    public int total_score = 0;
-    public bool onPrepare = true;
+    [Tooltip("Question on test paper")]
+    public GameObject questionTextObj;
+    [Tooltip("Choices on test paper")]
+    public GameObject choiceA, choiceB, choiceC, choiceD;
+    [Tooltip("Student images")]
     public Sprite[] studentImage;
+    [Tooltip("Load Scene Handler (SteamVR Load Scene)")]
     public GameObject LoadSceneHandler;
 
-    private GameObject[] bribeOptions;
-    private float offset;
-    private bool start = false;
-    private Color disabledColor = new Color(0.78f, 0.78f, 0.78f, 1.0f);
-    private Color bribeColor = new Color(0.98f, 0.812f, 0.016f, 1.0f);
-    private LevelSetting setting;
+    [HideInInspector]
+    public bool onPrepare = true;               // On prepare
+    [HideInInspector]
+    public GetQuestion question = new GetQuestion();
+    [HideInInspector]
+    public List<int> unansweredQues = new List<int>();
+
+    // Different pages
+    private GameObject preparePage, testPage, submitPage, initialPage, bribePage, bribeSkillPage;
+    private GameObject[] bribeOptions;          // Bribe options on skill page
+    private LevelSetting setting;               // Global setting
+    private GiftBlindEyesBehavior gbe;          // Skill script
+    private MultipleChoiceBehavior[] quesTrack; // Question tracker
+
+    private int tempQuestion = -1;              // Question counter
+    private int bribePageCounter = -1;          // Bribe page counter
+    private string JSON_file;                   // File name
+    private float offset;                       // Talking time
+    private bool start = false;                 // Test start
+
+    private Color disabledColor = new Color(0.78f, 0.78f, 0.78f, 1.0f); // Disabled button color
+    private Color bribeColor = new Color(0.98f, 0.812f, 0.016f, 1.0f);  // Bribe button color
 
     void Start()
     {
@@ -45,6 +60,7 @@ public class TestPaperBehavior : MonoBehaviour
         bribePage = testPaper.transform.Find("BribePage").gameObject;
         bribeSkillPage = testPaper.transform.Find("BribeSkillPage").gameObject;
 
+        // Start with prepare page
         preparePage.SetActive(true);
         initialPage.SetActive(false);
         testPage.SetActive(false);
@@ -52,54 +68,52 @@ public class TestPaperBehavior : MonoBehaviour
         bribePage.SetActive(false);
         bribeSkillPage.SetActive(false);
 
+        // Randomly pick a subject
         string[] files = { "World", "Chemistry", "Math", "Biology", "Computer", "History", "Music", "BioChemistry", "Sports", "Geography" };
         int index = Random.Range(0, files.Length);
         string filename = "questions-" + files[index] + ".json";
         JSON_file = filename;
 
+        // Set subject on test papers and black board
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         setting.setSubject(files[index]);
 
+        // Set onprepare
         onPrepare = setting.onPrepare;
         if (!onPrepare)
         {
+            // Show initial page if onprepare not set
             initialPage.SetActive(true);
             preparePage.SetActive(false);
         }
 
+        // Set talking time
         offset = setting.offset;
+        
+        // Set number of question first, then read questions from JSON
+        question.setNumQuestion(setting.numQuestion);
+        question.readQuestionFromJson(JSON_file);
+        // Multiple Choice Behavior for EACH question
+        quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
 
-        if (setting.washroomed)
+        // Get all questions loaded to get answers for level setting
+        for (int i = 0; i < question.getQuesCount(); i++)
         {
-            question = setting.question;
-            quesTrack = setting.quesTrack;
-            scoreTrack = setting.scoreTrack;
-            tempQuestion = question.current - 1;
-            unansweredQues = setting.unansweredQues;
+            next();
         }
-        else
+        // Set unanswered questions
+        for (int i = 0; i < setting.numQuestion; i++)
         {
-            question.setNumQuestion(setting.numQuestion);
-            question.readQuestionFromJson(JSON_file);
-            //Debug.Log(question.ques);
-            quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
-            scoreTrack = new int[question.getQuesCount()];
-            for (int i = 0; i < question.getQuesCount(); i++)
-            {
-                scoreTrack[i] = 0;
-                next();
-            }
-            for (int i = 0; i < setting.numQuestion; i++)
-            {
-                unansweredQues.Add(i);
-            }
+            unansweredQues.Add(i);
         }
     }
 
     void Update()
     {
+        // If ready for test
         if (!onPrepare)
         {
+            // If not finish talking
             if (offset > 0)
             {
                 offset -= Time.deltaTime;
@@ -108,34 +122,39 @@ public class TestPaperBehavior : MonoBehaviour
             {
                 if (!start)
                 {
+                    // If haven't swith page
                     initialPage.SetActive(false);
                     testPage.SetActive(true);
                     next();
                     start = true;
                 }
             }
-        } 
+        }
     }
 
+    // Function to get current question number
     public int getCurrentQuesNum()
     {
         return tempQuestion;
     }
 
+    // Function to get current question ID
     public int getCurrentQuesId()
     {
         return int.Parse(question.getQuestionId(tempQuestion));
     }
-
+    
+    // Function to get current question answer
     public int getCurrentQuesAns()
     {
         return quesTrack[tempQuestion].correctAns;
     }
-
+    
+    // Function to next question
     public void next()
     {
         reset();
-
+        // Set question counter
         if (tempQuestion < question.getQuesCount() - 1)
         {
             tempQuestion += 1;
@@ -144,37 +163,28 @@ public class TestPaperBehavior : MonoBehaviour
         {
             tempQuestion = 0;
         }
-        //Debug.Log(tempQuestion);
+        // Set question
         if (quesTrack[tempQuestion] == null)
         {
             quesTrack[tempQuestion] = new MultipleChoiceBehavior();
             JObject Q = question.getNextQuestion();
-            //Debug.Log(Q);
             quesTrack[tempQuestion].pushQuestion(Q);
         }
         question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
+        // Set tag of selected choice if answered before
         if (quesTrack[tempQuestion].choice > -1)
         {
             setSelectedTag(quesTrack[tempQuestion].choice);
         }
     }
 
+    // Function to previous question
     public void previous()
     {
-        if (tempQuestion != -1)
-        {
-            if (quesTrack[tempQuestion].isCorrect != scoreTrack[tempQuestion])
-            {
-                if (scoreTrack[tempQuestion] == 0) total_score += 1;
-                else total_score -= 1;
-                scoreTrack[tempQuestion] = quesTrack[tempQuestion].isCorrect;
-            }
-        }
-
         reset();
-
+        // Set question counter
         if (tempQuestion > 0)
         {
             tempQuestion -= 1;
@@ -183,6 +193,7 @@ public class TestPaperBehavior : MonoBehaviour
         {
             tempQuestion = question.getQuesCount() - 1;
         }
+        // Set question
         if (quesTrack[tempQuestion] == null)
         {
             quesTrack[tempQuestion] = new MultipleChoiceBehavior();
@@ -192,39 +203,43 @@ public class TestPaperBehavior : MonoBehaviour
         question.updateQuesNum(tempQuestion);
         GameObject[] choices = { choiceA, choiceB, choiceC, choiceD };
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
-        if(quesTrack[tempQuestion].choice > -1)
+        // Set tag of selected choice if answered before
+        if (quesTrack[tempQuestion].choice > -1)
         {
             setSelectedTag(quesTrack[tempQuestion].choice);
         }
     }
 
+    // Function starting test (finish preparing)
     public void startTest()
     {
+        // Switch page to initail page
         preparePage.SetActive(false);
         initialPage.SetActive(true);
         onPrepare = false;
         setting.setOnPrepare(false);
         Text subjectText = GameObject.FindGameObjectWithTag("MainSubject").GetComponent<Text>();
         subjectText.text = setting.subject;
-       
     }
 
+    // Function to open bribe page (in prepare)
     public void openBribePage()
     {
+        // Switch to bribe page
         preparePage.SetActive(false);
         bribePage.SetActive(true);
         if (bribeOptions == null || bribeOptions.Length == 0)
         {
+            // Find option locations on page
             bribeOptions = GameObject.FindGameObjectsWithTag("BribeOption");
         }
-
         bribePageNext();
     }
 
+    // Function to next page in bribe page
     public void bribePageNext()
     {
-        //Debug.Log(Mathf.Floor(studentImage.Length / bribeOptions.Length));
-        //Debug.Log((float)studentImage.Length / bribeOptions.Length);
+        // Update bribe page counter
         if (bribePageCounter + 1 < Mathf.Ceil((float)studentImage.Length / bribeOptions.Length))
         {
             bribePageCounter += 1;
@@ -233,11 +248,13 @@ public class TestPaperBehavior : MonoBehaviour
         {
             bribePageCounter = 0;
         }
-        showStudentImage();
+        showStudentImage(); // Update student images
     }
 
+    // Function to previous page in bribe page
     public void bribePagePrev()
     {
+        // Update bribe page counter
         if (bribePageCounter > 0)
         {
             bribePageCounter -= 1;
@@ -246,18 +263,24 @@ public class TestPaperBehavior : MonoBehaviour
         {
             bribePageCounter = (int)Mathf.Ceil((float)studentImage.Length / bribeOptions.Length) - 1;
         }
-        showStudentImage();
+        showStudentImage(); // Update student images
     }
 
+    // Function to show student image(s) on bribe page
     private void showStudentImage()
     {
         for (int i = 0; i < bribeOptions.Length; i++)
         {
+            // Show bribe options for current page
             if (bribePageCounter * bribeOptions.Length + i < studentImage.Length)
             {
+                // Obtain image and change image
                 Image img = bribeOptions[i].GetComponent<Image>();
                 img.sprite = studentImage[bribePageCounter * bribeOptions.Length + i];
+                // Activate current option
                 bribeOptions[i].transform.parent.parent.gameObject.SetActive(true);
+
+                // If option bribe selected before, show cancel button; else, show bribe button
                 if (gbe.bribeList.Contains(img.sprite))
                 {
                     bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Text>().text = "Cancel";
@@ -266,6 +289,7 @@ public class TestPaperBehavior : MonoBehaviour
                 {
                     bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Text>().text = "Bribe";
                 }
+                // If already chosen 3 student, cannot choose more students
                 if (gbe.bribeList.Count == 3)
                 {
                     if (bribeOptions[i].transform.parent.parent.GetChild(1).GetComponentInChildren<Text>().text == "Bribe")
@@ -287,31 +311,32 @@ public class TestPaperBehavior : MonoBehaviour
             }
             else
             {
+                // Hide extra option
                 bribeOptions[i].transform.parent.parent.gameObject.SetActive(false);
             }
 
         }
     }
 
+    // Function to show bribe skill page (Page for Bribe Skill)
     public void showBribeSkillPage()
     {
+        // If bribe skill not cooling down
         if (!gbe.isCoolDown())
         {
+            // Swtich page
             testPage.SetActive(false);
             bribeSkillPage.SetActive(true);
+            // Show bribed options
             for (int i = 0; i < gbe.bribeList.Count; i++)
             {
                 bribeSkillPage.transform.GetChild(i).gameObject.SetActive(true);
                 bribeSkillPage.transform.GetChild(i).GetChild(0).GetComponentInChildren<Image>().sprite = gbe.bribeList[i];
             }
         }
-        else
-        {
-            Debug.Log("The bribing system is cooling down!");
-        }
-        
     }
 
+    // Function for onclick bribe/cancel button on bribe page
     public void bribeStudent(GameObject target)
     {
         if (target.transform.GetChild(1).GetComponentInChildren<Text>().text == "Bribe")
@@ -344,41 +369,46 @@ public class TestPaperBehavior : MonoBehaviour
         }
     }
 
+    // Function to choose bribed student (Main Function for Bribe Skill)
     public void ChooseBribee(GameObject t)
     {
         gbe.ChooseBribee(t);
-        backToTest();
+        backToTest(); // Change page
     }
 
+    // Funtion for back button on bribe page
     public void backToPreparePage()
     {
         bribePage.SetActive(false);
         preparePage.SetActive(true);
         bribePageCounter = -1;
-        //Debug.Log(gbe.bribeList.Count);
     }
 
+    // Function to see if bribe skill page is shown
     public bool isBribeSkillActive()
     {
         return bribeSkillPage.activeSelf;
     }
 
+    // Function to see if bribe page is shown
     public bool isBribeActive()
     {
         return bribePage.activeSelf;
     }
 
+    // Function for submit button
     public void submit()
     {
         Button submit = testPage.GetComponentsInChildren<Button>()[6];
         ColorBlock cb = submit.colors;
         cb.normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         submit.colors = cb;
-
+        // Change page
         testPage.SetActive(false);
         submitPage.SetActive(true);
     }
 
+    // Funtion for back button on bribe skill page and submit page
     public void backToTest()
     {
         if (submitPage.activeSelf)
@@ -393,28 +423,22 @@ public class TestPaperBehavior : MonoBehaviour
         {
             bribeSkillPage.SetActive(false);
         }
-
         testPage.SetActive(true);
     }
 
-    public GetQuestion setQuestion()
+    // Funtion to get questions
+    public GetQuestion getQuestion()
     {
         return question;
     }
-    public MultipleChoiceBehavior[] setQuesTrack()
-    {
-        return quesTrack;
-    }
-    public int[] setScoreTrack()
-    {
-        return scoreTrack;
-    }
 
-    public List<int> setUnansweredQues()
+    // Funtion to get unanswered questions
+    public List<int> getUnansweredQues()
     {
         return unansweredQues;
     }
-
+    
+    // Funtion to get all answers (Used in LevelSetting.cs)
     public string[] getAllAnswer()
     {
         int size = question.getQuesCount();
@@ -428,6 +452,7 @@ public class TestPaperBehavior : MonoBehaviour
         return answer;
     }
 
+    // Funtion when got caught. Switch to gameover page
     public void gameOver()
     {
         testPage.SetActive(true);
@@ -440,7 +465,7 @@ public class TestPaperBehavior : MonoBehaviour
         bribeSkillPage.SetActive(false);
     }
 
-
+    // Funtion to write answer to JSON file
     public void writeAnsToJson()
     {
         char[] abcd = { 'A', 'B', 'C', 'D' };
@@ -456,24 +481,29 @@ public class TestPaperBehavior : MonoBehaviour
             for (int i = 0; i < question.getQuesCount(); i++)
             {
                 writer.WriteStartObject();
+
+                // Write ID 
                 writer.WritePropertyName("id");
                 writer.WriteValue(question.getQuestionId(i));
-                // writing question_txt to the answers.json file
+
+                // Write question text
                 writer.WritePropertyName("question_txt");
                 writer.WriteValue(question.getQuestionTxt(i));
+
+                // Write player answer
                 writer.WritePropertyName("YourAns");
-                //Debug.Log(i);
-                //Debug.Log(quesTrack.Length);
                 if (quesTrack[i] == null || quesTrack[i].choice == -1) writer.WriteValue("NA");
                 else writer.WriteValue(abcd[quesTrack[i].choice] + ". " + quesTrack[i].choiceContent);
+
+                // Write correct answer
                 writer.WritePropertyName("MyAns");
-                //Debug.Log(question.getQuestionCorrectAns(i));
                 writer.WriteValue(abcd[question.getQuestionCorrectAns(i)] + ". " + question.getQuestionCorrectAnsContext(i));
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
+        // Fade to GameOver scene
         if (SteamVR.active)
         {
             LoadSceneHandler.SetActive(true);
@@ -484,6 +514,7 @@ public class TestPaperBehavior : MonoBehaviour
         }
     }
 
+    // Function to set selected choice's tag
     public void setSelectedTag(int i)
     {
         Button btn = choiceA.GetComponentInChildren<Button>();
@@ -503,6 +534,7 @@ public class TestPaperBehavior : MonoBehaviour
         btn.tag = "MainChoiceSelected";
     }
 
+    // Function to reset page choices
     public void reset()
     {
         Button A = choiceA.GetComponentInChildren<Button>();
@@ -521,13 +553,16 @@ public class TestPaperBehavior : MonoBehaviour
         D.tag = "MainChoice";
     }
 
-     public void selectA()
+    // Function to select A
+    public void selectA()
     {
         reset();
         choiceA.GetComponentInChildren<Button>().tag = "MainChoiceSelected";
         quesTrack[tempQuestion].select(choiceA, 0);
         unansweredQues.Remove(tempQuestion);
     }
+
+    // Function to select B
     public void selectB()
     {
         reset();
@@ -535,6 +570,8 @@ public class TestPaperBehavior : MonoBehaviour
         quesTrack[tempQuestion].select(choiceB, 1);
         unansweredQues.Remove(tempQuestion);
     }
+
+    // Function to select C
     public void selectC()
     {
         reset();
@@ -542,6 +579,8 @@ public class TestPaperBehavior : MonoBehaviour
         quesTrack[tempQuestion].select(choiceC, 2);
         unansweredQues.Remove(tempQuestion);
     }
+
+    // Function to select D
     public void selectD()
     {
         reset();
@@ -550,18 +589,7 @@ public class TestPaperBehavior : MonoBehaviour
         unansweredQues.Remove(tempQuestion);
     }
 
-    private void FadeIn()
-    {
-        SteamVR_Fade.Start(Color.clear, 0.0f);
-        SteamVR_Fade.Start(Color.black, 2.0f);
-    }
-    private void FadeOut()
-    {
-        SteamVR_Fade.Start(Color.black, 0.0f);
-        SteamVR_Fade.Start(Color.clear, 2.0f);
-        SceneManager.LoadScene(2);
-    }
-
+    // Function to know if test started
     public bool isStart()
     {
         return start;

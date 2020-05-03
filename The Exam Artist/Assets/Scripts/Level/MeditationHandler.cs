@@ -7,29 +7,38 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Valve.VR;
 
+/******************************************************************* 
+Script for Meditation Scene (Object):
+A pair to MeditationBehavior.cs
+*******************************************************************/
+
 public class MeditationHandler : MonoBehaviour
 {
-    public GameObject level, projectile;
+    [Tooltip("Level Object (Contains Classroom)")]
+    public GameObject level;
+    [Tooltip("Walls")]
     public GameObject front, right, left, back;
+    [Tooltip("Skiils Scipt")]
     public MeditationBehavior meditation;
 
-    private float time = 20.0f;
+    private float time = 20.0f, duration = 2.0f;
+    private bool play = false, extended = false, isMeditate = false;
     private Text[] frontText, rightText, leftText, backText, texts;
+    private GameObject projectile;
     private List<bool> show = new List<bool>();
     private Dictionary<int, Text> showing = new Dictionary<int, Text>(), fading = new Dictionary<int, Text>();
     private List<int> remove = new List<int>();
     private AudioSource[] sound;
-    private bool play = false, extended = false;
     private JObject words_odj;
     private JArray words;
-    private float duration = 2.0f;
     private LevelSetting setting;
-    private bool isMeditate = false;
-
-
+    
     void Awake()
     {
+        // Obtain sound
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
+
+        // Set Text from four sides
         frontText = front.GetComponentsInChildren<Text>();
         rightText = right.GetComponentsInChildren<Text>();
         leftText = left.GetComponentsInChildren<Text>();
@@ -41,18 +50,23 @@ public class MeditationHandler : MonoBehaviour
         leftText.CopyTo(texts, frontText.Length + rightText.Length);
         backText.CopyTo(texts, frontText.Length + rightText.Length + leftText.Length);
 
+        // Read JSON directly from a file
+        // NOTE: Check out @Application.dataPath in Unity Documents.
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/Meditation.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
             words_odj = (JObject)JToken.ReadFrom(reader);
         }
         words = (JArray)words_odj["words"];
+
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
     }
 
     private void OnEnable()
     {
-        isMeditate = true;
+        isMeditate = true;  // Is meditating
+
+        // Extend text with question texts
         if (!extended)
         {
             for (int i = 0; i < setting.question.getQuesCount(); i++)
@@ -61,7 +75,10 @@ public class MeditationHandler : MonoBehaviour
                 words.Add(t);
             }
         }
-        sound[2].volume = 0.5f;
+
+        sound[2].volume = 0.5f; // Set BGM volume
+
+        // Randomly pick a sentece/word from array
         for (int i = 0; i < texts.Length; i++)
         {
             Color c = texts[i].color;
@@ -71,13 +88,14 @@ public class MeditationHandler : MonoBehaviour
             texts[i].text = (string)words[index];
             show.Add(false);
         }
-        projectile = setting.projectile;
+        projectile = setting.projectile;    // Set projectile
     }
 
     void Update()
     {
         if (time > 0)
         {
+            // Play answer audio when < 5 seconds
             if (time < 5.0f)
             {
                 if (!play)
@@ -89,6 +107,8 @@ public class MeditationHandler : MonoBehaviour
             }
 
             time -= Time.deltaTime;
+
+            // Fade in/out text on walls, can improve
             remove = new List<int>();
             foreach (KeyValuePair<int, Text> p in showing)
             {
@@ -114,11 +134,6 @@ public class MeditationHandler : MonoBehaviour
             {
                 if (!show[index])
                 {
-                    /*string[] ans = { "A", "B", "C", "D" };
-                    if (time < 5.0f)
-                    {
-                        texts[index].text = ans[meditation.correctAns];
-                    }*/
                     FadeTextToFullAlpha(1.0f, texts[index], index);
                 }
                 else
@@ -129,14 +144,24 @@ public class MeditationHandler : MonoBehaviour
         }
         else
         {
+            // If time up, stop BGM and return
             sound[2].Stop();
             time = 15.0f;
             play = false;
-            FadeOut();
-            Invoke("FadeIn", duration);
+            if (SteamVR.active)
+            {
+                FadeOut();
+                Invoke("FadeIn", duration);
+            }
+            else
+            {
+                Initiate.Fade("", Color.black, 0.5f);
+                Invoke("Change", duration);    
+            }
         }
     }
 
+    // Function to fade in text
     public void FadeTextToFullAlpha(float t, Text i, int index)
     {
         i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
@@ -150,7 +175,8 @@ public class MeditationHandler : MonoBehaviour
             remove.Add(index);
         }
     }
-
+    
+    // Function to fade out text
     public void FadeTextToZeroAlpha(float t, Text i, int index)
     {
         i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
@@ -164,7 +190,8 @@ public class MeditationHandler : MonoBehaviour
             remove.Add(index);
         }
     }
-
+    
+    // Function to fade out audio
     public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
     {
         float startVolume = audioSource.volume;
@@ -180,13 +207,13 @@ public class MeditationHandler : MonoBehaviour
         audioSource.volume = startVolume;
     }
 
-
-
+    // Function to fade out (SteamVR)
     private void FadeOut()
     {
         SteamVR_Fade.Start(Color.black, duration);
     }
 
+    // Function to fade in (SteamVR)
     private void FadeIn()
     {
         gameObject.SetActive(false);
@@ -196,6 +223,16 @@ public class MeditationHandler : MonoBehaviour
         SteamVR_Fade.Start(Color.clear, duration);
     }
 
+    // Function to swap active object
+    private void Change()
+    {
+        gameObject.SetActive(false);
+        level.SetActive(true);
+        isMeditate = false;
+        projectile.SetActive(true);
+    }
+
+    // Function to know if in meditation
     public bool inMeditation()
     {
         return isMeditate;

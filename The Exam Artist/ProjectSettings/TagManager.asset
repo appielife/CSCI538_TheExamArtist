@@ -39,6 +39,7 @@ TagManager:
   - JoggingCharacter
   - OutsideCharacter
   - HallwayCharacter
+  - Timer
   layers:
   - Default
   - TransparentFX

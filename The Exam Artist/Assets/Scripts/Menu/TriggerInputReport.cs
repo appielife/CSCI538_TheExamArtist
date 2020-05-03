@@ -4,19 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
 
+/*****************************************
+Script for trigger input in GameOver scene 
+*****************************************/
+
 public class TriggerInputReport : MonoBehaviour
 {
-    public SteamVR_Action_Boolean LeftNorth;
-    public SteamVR_Action_Boolean LeftSouth;
-    public SteamVR_Action_Boolean RightNorth;
-    public SteamVR_Action_Boolean RightSouth;
+    public SteamVR_Action_Boolean LeftNorth;  // Up
+    public SteamVR_Action_Boolean LeftSouth;  // Down
+    public SteamVR_Action_Boolean RightNorth; // Up
+    public SteamVR_Action_Boolean RightSouth; // Down
 
-    public SteamVR_Input_Sources left;
-    public SteamVR_Input_Sources right;
+    public SteamVR_Input_Sources left;  // Left Controller
+    public SteamVR_Input_Sources right; // Right Controller
 
     public ScoreCalculate report;
     public GameObject scoreboard;
 
+    // IMPORTANT to destroy binded settings when scene change
+    // Only if same setting for all scenes
     void OnDestroy()
     {
         LeftNorth.RemoveOnStateDownListener(TriggerDownU, left);
@@ -33,6 +39,7 @@ public class TriggerInputReport : MonoBehaviour
         RightSouth.AddOnStateDownListener(TriggerDownD, right);
     }
 
+    // Function for up 
     public void TriggerDownU(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (scoreboard.activeSelf)
@@ -41,6 +48,7 @@ public class TriggerInputReport : MonoBehaviour
         }
     }
 
+    // Function for down
     public void TriggerDownD(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (scoreboard.activeSelf)

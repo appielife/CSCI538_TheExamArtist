@@ -5,16 +5,22 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Valve.VR.Extras;
 
+/**************************************** 
+Script to handle laser behavior in level
+****************************************/
+
 public class SceneHandler : MonoBehaviour
 {
-
-    private SteamVR_LaserPointer laserPointer;
-    public Settings setting;
+    [Tooltip("Skills canvas")]
     public GameObject SkillsOverlay;
+
+    private Settings setting;
+    private SteamVR_LaserPointer laserPointer;
     private AudioSource scribble;
 
     void Start()
     {
+        // Set hand
         setting = null;
         if (GameObject.Find("Settings"))
         {
@@ -26,14 +32,16 @@ public class SceneHandler : MonoBehaviour
         GameObject SteamVRObjects = player.transform.Find("SteamVRObjects").gameObject;
         GameObject Hand = SteamVRObjects.transform.Find(hand).gameObject;
 
+        // Activate pencil
         Hand.transform.Find("Pencil").gameObject.SetActive(true);
 
+        // Set laser pointer actions
         laserPointer = Hand.GetComponent<SteamVR_LaserPointer>();
-
         laserPointer.PointerIn += PointerInside;
         laserPointer.PointerOut += PointerOutside;
         laserPointer.PointerClick += PointerClick;
 
+        // Set table objects
         if (hand == "LeftHand")
         {
             GameObject.Find("PlayerTable").transform.Find("BottleLeft").gameObject.SetActive(true);
@@ -51,27 +59,35 @@ public class SceneHandler : MonoBehaviour
             position.z += 1.526f;
             SkillsOverlay.transform.localPosition = position;
         }
+
+        // Set audio
         scribble = GameObject.FindGameObjectWithTag("TestSound").GetComponent<AudioSource>();
     }
 
+    // Called when pointer clicks
     public void PointerClick(object sender, PointerEventArgs e)
     {
+        // If button
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
             Button b = e.target.gameObject.GetComponent<Button>();
+            // If not selected choice
             if(b.tag != "MainChoiceSelected")
             {
                 if (b.tag == "MainChoice")
                 {
+                    // If choice button
                     scribble.Play();
                 }
                 else
                 {
+                    // If other button
                     if (setting != null)
                     {
                         setting.click.Play();
                     }
                 }
+                // Invoke onclick if button enabled
                 if (b.enabled)
                 {
                     b.onClick.Invoke();
@@ -80,30 +96,39 @@ public class SceneHandler : MonoBehaviour
         }
 
     }
+
+    // Called when pointer inside
     public void PointerInside(object sender, PointerEventArgs e)
     {
+        // If button
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
-            laserPointer.thickness = 0.002f;
+            laserPointer.thickness = 0.002f; // Show laser
             Button b = e.target.gameObject.GetComponent<Button>();
-            if(b.tag != "MainChoiceSelected")
+            // If not selected choice, change color
+            if (b.tag != "MainChoiceSelected")
             {
                 ColorBlock cb = b.colors;
                 cb.normalColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
                 b.colors = cb;
             }
         }
+        // If test paper (NOTE: BUGGY)
         if (e.target.tag == "MainTestPaper")
         {
-            laserPointer.thickness = 0.002f;
+            laserPointer.thickness = 0.002f; // Show laser
         }
     }
+
+    // Called when pointer outside
     public void PointerOutside(object sender, PointerEventArgs e)
     {
+        // If button
         if (e.target.gameObject.GetComponent<Button>() != null)
         {
-            laserPointer.thickness = 0.0f;
+            laserPointer.thickness = 0.0f; // Hide laser
             Button b = e.target.gameObject.GetComponent<Button>();
+            // If not selected choice, change color
             if (b.tag != "MainChoiceSelected")
             {
                 ColorBlock cb = b.colors;
@@ -111,9 +136,10 @@ public class SceneHandler : MonoBehaviour
                 b.colors = cb;
             }
         }
+        // If test paper (NOTE: BUGGY)
         if (e.target.tag == "MainTestPaper")
         {
-            laserPointer.thickness = 0.0f;
+            laserPointer.thickness = 0.0f; // Hide laser
         }
     }
 }

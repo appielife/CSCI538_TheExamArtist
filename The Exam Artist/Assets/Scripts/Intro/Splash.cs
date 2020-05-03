@@ -2,41 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using Valve.VR;
+
+/***********************************
+Script for Intro scene.
+Used for playing video then logo.
+***********************************/
 
 public class Splash : MonoBehaviour
 {
-    public Image usc, logo;
+    public Image logo;
     public GameObject LoadSceneHandler;
-    private bool usc_in = false, usc_out = false, logo_in = false, logo_out = false;
-    private bool usc_out_s = false, logo_in_s = false, logo_out_s = false;
-    private Light[] lights;
+    public GameObject videoplayer;
+    private VideoPlayer video;
+    private bool logo_in = false, logo_out = false;
+    private bool logo_in_s = false, logo_out_s = false;
 
     void Start()
     {
-        if (SteamVR.active)
-        {
-            StartCoroutine(FadeIn(usc, 2.0f));
-        }
-        else
-        {
-            lights = FindObjectsOfType(typeof(Light)) as Light[];
-            foreach (Light light in lights)
-            {
-                light.intensity = 0;
-            }
-            LoadSceneHandler.SetActive(true);
-        }
+        video = videoplayer.GetComponent<VideoPlayer>();
+        video.loopPointReached += EndReached;
+        video.Play();
     }
 
     void Update()
     {
-        if (!usc_out && usc_in && !usc_out_s)
-        {
-            StartCoroutine(FadeOut(usc, 2.0f));
-            usc_out_s = true;
-        }
-        else if (!logo_in && usc_out && !logo_in_s)
+        if (!videoplayer.activeSelf && !logo_in_s)
         {
             StartCoroutine(FadeIn(logo, 2.0f));
             logo_in_s = true;
@@ -48,7 +40,17 @@ public class Splash : MonoBehaviour
         }
         else if (logo_out)
         {
-            LoadSceneHandler.SetActive(true);
+            // Load Scene
+            if (SteamVR.active)
+            {
+                // If VR
+                LoadSceneHandler.SetActive(true);
+            }
+            else
+            {
+                // If non-VR
+                Initiate.Fade("Menu", Color.black, 0.5f);
+            }
         }
     }
 
@@ -60,7 +62,6 @@ public class Splash : MonoBehaviour
             i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / FadeTime));
             yield return null;
         }
-        if (i == usc) { usc_out = true; }
         if (i == logo) { logo_out = true; }
     }
 
@@ -72,8 +73,11 @@ public class Splash : MonoBehaviour
             i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / FadeTime));
             yield return null;
         }
-        if (i == usc) { usc_in = true; }
         if (i == logo) { logo_in = true; }
     }
 
+    void EndReached(VideoPlayer vp)
+    {
+        videoplayer.SetActive(false);
+    }
 }

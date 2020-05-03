@@ -6,28 +6,35 @@ using UnityEngine.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+/************************************************************* 
+Script to control student's test behavior:
+Switches to next question with correct answer every X seconds.
+Gets question from main test paper
+*************************************************************/
+
 public class TestPaperAuto : MonoBehaviour
 {
+    [Tooltip("Student test paper")]
     public GameObject testPaper;
+    [Tooltip("Question on test paper")]
     public GameObject questionTextObj;
-    //public GameObject Choices3D;
+    [Tooltip("Choices on test paper")]
     public GameObject choiceA, choiceB, choiceC, choiceD;
+    [Tooltip("Seconds to change question")]
+    public float frequency = 0.0f;
 
+    // Scripts
     private TimeFreezeBehavior tf;
     private TestPaperBehavior playerTest;
-    //private MeshRenderer[] choiceMesh;
     private GetQuestion question;
-    private int tempQuestion = -1;
     private MultipleChoiceBehavior[] quesTrack;
 
-    public float frequency = 0.0f;
-    public bool slowDown = false;
-
-    private float timeChange = 0.0f;
-    private GameObject mainSelectHandler;
-    private GameObject testPage, initialPage;
-    private float offset;
-    private bool start = false;
+    private int tempQuestion = -1;              // Question counter
+    private float timeChange = 0.0f;            // Time to change page
+    private GameObject mainSelectHandler;       // Select Handler of player test paper
+    private GameObject testPage, initialPage;   // Different pages
+    private float offset;                       // Talking time
+    private bool start = false;                 // Start test
 
     void Start()
     {
@@ -38,49 +45,42 @@ public class TestPaperAuto : MonoBehaviour
 
         testPage.SetActive(false);
         initialPage.SetActive(true);
-        //Choices3D.SetActive(false);
-
         offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
 
         mainSelectHandler = GameObject.FindGameObjectWithTag("MainSelectHandler");
         timeChange = frequency;
-        //choiceMesh = Choices3D.GetComponentsInChildren<MeshRenderer>();
     }
 
     void Update()
     {
+        // If ready for test
         if (!playerTest.onPrepare)
         {
+            // If not finish talking
             if (offset > 0)
             {
                 offset -= Time.deltaTime;
             }
             else
             {
+                // If haven't swith page
                 if (!start)
                 {
                     initialPage.SetActive(false);
                     testPage.SetActive(true);
-                    //Choices3D.SetActive(true);
                     if (question == null)
                     {
+                        // Copy question for main test paper (IMPORTANT)
                         question = mainSelectHandler.GetComponent<TestPaperBehavior>().question.copy();
                         quesTrack = new MultipleChoiceBehavior[question.getQuesCount()];
                         next();
                     }
                     start = true;
                 }
+                // If not time freeze
                 if (!tf.isExisting())
                 {
-                    if (slowDown == true)
-                    {
-                        timeChange -= Time.deltaTime / 2;
-                    }
-                    else
-                    {
-                        timeChange -= Time.deltaTime;
-                    }
-
+                    timeChange -= Time.deltaTime;
                     if (timeChange <= 0)
                     {
                         timeChange = frequency;
@@ -91,9 +91,11 @@ public class TestPaperAuto : MonoBehaviour
         }
     }
 
+    // Function to next question
     public void next()
     {
         reset();
+        // Set question counter
         if (tempQuestion < question.getQuesCount() - 1)
         {
             tempQuestion += 1;
@@ -102,6 +104,7 @@ public class TestPaperAuto : MonoBehaviour
         {
             tempQuestion = 0;
         }
+        // Set question
         if (quesTrack[tempQuestion] == null)
         {
             quesTrack[tempQuestion] = new MultipleChoiceBehavior();
@@ -112,10 +115,9 @@ public class TestPaperAuto : MonoBehaviour
         quesTrack[tempQuestion].showQuestion(questionTextObj, choices, tempQuestion);
         int correctAns = quesTrack[tempQuestion].correctAns;
         quesTrack[tempQuestion].select(choices[correctAns], correctAns);
-        Color higlight = new Color(1.0f, 0.0f, 0.0f, 1.0f);
-        //choiceMesh[correctAns].material.color = higlight;
     }
 
+    // Function to reset page choices
     public void reset()
     {
         Color white = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -129,10 +131,6 @@ public class TestPaperAuto : MonoBehaviour
         B.colors = cb;
         C.colors = cb;
         D.colors = cb;
-        /*for(int i = 0; i < choiceMesh.Length; i++)
-        {
-            choiceMesh[i].material.color = white;
-        }*/
     }
 }
 

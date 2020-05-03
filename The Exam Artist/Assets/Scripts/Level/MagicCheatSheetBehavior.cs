@@ -6,71 +6,82 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+/******************************************************************* 
+Script for Washroom Skill:
+Go to the washroom for a few seconds. Cost one minute of test time.
+A pair to washroom.cs
+*******************************************************************/
+
 public class MagicCheatSheetBehavior : MonoBehaviour
 {
-    private JArray hintArray;
-    public GameObject testPaper;
-    public Image imgCoolDown, imgExist;
+    [Tooltip("Image for CD")]
+    public Image imgCoolDown;
+    [Tooltip("Image for existing")]
+    public Image imgExist;
+    [Tooltip("Text for CD")]
     public Text textCoolDown;
-    
+
+    // Cooldown settings
     private float coolDown = 5.0f, coolDownCounter = 5.0f;
+    // Exist settings
     private float existTime = 5.0f, existTimeCounter = 5.0f;
-    private bool exist = false, used = false; //increased = false;
-    private Text currentHintShown;
-    private Text cheatText;
+    private bool exist = false, used = false;
+    private Text currentHintShown, cheatText;
     static string[] choices = { "A", "B", "C", "D" };
-    //private Text tableHint;
-    private HintsHandle hintHandle;
-    private List<JToken> hintJToken = new List<JToken>();
+
+    private GameObject testPaper;
     private TimeFreezeBehavior tf;
 
-    private void loadResources()
+    private JArray hintArray;                               // Hint JArray
+    private List<JToken> hintJToken = new List<JToken>();   // Hint JToken
+    private List<Text> Hints = new List<Text>();            // Hint location text
+    private int numHint;                                    // Number of hint
+
+    // Read file before start
+    private void Awake()
     {
-        GameObject table = GameObject.Find("PlayerTable");
-        GameObject SkillsOverlay = table.transform.Find("SkillsOverlay").gameObject;
-        GameObject SkillCoolDown = SkillsOverlay.transform.Find("SkillCoolDown").gameObject;
-        GameObject skill = SkillCoolDown.transform.Find("MagicCheatSheet").gameObject;
-        GameObject resources = skill.transform.Find("Image").gameObject;
-
-        imgCoolDown = resources.transform.Find("CDImg").gameObject.GetComponent<Image>();
-        imgExist = resources.transform.Find("exsiting").gameObject.GetComponent<Image>();
-        textCoolDown = resources.transform.Find("CDText").gameObject.GetComponent<Text>();
-
-        GameObject cheatsheet = GameObject.Find("CheatSheet");
-        cheatText = cheatsheet.transform.Find("Hint").GetComponentInChildren<Text>();
-
-        //tableHint = GameObject.Find("TableHint").GetComponentInChildren<Text>();
-        hintHandle = GameObject.Find("HintHandle").GetComponent<HintsHandle>();
-
-        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
-    }
-
-    void Start()
-    {
-        loadResources();
-
-        imgCoolDown.fillAmount = 0.0f;
-        imgExist.fillAmount = 0.0f;
-        textCoolDown.text = "";
-        //tableHint.text = "";
-        cheatText.text = "";
-
-        GameObject[] hints = GameObject.FindGameObjectsWithTag("Hint");
-        for(int i = 0; i < hints.Length; i++)
-        {
-            hints[i].GetComponentInChildren<Text>().text = "";
-        }
-
+        // Read JSON directly from a file
+        // NOTE: Check out @Application.dataPath in Unity Documents.
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/hints.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
             hintArray = (JArray)((JObject)JToken.ReadFrom(reader))["questions"];
         }
+        numHint = hintArray.Count;
+
+        for (int i = 0; i < numHint; i++)
+        {
+            string name = (string)hintArray[i]["name"];
+            Hints.Add(GameObject.Find(name).GetComponentInChildren<Text>());
+        }
+    }
+
+    void Start()
+    {
+        testPaper = GameObject.FindGameObjectWithTag("MainSelectHandler");
+
+        GameObject cheatsheet = GameObject.Find("CheatSheet");
+        cheatText = cheatsheet.transform.Find("Hint").GetComponentInChildren<Text>();
+        cheatText.text = "";
+        
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
+
+        imgCoolDown.fillAmount = 0.0f;
+        imgExist.fillAmount = 0.0f;
+        textCoolDown.text = "";
+
+        GameObject[] hints = GameObject.FindGameObjectsWithTag("Hint");
+        for (int i = 0; i < hints.Length; i++)
+        {
+            hints[i].GetComponentInChildren<Text>().text = "";
+        }
+        
         RandomHint();
     }
 
     void Update()
     {
+        // If not time freeze, cooldown remains active
         if (!tf.hold)
         {
             if (existTimeCounter > 0 && exist == true && used == false)
@@ -84,7 +95,6 @@ public class MagicCheatSheetBehavior : MonoBehaviour
                 existTimeCounter = existTime;
                 exist = false;
                 imgExist.fillAmount = 0.0f;
-                //tableHint.text = "";
                 cheatText.text = "";
                 currentHintShown.text = "";
                 used = true;
@@ -105,49 +115,43 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         }
     }
 
+    // Function for skill (Main Function)
     public void MagicCheatSheet()
     {
+        // If not cooling down and not existing
         if (exist == false && used == false)
         {
             int temp_ques_id = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesId();
-            //Debug.Log(temp_ques_id);
-            //Debug.Log((JObject)hintArray[temp_ques_id]);
-            //string hintStr = (string)((JObject)hintArray[temp_ques_id])["hints"];
             int index = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum();
-            string hintStr = (string) hintJToken[index]["hints"];
-            //tableHint.text = (testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesNum() + 1).ToString() + ". " + hintStr;
+            string hintStr = (string)hintJToken[index]["hints"];
             cheatText.text = hintStr;
 
             exist = true;
             int tempAnsIdx = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-            //int id = (int)((JObject)hintArray[temp_ques_id])["id"];
-            int id = (int) hintJToken[index]["id"];
+            int id = (int)hintJToken[index]["id"];
 
-            hintHandle.Hints[id].text = choices[tempAnsIdx];
-            currentHintShown = hintHandle.Hints[id];
+            Hints[id].text = choices[tempAnsIdx];
+            currentHintShown = Hints[id];
             if (id == 8)
             {
                 GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().startAnimation();
                 GameObject.Find("OutsideAnswer").GetComponentInChildren<femaleoutside>().enabled = true;
             }
         }
-        else
-        {
-            Debug.Log("Your skill need to be cooled down");
-        }
     }
 
+    // Function to know if skill activated
     public bool isTrigger()
     {
         return used == true || exist == true;
     }
 
+    // Function to reset (used in MeditationBehavior.cs)
     public void ResetSkill()
     {
         imgCoolDown.fillAmount = 0.0f;
         imgExist.fillAmount = 0.0f;
         textCoolDown.text = "";
-        //tableHint.text = "";
         cheatText.text = "";
         if (currentHintShown)
         {
@@ -160,25 +164,15 @@ public class MagicCheatSheetBehavior : MonoBehaviour
         used = false;
     }
 
+    // Function to randomly pick hint to each question
     public void RandomHint()
     {
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-        if (setting.hints.Count != 0)
+        int numQuestion = setting.numQuestion;
+        for (int i = 0; i < numQuestion; i++)
         {
-            hintJToken = setting.hints;
+            int id = Random.Range(0, hintArray.Count);
+            hintJToken.Add(hintArray[id]);
         }
-        else{
-            int numQuestion = setting.numQuestion;
-            for (int i = 0; i < numQuestion; i++)
-            {
-                int id = Random.Range(0, hintArray.Count);
-                hintJToken.Add(hintArray[id]);
-            }
-        }
-    }
-
-    public List<JToken> setHints()
-    {
-        return hintJToken;
     }
 }

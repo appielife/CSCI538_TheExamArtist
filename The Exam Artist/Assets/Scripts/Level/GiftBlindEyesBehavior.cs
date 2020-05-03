@@ -4,30 +4,40 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* 
-   Bribe one of your classmate before the test.
-   When you use the skill, you will use some special signal to call your partner,
-   and your partner will call the teacher for "help" to attract teacher's attention.
-   It will give a relatively safe period for you to cheat.
-*/
+/********************************************************************************** 
+Script for Bribe Skill:
+Bribe one of your classmate before the test.
+When you use the skill, you will use some special signal to call your partner,
+and your partner will call the teacher for "help" to attract teacher's attention.
+It will give a relatively safe period for you to cheat.
+***********************************************************************************/
+
 public class GiftBlindEyesBehavior : MonoBehaviour
 {
-    public Image imgCoolDown, imgExist;
+    [Tooltip("Image for CD")]
+    public Image imgCoolDown;
+    [Tooltip("Image for existing")]
+    public Image imgExist;
+    [Tooltip("Text for CD")]
     public Text textCoolDown;
+    [Tooltip("Audios for calling teacher")]
+    public AudioClip[] giftAudioClip = new AudioClip[3];
+
+    [HideInInspector]
     public List<Sprite> bribeList = new List<Sprite>();
+    [HideInInspector]
     public string target;
+    [HideInInspector]
     public string tempChoice = "";
+    [HideInInspector]
     public Sprite[] buttons;
-    //private string backButton = "B";
 
     private float coolDown = 5.0f, coolDownCounter = 5.0f;
     private float existTime = 15.0f, existTimeCounter = 15.0f;
     private bool exist = false, used = false;
-
     private AudioSource[] sound;
-    public AudioClip[] giftAudioClip = new AudioClip[3];
-    static System.Random songPlayer = new System.Random();
     private TimeFreezeBehavior tf;
+    static System.Random songPlayer = new System.Random();
 
     void Start()
     {
@@ -45,6 +55,7 @@ public class GiftBlindEyesBehavior : MonoBehaviour
 
     void Update()
     {
+        // If not time freeze, cooldown remains active
         if (!tf.hold)
         {
             if (existTimeCounter > 0 && exist == true && used == false)
@@ -65,7 +76,6 @@ public class GiftBlindEyesBehavior : MonoBehaviour
                 coolDownCounter -= Time.deltaTime;
                 imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
                 textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-                //Debug.Log(coolDownCounter[0]);
             }
             else if (coolDownCounter <= 0 && used == true)
             {
@@ -77,20 +87,25 @@ public class GiftBlindEyesBehavior : MonoBehaviour
         }
     }
 
+    // Function to know if skill activated
     public bool isTrigger()
     {
         return exist == true;
     }
 
+    // Function to know if skill is cooling down
     public bool isCoolDown()
     {
         return used == true || exist == true;
     }
 
+    // Function to reduce cooldown
     public void ReduceCoolDownCounter(float n)
     {
+        // If is cooling down
         if (exist)
         {
+            // Clamp n to counter range
             if (n > existTimeCounter)
             {
                 n -= existTimeCounter;
@@ -111,6 +126,14 @@ public class GiftBlindEyesBehavior : MonoBehaviour
         }
     }
 
+    // Function to choose which student
+    public void ChooseBribee(GameObject t)
+    {
+        target = t.GetComponent<Image>().sprite.name;
+        GiftBlindEyes();
+    }
+
+    // Function for skill (Main Function ChooseBribee in TestPaperBehavior.cs)
     public void GiftBlindEyes()
     {
         if (exist == false && used == false)
@@ -119,11 +142,5 @@ public class GiftBlindEyesBehavior : MonoBehaviour
             int n = songPlayer.Next(3);
             sound[0].PlayOneShot(giftAudioClip[n], 1.5f);
         }
-    }
-
-    public void ChooseBribee(GameObject t)
-    {
-        target = t.GetComponent<Image>().sprite.name;
-        GiftBlindEyes();
     }
 }

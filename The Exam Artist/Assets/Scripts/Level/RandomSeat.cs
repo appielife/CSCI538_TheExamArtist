@@ -2,43 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/************************** 
+Script for randomize seats
+**************************/
+
 public class RandomSeat : MonoBehaviour
 {
-    private List<Vector3> positions = new List<Vector3>();
-    private List<string> names = new List<string>();
+    private List<Vector3> positions = new List<Vector3>();  // Student positions
+    private List<string> names = new List<string>();        // Student names
     static System.Random random = new System.Random();
 
     void Start()
     {
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        // If randeomseats is set
         if (setting.randomseats)
         {
-            getPosition();
-            if (!setting.randomed)
+            getPosition(); // Obtain student object name
+            for (int i = 0; i < 12; i++)
             {
-                for (int i = 0; i < 12; i++)
-                {
-                    positions.Add(GameObject.Find(names[i]).transform.position);
-                }
-                randomize();
-                for (int i = 0; i < 12; i++)
-                {
-                    GameObject.Find(names[i]).transform.position = positions[i];
-                }
-                setting.randomed = true;
-                setting.setPositions(positions);
+                positions.Add(GameObject.Find(names[i]).transform.position); // Add student position
             }
-            else
+            randomize(); // Randomize list
+            for (int i = 0; i < 12; i++)
             {
-                positions = setting.positions;
-                for (int i = 0; i < 12; i++)
-                {
-                    GameObject.Find(names[i]).transform.position = positions[i];
-                }
+                GameObject.Find(names[i]).transform.position = positions[i]; // Set position
             }
         }
     }
 
+    // Function to randomize list/array
     void randomize()
     {
         int n = positions.Count;
@@ -50,12 +43,13 @@ public class RandomSeat : MonoBehaviour
             positions[i] = t;
         }
     }
-
+    
+    // Function to get student object name
     void getPosition()
     {
         GameObject[] students = GameObject.FindGameObjectsWithTag("Student");
         GameObject player = GameObject.FindGameObjectWithTag("MainPlayerPosition");
-        
+
         for (int i = 0; i < students.Length; i++)
         {
             names.Add(students[i].name);

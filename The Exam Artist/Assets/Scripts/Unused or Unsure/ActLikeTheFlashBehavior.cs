@@ -66,7 +66,7 @@ public class ActLikeTheFlashBehavior : MonoBehaviour
             for (int i = 0; i < students.Length; i++)
             {
                 TestPaperAuto tp = students[i].GetComponent<TestPaperAuto>();
-                tp.slowDown = false;
+                //tp.slowDown = false;
             }
 
             used = true;
@@ -115,7 +115,7 @@ public class ActLikeTheFlashBehavior : MonoBehaviour
                 //Debug.Log(students[i].name);
                 TestPaperAuto tp = students[i].GetComponent<TestPaperAuto>();
                 //Debug.Log(tp);
-                tp.slowDown = true;
+                //tp.slowDown = true;
             }
         }
         else

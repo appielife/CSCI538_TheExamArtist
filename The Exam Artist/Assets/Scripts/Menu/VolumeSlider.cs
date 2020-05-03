@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR.InteractionSystem;
 
+/*********************************************************
+Script to control set voulme in Menu scene (slider version)
+NOT FULLY IMPLEMENTED
+*********************************************************/
+
 public class VolumeSlider : MonoBehaviour
 {
     public LinearMapping mapping;

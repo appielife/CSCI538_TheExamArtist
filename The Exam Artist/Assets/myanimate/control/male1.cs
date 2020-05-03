@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
+[RequireComponent(typeof(Animator))]
 public class male1 : MonoBehaviour
 {
-    public Animator ani;
-    public Random ran = new Random();
+    private Animator ani;
+    private Random ran = new Random();
 
     void Start()
     {
+        ani = gameObject.GetComponent<Animator>();
         ani.SetInteger("animation_int", 1);
-
     }
 
     void Update()

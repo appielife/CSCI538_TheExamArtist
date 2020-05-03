@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*******************************************************
+Script to adjust volume using global setting (if exist)
+*******************************************************/
+
 public class VolumeControl : MonoBehaviour
 {
-    public Settings setting;
+    private Settings setting;
     private AudioSource[] sound;
-    // Start is called before the first frame update
+
     void Start()
     {
         sound = GetComponents<AudioSource>();

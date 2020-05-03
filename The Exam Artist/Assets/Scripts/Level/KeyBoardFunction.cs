@@ -3,18 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
+/****************************** 
+Script to play with keyboard 
+(Non-VR fallback mode)
+USE THIS TO DEBUG WITHOUT VR
+******************************/
+
 public class KeyBoardFunction : MonoBehaviour
 {
-    private HideAndShowSkills hns;
-    private float offset;
-    private Transform originalPlace;
-    private LevelSetting setting;
-    private bool gameover = false, freeze = false;
-    public TeacherController tc;
-    public TimeFreezeBehavior tf;
+    [Tooltip("Washroom Object (w/ Washroom.cs)")]
     public Washroom wash;
+    [Tooltip("Meditation Object (w/ MeditationHandler.cs)")]
     public MeditationHandler mh;
-    private float holdTime = 2.0f;
+
+    private float offset;           // Time after prepare and before test start
+    private bool gameover = false, freeze = false;
+    private float holdTime = 2.0f;  // Hold time to activate freeze skill
+    // Skill scripts
+    private HideAndShowSkills hns;
+    private LevelSetting setting;
+    private TeacherController tc;
+    private TimeFreezeBehavior tf;
 
     private void Start()
     {
@@ -38,7 +47,9 @@ public class KeyBoardFunction : MonoBehaviour
             {
                 if (!gameover)
                 {
+                    // Check gameover or not
                     gameover = tc.gameover;
+                    // Space for hide/show skill canvas
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         if (!wash.inWashroom() && !mh.inMeditation())
@@ -53,6 +64,7 @@ public class KeyBoardFunction : MonoBehaviour
                             hns.Hide();
                         }
                     }
+                    // F hold for time freeze
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         if (!wash.inWashroom() && !mh.inMeditation())
@@ -88,11 +100,14 @@ public class KeyBoardFunction : MonoBehaviour
         }
     }
 
+    // Function to know to activate freeze skill after hold time
     public void freezeOn()
     {
         freeze = true;
     }
 
+
+    // Function to deactivate freeze skill
     public void freezeOff()
     {
         freeze = false;

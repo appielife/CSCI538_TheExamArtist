@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
-      "id": "20",
-      "question_txt": "I said to drink water, but my chemist friend died. Why?",
-      "YourAns": "NA",
-      "MyAns": "D. He drank something weird"
-    },
-    {
-      "id": "18",
-      "question_txt": "Why did the attacking army use acid?",
-      "YourAns": "NA",
-      "MyAns": "B. To neutralize the enemy's base"
-    },
-    {
-      "id": "10",
-      "question_txt": "Butanoic anhydride can be produced by the reaction of butanoic acid with which of the following compounds?",
-      "YourAns": "NA",
-      "MyAns": "A.  Butanoic acid"
-    },
-    {
-      "id": "3",
-      "question_txt": "Where was Stephanie Kwolek born?",
-      "YourAns": "NA",
-      "MyAns": "A. Philadelphia"
-    },
-    {
-      "id": "12",
-      "question_txt": "What is the most specific characterization of the reaction shown?\nCa(OH)2 (aq) + H2SO4 (aq) → CaSO4 (aq) + H2O (l)",
-      "YourAns": "NA",
-      "MyAns": "A. Neutralization"
-    },
-    {
-      "id": "9",
-      "question_txt": "All of the following are true with respect to carbonyls EXCEPT:",
-      "YourAns": "NA",
-      "MyAns": "D. the π electrons are mobile and are pulled toward the carbonyl carbon."
-    },
-    {
-      "id": "11",
-      "question_txt": "What would be the charge of aspartic acid at pH 7?",
-      "YourAns": "NA",
-      "MyAns": "A. Negative"
-    },
-    {
-      "id": "15",
-      "question_txt": "Which of the following actions does NOT affect the equilibrium position of a reaction?",
-      "YourAns": "NA",
-      "MyAns": "A. Adding or removing a catalyst."
-    },
-    {
-      "id": "1",
-      "question_txt": "Which one of the following is the true covalent oxide of iodine?",
-      "YourAns": "NA",
-      "MyAns": "B. I2O5"
+      "id": "17",
+      "question_txt": "Falklands War is the war between Argentina and ",
+      "YourAns": "D. United Kingdom",
+      "MyAns": "D. United Kingdom"
     },
     {
       "id": "8",
-      "question_txt": "An electron is known to be in the n = 4 shell and the l = 2 subshell. How many possible combinations of quantum numbers could this electron have?",
+      "question_txt": "Who dig the Panama Canal?",
+      "YourAns": "A. Americans",
+      "MyAns": "A. Americans"
+    },
+    {
+      "id": "4",
+      "question_txt": "What Tactics did Lincoln use during American Civil War",
+      "YourAns": "D. Anaconda",
+      "MyAns": "D. Anaconda"
+    },
+    {
+      "id": "3",
+      "question_txt": "We''ll all feel gay when",
       "YourAns": "NA",
-      "MyAns": "D. 10"
+      "MyAns": "D. Johnny Comes Marching home"
+    },
+    {
+      "id": "9",
+      "question_txt": "Which State does not exist in 1800s",
+      "YourAns": "NA",
+      "MyAns": "B. Germany"
+    },
+    {
+      "id": "2",
+      "question_txt": "Which West Germany City is adjacent to Berlin",
+      "YourAns": "NA",
+      "MyAns": "A. Berlin is not adjacent to West Germany"
+    },
+    {
+      "id": "15",
+      "question_txt": "Princess Anatasia.....",
+      "YourAns": "NA",
+      "MyAns": "C. Was murdered along with her family"
+    },
+    {
+      "id": "12",
+      "question_txt": "Where did Auschwitz Death Camp located",
+      "YourAns": "NA",
+      "MyAns": "C. Poland"
+    },
+    {
+      "id": "0",
+      "question_txt": "Who is the 13th President of United States",
+      "YourAns": "NA",
+      "MyAns": "A. Millard Fillmore"
+    },
+    {
+      "id": "14",
+      "question_txt": "What is Purpose of Ho Chi Minh Trail",
+      "YourAns": "NA",
+      "MyAns": "B. The network of logistics system to attack South Vietnam"
     }
   ]
 }

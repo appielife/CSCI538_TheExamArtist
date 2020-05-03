@@ -2,28 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/***********************************
+Script for sound control in washroom
+***********************************/
+
 public class toiletsound : MonoBehaviour
 {
-
+    [Tooltip("Audio source")]
     public AudioSource audioSource;
+    [Tooltip("Audio 1")]
     public AudioClip otherClip1;
+    [Tooltip("Audio 2")]
     public AudioClip otherClip2;
+    [Tooltip("Audio 3")]
     public AudioClip otherClip3;
+    [Tooltip("Audio 4")]
     public AudioClip otherClip4;
 
-    public float musicVolume;
-    public float randomNum;
-    public int state;
-    // Use this for initialization
+    private float musicVolume;
+    private float randomNum;
+    private int state;
+
     void Start () {
         musicVolume = 0.5f;
         randomPlay();
     }
-    // Update is called once per frame
+
     void Update () {
         audioSource.volume = musicVolume;
         if ((state == 1 && !audioSource.isPlaying)||(state == 2 && !audioSource.isPlaying) ||(state == 3 && !audioSource.isPlaying) ||(state == 4 && !audioSource.isPlaying)) { randomPlay(); }
     }
+
+    // Function to randomly play audio
     void randomPlay()
     {
         randomNum = Random.Range(1.0f, 5.0f);

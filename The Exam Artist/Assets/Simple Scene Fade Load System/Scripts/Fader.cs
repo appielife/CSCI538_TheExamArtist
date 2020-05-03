@@ -21,11 +21,13 @@ public class Fader : MonoBehaviour
     Image bg;
     float lastTime = 0;
     bool startedLoading = false;
+
     //Set callback
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
+
     //Remove callback
     void OnDisable()
     {
@@ -78,7 +80,15 @@ public class Fader : MonoBehaviour
                 if (alpha == 1 && !startedLoading)
                 {
                     startedLoading = true;
-                    SceneManager.LoadScene(fadeScene);
+                    if (fadeScene != "")
+                    {
+                        SceneManager.LoadScene(fadeScene);
+                    }
+                    else
+                    {
+                        StartCoroutine(FadeIt());
+                        isFadeIn = true;
+                    }
                 }
 
             }
@@ -90,8 +100,6 @@ public class Fader : MonoBehaviour
                 {
                     hasFadedIn = true;
                 }
-
-
             }
             lastTime = Time.time;
             myCanvas.alpha = alpha;

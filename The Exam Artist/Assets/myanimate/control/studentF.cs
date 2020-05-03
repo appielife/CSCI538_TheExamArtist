@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
+/*DEPRECATED USE sudent.cs*/
 public class studentF : MonoBehaviour
 {
 
@@ -35,10 +36,6 @@ public class studentF : MonoBehaviour
         ani.SetInteger("animation_int", 7);
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
-        if (setting.washroomed)
-        {
-            timeLeft = -1.0f;
-        }
         original = gameObject.transform.localPosition;
         chair = gameObject.transform.parent.transform.Find("prop_sch_tablechair").transform.Find("prop_sch_chair").gameObject;
         chairOriginal = chair.transform.localPosition;

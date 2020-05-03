@@ -4,38 +4,61 @@ using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
 
+/****************************************************
+Script for handling Trigger actions in Level scene(s)
+****************************************************/
+
 public class TriggerInput : MonoBehaviour
 {
+    // Bind action
+    [Tooltip("Y Button Pressed")]
     public SteamVR_Action_Boolean Ypressed;
+    [Tooltip("X Button Pressed")]
     public SteamVR_Action_Boolean Xpressed;
+    [Tooltip("Button Touched")]
     public SteamVR_Action_Boolean Spressed;
+    [Tooltip("A Button Pressed")]
     public SteamVR_Action_Boolean Apressed;
+    [Tooltip("B Button Pressed")]
     public SteamVR_Action_Boolean Bpressed;
+    [Tooltip("Grip Pressed")]
     public SteamVR_Action_Boolean Gpressed;
+    [Tooltip("Right on Left Pad")]
     public SteamVR_Action_Boolean LeftEast;
+    [Tooltip("Left on Left Pad")]
     public SteamVR_Action_Boolean LeftWest;
+    [Tooltip("Right on Right Pad")]
     public SteamVR_Action_Boolean RightEast;
+    [Tooltip("Left on Right Pad")]
     public SteamVR_Action_Boolean RightWest;
 
+    // Set input source
+    [Tooltip("Left hand")]
     public SteamVR_Input_Sources left;
+    [Tooltip("Right hand")]
     public SteamVR_Input_Sources right;
 
-    public GodOfWashroomBehavior washroom;
-    public MagicCheatSheetBehavior hint;
-    public HideAndShowSkills hns;
-    public TestPaperBehavior test;
-    public GiftBlindEyesBehavior gbe;
-    public MeditationBehavior mb;
-    public TeacherController tc;
-    public TimeFreezeBehavior tf;
+    [Tooltip("Washroom Object")]
     public Washroom wash;
+    [Tooltip("Meditation Object")]
     public MeditationHandler mh;
 
+    // Skills scipts
+    private GodOfWashroomBehavior washroom;
+    private MagicCheatSheetBehavior hint;
+    private HideAndShowSkills hns;
+    private TestPaperBehavior test;
+    private GiftBlindEyesBehavior gbe;
+    private MeditationBehavior mb;
+    private TeacherController tc;
+    private TimeFreezeBehavior tf;
+
     private bool onPrepare = true, gameover = false, freeze = false;
-    public float offset;
-    private float holdTime = 2.0f;
+    private float offset, holdTime = 2.0f;
     private List<Sprite> bribeList = new List<Sprite>();
 
+    // IMPORTANT to destroy binded settings when scene change
+    // Only if same setting for all scenes
     void OnDestroy()
     {
         Ypressed.RemoveOnStateDownListener(TriggerDownY, left);
@@ -59,22 +82,22 @@ public class TriggerInput : MonoBehaviour
 
     void Start()
     {
+        // Set skill scipts
         washroom = GameObject.Find("SkillsScript").GetComponent<GodOfWashroomBehavior>();
         hint = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>();
         hns = GameObject.Find("SkillsScript").GetComponent<HideAndShowSkills>();
         gbe = GameObject.Find("SkillsScript").GetComponent<GiftBlindEyesBehavior>();
         mb = GameObject.Find("SkillsScript").GetComponent<MeditationBehavior>();
-
         test = GameObject.FindGameObjectWithTag("MainSelectHandler").gameObject.GetComponent<TestPaperBehavior>();
-
-        offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
-        onPrepare = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().onPrepare;
-
         tc = GameObject.FindGameObjectWithTag("TeacherAction").GetComponent<TeacherController>();
         tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
 
+        // Set parameters
+        offset = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().offset;
+        onPrepare = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().onPrepare;
         bribeList = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().bribeList;
 
+        // Bind funtions to actions
         Ypressed.AddOnStateDownListener(TriggerDownY, left);
         Xpressed.AddOnStateDownListener(TriggerDownX, left);
         Spressed.AddOnStateUpListener(TriggerUpS, left);
@@ -96,38 +119,50 @@ public class TriggerInput : MonoBehaviour
 
     void Update()
     {
+        // If preparing, keep track
         if (onPrepare)
         {
             onPrepare = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().onPrepare;
         }
         else
         {
+            // If still talking
             if (offset >= 0)
             {
                 offset -= Time.deltaTime;
             }
+            // If not gameover, keep track
             if (!gameover)
             {
                 gameover = tc.gameover;
             }
+            else
+            {
+                hns.Hide();
+            }
+            // If grip hold
             if (freeze)
             {
                 if (holdTime > 0)
                 {
+                    // If hold for < 2 seconds
                     holdTime -= Time.deltaTime;
                 }
                 else
                 {
+                    // If hold for 2 seconds
                     tf.hold = true;
                 }
             }
             else
             {
+                // If grip released
                 holdTime = 2.0f;
             }
         }
     }
 
+    // Function for Y button pressed
     public void TriggerDownY(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -150,6 +185,8 @@ public class TriggerInput : MonoBehaviour
             }
         }
     }
+
+    // Function for X button pressed
     public void TriggerDownX(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -172,6 +209,8 @@ public class TriggerInput : MonoBehaviour
             }
         }
     }
+
+    // Function for buttons untouched
     public void TriggerUpS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -182,6 +221,8 @@ public class TriggerInput : MonoBehaviour
             }
         }
     }
+
+    // Function for buttons tounched
     public void TriggerDownS(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -192,6 +233,8 @@ public class TriggerInput : MonoBehaviour
             }
         }
     }
+
+    // Function for left on pad
     public void TriggerDownL(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (test.isBribeActive())
@@ -206,6 +249,8 @@ public class TriggerInput : MonoBehaviour
             }
         }
     }
+
+    // Function for right on pad
     public void TriggerDownR(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (test.isBribeActive())
@@ -221,6 +266,7 @@ public class TriggerInput : MonoBehaviour
         }
     }
 
+    // Function for A button pressed
     public void TriggerDownA(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -244,6 +290,7 @@ public class TriggerInput : MonoBehaviour
         }
     }
 
+    // Function for B button pressed
     public void TriggerDownB(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -262,6 +309,7 @@ public class TriggerInput : MonoBehaviour
         }
     }
 
+    // Function for grip pressed
     public void TriggerDownG(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -274,6 +322,7 @@ public class TriggerInput : MonoBehaviour
         }
     }
 
+    // Function for grip released
     public void TriggerUpG(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         if (offset < 0 && !gameover)
@@ -285,5 +334,4 @@ public class TriggerInput : MonoBehaviour
             }
         }
     }
-
 }
