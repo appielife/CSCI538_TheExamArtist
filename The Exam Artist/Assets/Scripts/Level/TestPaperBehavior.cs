@@ -22,7 +22,7 @@ public class TestPaperBehavior : MonoBehaviour
     public GameObject choiceA, choiceB, choiceC, choiceD;
     [Tooltip("Student images")]
     public Sprite[] studentImage;
-    [Tooltip("Load Scene Handler (SteamVR Load Scene)")]
+    [Tooltip("Load Scene Handler (SteamVR Load Level)")]
     public GameObject LoadSceneHandler;
 
     [HideInInspector]

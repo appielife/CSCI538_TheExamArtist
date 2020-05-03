@@ -12,7 +12,7 @@ Script for handling LaserPointer actions in Menu and GameOver scene.
 
 public class Navigator : MonoBehaviour
 {
-    [Tooltip("Load Scene Handler (SteamVR Load Scene)")]
+    [Tooltip("Load Scene Handler (SteamVR Load Level)")]
     public GameObject LoadSceneHandler;
 
     private SteamVR_LaserPointer laserPointerL, laserPointerR;
@@ -192,12 +192,6 @@ public class Navigator : MonoBehaviour
     // Onclick event for TryAgain button
     public void TryAgain()
     {
-        // Deprecated
-        if (GameObject.Find("LevelSetting"))
-        {
-            LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-            Destroy(GameObject.Find("LevelSetting"));
-        }
         if (SteamVR.active)
         {
             // If VR
@@ -206,6 +200,10 @@ public class Navigator : MonoBehaviour
         else
         {
             // If non-VR
+            if (setting != null)
+            {
+                setting.setFailed(false);
+            }
             Initiate.Fade("Level 1", Color.black, 0.5f);
         }
     }

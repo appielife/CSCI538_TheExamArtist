@@ -6,6 +6,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine.UI;
 
+/*********************************************
+Script for calculating score in GameOver scene 
+*********************************************/
+
 public class scoreObject
 {
     public int correct_ans; // Count of correct answered
@@ -15,8 +19,15 @@ public class scoreObject
 
 public class ScoreCalculate : MonoBehaviour
 {
-    public Text score, report;
-    public GameObject fail, yourscore;
+    [Tooltip("Fail Object on black board")]
+    public GameObject fail;
+    [Tooltip("Score Object on black board")]
+    public GameObject yourscore;
+    [Tooltip("Score Text")]
+    public Text score;
+    [Tooltip("Report Text")]
+    public Text report;
+
     private JObject ans_obj;
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();

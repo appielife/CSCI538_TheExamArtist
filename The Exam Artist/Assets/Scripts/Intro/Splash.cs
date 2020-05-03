@@ -12,9 +12,13 @@ Used for playing video then logo.
 
 public class Splash : MonoBehaviour
 {
+    [Tooltip("Logo Image")]
     public Image logo;
+    [Tooltip("Load Scene Handler (SteamVR Load Level)")]
     public GameObject LoadSceneHandler;
+    [Tooltip("Video Projector")]
     public GameObject videoplayer;
+    [Tooltip("Video Player")]
     private VideoPlayer video;
     private bool logo_in = false, logo_out = false;
     private bool logo_in_s = false, logo_out_s = false;

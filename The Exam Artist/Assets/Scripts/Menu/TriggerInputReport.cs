@@ -10,15 +10,25 @@ Script for trigger input in GameOver scene
 
 public class TriggerInputReport : MonoBehaviour
 {
-    public SteamVR_Action_Boolean LeftNorth;  // Up
-    public SteamVR_Action_Boolean LeftSouth;  // Down
-    public SteamVR_Action_Boolean RightNorth; // Up
-    public SteamVR_Action_Boolean RightSouth; // Down
+    // Bind Actions
+    [Tooltip("Up on Left Pad")]
+    public SteamVR_Action_Boolean LeftNorth; 
+    [Tooltip("Down on Left Pad")]
+    public SteamVR_Action_Boolean LeftSouth;  
+    [Tooltip("Up on Right Pad")]
+    public SteamVR_Action_Boolean RightNorth;
+    [Tooltip("Down on Right Pad")]
+    public SteamVR_Action_Boolean RightSouth;
 
-    public SteamVR_Input_Sources left;  // Left Controller
-    public SteamVR_Input_Sources right; // Right Controller
+    // Input Sources
+    [Tooltip("Left hand")]
+    public SteamVR_Input_Sources left;
+    [Tooltip("Right hand")]
+    public SteamVR_Input_Sources right;
 
+    [Tooltip("Script ScoreCalulate")]
     public ScoreCalculate report;
+    [Tooltip("Score board object")]
     public GameObject scoreboard;
 
     // IMPORTANT to destroy binded settings when scene change
@@ -33,6 +43,7 @@ public class TriggerInputReport : MonoBehaviour
 
     void Start()
     {
+        // Bind functions to actions
         LeftNorth.AddOnStateDownListener(TriggerDownU, left);
         LeftSouth.AddOnStateDownListener(TriggerDownD, left);
         RightNorth.AddOnStateDownListener(TriggerDownU, right);
