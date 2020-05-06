@@ -24,7 +24,8 @@ public class MeditationHandler : MonoBehaviour
     private float time = 20.0f, duration = 2.0f;
     private bool play = false, extended = false, isMeditate = false;
     private Text[] frontText, rightText, leftText, backText, texts;
-    private GameObject projectile;
+    private GameObject projectile;          // Projectile object
+    private GameObject cheatsheet;          // Cheat sheet object
     private List<bool> show = new List<bool>();
     private Dictionary<int, Text> showing = new Dictionary<int, Text>(), fading = new Dictionary<int, Text>();
     private List<int> remove = new List<int>();
@@ -89,6 +90,7 @@ public class MeditationHandler : MonoBehaviour
             show.Add(false);
         }
         projectile = setting.projectile;    // Set projectile
+        cheatsheet = setting.cheatsheet;    // Set cheatsheet
     }
 
     void Update()
@@ -230,6 +232,7 @@ public class MeditationHandler : MonoBehaviour
         level.SetActive(true);
         isMeditate = false;
         projectile.SetActive(true);
+        cheatsheet.SetActive(true);
     }
 
     // Function to know if in meditation

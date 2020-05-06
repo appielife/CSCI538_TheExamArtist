@@ -192,6 +192,10 @@ public class Navigator : MonoBehaviour
     // Onclick event for TryAgain button
     public void TryAgain()
     {
+        if (setting != null)
+        {
+            setting.setFailed(false);
+        }
         if (SteamVR.active)
         {
             // If VR
@@ -200,10 +204,6 @@ public class Navigator : MonoBehaviour
         else
         {
             // If non-VR
-            if (setting != null)
-            {
-                setting.setFailed(false);
-            }
             Initiate.Fade("Level 1", Color.black, 0.5f);
         }
     }

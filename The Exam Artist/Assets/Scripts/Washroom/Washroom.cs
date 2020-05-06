@@ -17,7 +17,8 @@ public class Washroom : MonoBehaviour
     [Tooltip("Level Object (Contains Classroom)")]
     public GameObject Level;
 
-    private GameObject projectile;      // projectile
+    private GameObject projectile;      // Projectile object
+    private GameObject cheatsheet;      // Cheat sheet object
     private LevelSetting setting;       // Global setting
     private float timer;                // Time for staying in washroom
     private GameObject paper;           // Answer paper
@@ -33,6 +34,7 @@ public class Washroom : MonoBehaviour
             setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             timer = setting.washroomDuration;
             projectile = setting.projectile;
+            cheatsheet = setting.cheatsheet;
 
             paper = GameObject.Find("Paper");
 
@@ -130,6 +132,7 @@ public class Washroom : MonoBehaviour
         Level.SetActive(true);
         current.SetActive(false);
         projectile.SetActive(true);
+        cheatsheet.SetActive(true);
     }
 
     public bool inWashroom()

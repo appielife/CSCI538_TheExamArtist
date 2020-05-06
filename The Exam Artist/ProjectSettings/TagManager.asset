@@ -40,6 +40,7 @@ TagManager:
   - OutsideCharacter
   - HallwayCharacter
   - Timer
+  - CheatSheet
   layers:
   - Default
   - TransparentFX

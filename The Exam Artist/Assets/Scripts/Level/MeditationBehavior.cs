@@ -28,6 +28,7 @@ public class MeditationBehavior : MonoBehaviour
 
     private GameObject timer, testPaper;    // Select Handler and Timer Object
     private GameObject projectile;          // Projectile object
+    private GameObject cheatsheet;          // Cheat sheet object
 
     // Cooldown settings, Fade setting
     private float coolDown = 15.0f, coolDownCounter = 15.0f, duration = 2.0f;
@@ -47,6 +48,7 @@ public class MeditationBehavior : MonoBehaviour
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
 
         tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
+        cheatsheet = GameObject.FindGameObjectWithTag("CheatSheet");
     }
 
     void Update()
@@ -160,5 +162,6 @@ public class MeditationBehavior : MonoBehaviour
         level.SetActive(false);
         wall.SetActive(true);
         projectile.SetActive(false);
+        cheatsheet.SetActive(false);
     }
 }

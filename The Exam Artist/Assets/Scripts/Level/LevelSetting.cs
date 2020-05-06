@@ -40,6 +40,8 @@ public class LevelSetting : MonoBehaviour
     public List<Sprite> bribeList = new List<Sprite>(); // Store bribe list
     [HideInInspector]
     public GameObject projectile; // Know which projectile
+    [HideInInspector]
+    public GameObject cheatsheet; // Know which sheet
 
     private void Awake()
     {
@@ -55,6 +57,7 @@ public class LevelSetting : MonoBehaviour
             setting = GameObject.Find("Settings").GetComponent<Settings>();
         }
         projectile = GameObject.FindGameObjectWithTag("Projectile");
+        cheatsheet = GameObject.FindGameObjectWithTag("CheatSheet");
     }
 
     private void Update()

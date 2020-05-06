@@ -33,6 +33,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
 
     private GameObject testPaper, timer;    // Select Handler and Timer Object
     private GameObject projectile;          // Projectile object
+    private GameObject cheatsheet;          // Cheat sheet object
     private AudioSource[] sound;            // Audio for behavior
 
     // Skill scripts
@@ -49,6 +50,7 @@ public class GodOfWashroomBehavior : MonoBehaviour
         textCoolDown.text = "";
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         limitText.text = limit.ToString();
+        cheatsheet = GameObject.FindGameObjectWithTag("CheatSheet");
     }
 
     void Update()
@@ -185,5 +187,6 @@ public class GodOfWashroomBehavior : MonoBehaviour
         Washroom.SetActive(true);
         Level.SetActive(false);
         projectile.SetActive(false);
+        cheatsheet.SetActive(false);
     }
 }

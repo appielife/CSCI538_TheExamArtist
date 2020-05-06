@@ -13,6 +13,12 @@ public class SceneHandler : MonoBehaviour
 {
     [Tooltip("Skills canvas")]
     public GameObject SkillsOverlay;
+    [Tooltip("Cheat Sheet")]
+    public GameObject CheatSheet;
+    [Tooltip("Cheat Sheet Snap Location")]
+    public GameObject CheatSheetSnap;
+    [Tooltip("Drawer Hint")]
+    public GameObject DrawerHint;
 
     private Settings setting;
     private SteamVR_LaserPointer laserPointer;
@@ -58,6 +64,15 @@ public class SceneHandler : MonoBehaviour
             Vector3 position = SkillsOverlay.transform.localPosition;
             position.z += 1.526f;
             SkillsOverlay.transform.localPosition = position;
+            
+            position = CheatSheet.transform.localPosition;
+            position.z -= 0.55f;
+            CheatSheet.transform.localPosition = position;
+            CheatSheetSnap.transform.localPosition = position;
+
+            position = DrawerHint.transform.localPosition;
+            position.z += 1.477f;
+            DrawerHint.transform.localPosition = position;
         }
 
         // Set audio
