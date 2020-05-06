@@ -3,6 +3,9 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+/***************************************
+Script to get questions from JSON file
+***************************************/
 
 [System.Serializable]
 public class GetQuestion
@@ -16,6 +19,7 @@ public class GetQuestion
 
     static System.Random _random = new System.Random();
 
+    // Function to make a copy
     public GetQuestion copy()
     {
         GetQuestion res = new GetQuestion();
@@ -24,67 +28,54 @@ public class GetQuestion
         res.ques = ques;
         return res;
     }
-    
+
+    // Function to read question from JSON file
     public void readQuestionFromJson(string data)
     {
-        // read JSON directly from a file
+        // Read JSON directly from a file
+        // NOTE: Check out @Application.dataPath in Unity Documents.
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/" + data))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
             ques_obj = (JObject)JToken.ReadFrom(reader);
         }
 
-        // Now all our data is on ques_obj
-        // IMPORTANT : THIS INE WILL PRINT YOUR RESULT
         getQuestionsArray();
-        //Debug.Log(getNextQuestion());
-        //Debug.Log(getNextQuestion());
     }
 
+    // Function to get next question
     public JObject getNextQuestion()
     {
         current = (current < ques.Count - 1) ? (++current) : 0;
-        /*if (current < ques.Count - 1)
-        {
-            current += 1;
-        }
-        else
-        {
-            current = 0;
-        }*/
         return (JObject)ques[current];
     }
 
+    // Function to get previous question
     public JObject getPrevQuestion()
     {
-        if (current > 0)
-        {
-            current -= 1;
-        }
-        else
-        {
-            current = ques.Count - 1;
-        }
-        //Debug.Log(current);
+        current = (current > 0) ? (--current) : ques.Count - 1;
         return (JObject)ques[current];
     }
 
+    // Function to update question number
     public void updateQuesNum(int n)
     {
         current = n;
     }
 
+    // Function to get question ID
     public string getQuestionId(int idx)
     {
         return (string)ques[idx]["id"];
     }
 
-    //to get question text using the idx
+    // Function to get question text using the index
     public string getQuestionTxt(int idx)
     {
         return (string)ques[idx]["question_txt"];
     }
 
+    // Function to get correct answer
     public int getQuestionCorrectAns(int idx)
     {
         JArray options = (JArray)ques[idx]["options"];
@@ -95,10 +86,10 @@ public class GetQuestion
                 return i;
             }
         }
-        //Debug.Log("Error");
         return -1;
     }
 
+    // Function to get correct answer's context
     public string getQuestionCorrectAnsContext(int idx)
     {
         JArray options = (JArray)ques[idx]["options"];
@@ -109,11 +100,10 @@ public class GetQuestion
                 return (string)((JObject)options[i])["option_txt"];
             }
         }
-        //Debug.Log("Error");
         return "";
     }
 
-    //Call this function to get your questions array in JArray format
+    // Function to get your questions array in JArray format
     public void getQuestionsArray()
     {
         ques = (JArray)ques_obj["questions"];
@@ -141,13 +131,14 @@ public class GetQuestion
         }
         ques = temp;
     }
-
+    
+    // Function to get number of questions
     public int getQuesCount()
     {
         return ques.Count;
     }
 
-    // This function shuffes the question order everytime
+    // Function to shuffle the question order everytime
     static void Shuffle(JArray array)
     {
         int n = array.Count;
@@ -163,15 +154,15 @@ public class GetQuestion
         }
     }
 
+    // Function to set number of questions to get
     public void setNumQuestion(int numQuestion)
     {
         this.numQuestion = numQuestion;
     }
 
+    // Function to get number of questions in file
     public int getNumFileQuestion()
     {
         return numFileQuestion;
     }
-
-
 }

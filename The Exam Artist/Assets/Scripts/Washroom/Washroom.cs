@@ -5,14 +5,25 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Valve.VR;
 
+/********************************
+Script for behavior in washroom
+A pair to GodOfWashroom.cs
+********************************/
+
 public class Washroom : MonoBehaviour
 {
-    public LevelSetting setting;
-    public GameObject LoadSceneHandler, current, Level, projectile;
-    public float timer;
-    private GameObject paper;
-    private float duration = 2.0f;
-    private bool isWashroom = false;
+    [Tooltip("Washroom Object")]
+    public GameObject current;
+    [Tooltip("Level Object (Contains Classroom)")]
+    public GameObject Level;
+
+    private GameObject projectile;      // Projectile object
+    private GameObject cheatsheet;      // Cheat sheet object
+    private LevelSetting setting;       // Global setting
+    private float timer;                // Time for staying in washroom
+    private GameObject paper;           // Answer paper
+    private float duration = 2.0f;      // Fade setting
+    private bool isWashroom = false;    // Is in washroom
 
     void OnEnable()
     {
@@ -23,14 +34,17 @@ public class Washroom : MonoBehaviour
             setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
             timer = setting.washroomDuration;
             projectile = setting.projectile;
+            cheatsheet = setting.cheatsheet;
 
             paper = GameObject.Find("Paper");
 
             int time = (int)Mathf.Ceil((float)setting.timeLeft / 60.0f);
             string text = "";
 
+            // Set propability of number of answers to get
             if (setting.timeLeft > (float)setting.initialTime / 2.0f)
             {
+                // If remaing time > half test time, 0 or 1 answer
                 for (int i = 0; i < time; i++)
                 {
                     randomArray.Add(0);
@@ -39,21 +53,23 @@ public class Washroom : MonoBehaviour
             }
             else
             {
+                // If remaing time < half test time, 1 or 2 answer(s)
                 for (int i = 0; i < time + (int)Mathf.Ceil((float)setting.initialTime / 120.0f); i++)
                 {
                     randomArray.Add(1);
                 }
                 randomArray.Add(2);
             }
-            //Debug.Log(randomArray);
-            int numQues = randomArray[Random.Range(0, randomArray.Count)];
 
+            // Pick a number
+            int numQues = randomArray[Random.Range(0, randomArray.Count)];
+            // Set unanswered question(s) counter
             List<int> counter = new List<int>();
             for (int i = 0; i < setting.unansweredQues.Count; i++)
             {
                 counter.Add(i);
             }
-            //Debug.Log(numQues);
+            // Show result
             for (int i = 0; i < numQues; i++)
             {
                 int tempIdx = Random.Range(0, counter.Count);
@@ -81,25 +97,33 @@ public class Washroom : MonoBehaviour
             {
                 if (isWashroom)
                 {
-                    FadeOut();
-                    Invoke("Change", duration);
-                    Invoke("FadeIn", duration * 2);
+                    if (SteamVR.active)
+                    {
+                        FadeOut();                      // 2 seconds to fade out
+                        Invoke("Change", duration);     // after 2 seconds, change object
+                        Invoke("FadeIn", duration * 2); // after 4 seconds, fade in for 2 seconds (NOTE: BUGGY)
+                    }
+                    else
+                    {
+                        Initiate.Fade("", Color.black, 0.5f);
+                        Invoke("Change", duration);     // after 2 seconds, change object
+                    }
+                    isWashroom = false;
                 }
-                //LoadSceneHandler.SetActive(true);
             }
         }
     }
 
-
+    // Function to fade out (SteamVR)
     private void FadeOut()
     {
         SteamVR_Fade.Start(Color.black, duration);
     }
 
+    // Function to fade in (SteamVR)
     private void FadeIn()
     {
         SteamVR_Fade.Start(Color.clear, duration);
-        isWashroom = false;
     }
 
 
@@ -108,6 +132,7 @@ public class Washroom : MonoBehaviour
         Level.SetActive(true);
         current.SetActive(false);
         projectile.SetActive(true);
+        cheatsheet.SetActive(true);
     }
 
     public bool inWashroom()

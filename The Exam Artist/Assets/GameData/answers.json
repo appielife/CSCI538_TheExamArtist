@@ -1,64 +1,64 @@
 {
   "Answers": [
     {
-      "id": "7",
-      "question_txt": "Dr Pepper shares what main ingredient of most antifreezes?",
-      "YourAns": "NA",
-      "MyAns": "A. Ethylene Glycol"
-    },
-    {
-      "id": "0",
-      "question_txt": " One of the essential minerals in the human body is salt. How much salt (NaCl) is in the average adult human body?",
-      "YourAns": "NA",
-      "MyAns": "C. 250 grams"
-    },
-    {
-      "id": "12",
-      "question_txt": "How many more times acidic is a solution of pOH 5 than a solution of pH 5?",
-      "YourAns": "NA",
-      "MyAns": "B. 1x10^(-4)"
-    },
-    {
-      "id": "1",
-      "question_txt": "If you fill a glass to the brim with ice water and the ice melts, what will happen?",
-      "YourAns": "NA",
-      "MyAns": "B. The water level will drop slightly as the ice melts."
-    },
-    {
-      "id": "4",
-      "question_txt": "Which element has the highest boiling point at 5933.2 Kelvin??",
-      "YourAns": "NA",
-      "MyAns": "B. W"
-    },
-    {
-      "id": "5",
-      "question_txt": "Which suicidal 19th century chemist has the single line etched on his tombstone : S=k log W?",
-      "YourAns": "NA",
-      "MyAns": "C. Ludwig Boltzmann"
-    },
-    {
-      "id": "9",
-      "question_txt": "What are the products of acid-base neutralization?",
-      "YourAns": "NA",
-      "MyAns": "C. Water, Salt, Heat"
-    },
-    {
-      "id": "13",
-      "question_txt": "Out of the following list, which is NOT a strong acid?",
-      "YourAns": "NA",
-      "MyAns": "C. Oxalic"
-    },
-    {
-      "id": "6",
-      "question_txt": "Which electron that would emit the greatest amount of energy by dropping electron levels?",
-      "YourAns": "NA",
-      "MyAns": "C. N=2 To N=1"
+      "id": "17",
+      "question_txt": "Falklands War is the war between Argentina and ",
+      "YourAns": "D. United Kingdom",
+      "MyAns": "D. United Kingdom"
     },
     {
       "id": "8",
-      "question_txt": "In a lead storage battery, what strong acid is consumed in a reaction which produces the voltage?",
+      "question_txt": "Who dig the Panama Canal?",
+      "YourAns": "A. Americans",
+      "MyAns": "A. Americans"
+    },
+    {
+      "id": "4",
+      "question_txt": "What Tactics did Lincoln use during American Civil War",
+      "YourAns": "D. Anaconda",
+      "MyAns": "D. Anaconda"
+    },
+    {
+      "id": "3",
+      "question_txt": "We''ll all feel gay when",
       "YourAns": "NA",
-      "MyAns": "B. Sulphuric Acid"
+      "MyAns": "D. Johnny Comes Marching home"
+    },
+    {
+      "id": "9",
+      "question_txt": "Which State does not exist in 1800s",
+      "YourAns": "NA",
+      "MyAns": "B. Germany"
+    },
+    {
+      "id": "2",
+      "question_txt": "Which West Germany City is adjacent to Berlin",
+      "YourAns": "NA",
+      "MyAns": "A. Berlin is not adjacent to West Germany"
+    },
+    {
+      "id": "15",
+      "question_txt": "Princess Anatasia.....",
+      "YourAns": "NA",
+      "MyAns": "C. Was murdered along with her family"
+    },
+    {
+      "id": "12",
+      "question_txt": "Where did Auschwitz Death Camp located",
+      "YourAns": "NA",
+      "MyAns": "C. Poland"
+    },
+    {
+      "id": "0",
+      "question_txt": "Who is the 13th President of United States",
+      "YourAns": "NA",
+      "MyAns": "A. Millard Fillmore"
+    },
+    {
+      "id": "14",
+      "question_txt": "What is Purpose of Ho Chi Minh Trail",
+      "YourAns": "NA",
+      "MyAns": "B. The network of logistics system to attack South Vietnam"
     }
   ]
 }

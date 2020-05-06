@@ -2,25 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class teacher : MonoBehaviour
 {
-
-    public Animator ani;
-    public Random ran = new Random();
+    private Animator ani;
+    private Random ran = new Random();
     private AudioSource[] source;
     private AudioSource[] student;
     private AudioSource[] bgm;
 
-
-    // Start is called before the first frame update
     void Start()
     {
+        ani = gameObject.GetComponent<Animator>();
         bgm = GameObject.FindGameObjectWithTag("backgroundmusic").GetComponents<AudioSource>();
         source = GameObject.FindGameObjectWithTag("teacher").GetComponents<AudioSource>();
         student = GameObject.FindGameObjectWithTag("student").GetComponents<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))

@@ -6,22 +6,28 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine.UI;
 
+/*********************************************
+Script for calculating score in GameOver scene 
+*********************************************/
+
 public class scoreObject
 {
-    //  count of correct answered
-    public int correct_ans;
-    // count of unanswered questions
-    public int unans_count;
-    // count of total questions
-    public int total_count;
+    public int correct_ans; // Count of correct answered
+    public int unans_count; // Count of unanswered questions
+    public int total_count; // Count of total questions
 }
 
 public class ScoreCalculate : MonoBehaviour
 {
-    public Text score;
-    public Text report;
+    [Tooltip("Fail Object on black board")]
     public GameObject fail;
+    [Tooltip("Score Object on black board")]
     public GameObject yourscore;
+    [Tooltip("Score Text")]
+    public Text score;
+    [Tooltip("Report Text")]
+    public Text report;
+
     private JObject ans_obj;
     private JArray ans_arr;
     private scoreObject scoreObj = new scoreObject();
@@ -36,11 +42,14 @@ public class ScoreCalculate : MonoBehaviour
         getReport();
         report.text = reporttext[index];
         GameObject scorereport = GameObject.Find("BlackBoard").transform.Find("ScoreReport").gameObject;
+
+        // Set arrow charactor
         scorereport.transform.Find("PrevReport").GetComponentInChildren<Text>().text = '\u25B2'.ToString();
         scorereport.transform.Find("NextReport").GetComponentInChildren<Text>().text = '\u25BC'.ToString();
-        if (GameObject.Find("LevelSetting"))
+        if (GameObject.Find("Settings"))
         {
-            failed = GameObject.Find("LevelSetting").GetComponent<LevelSetting>().failed;
+            // Find out if failed.
+            failed = GameObject.Find("Settings").GetComponent<Settings>().getFailed();
         }
         if (failed)
         {
@@ -49,18 +58,17 @@ public class ScoreCalculate : MonoBehaviour
         }
     }
 
-
+    // Function to get score
     public scoreObject getScore()
     {
         ans_arr = readAnswersFromJson();
         scoreObj.total_count = ans_arr.Count;
         scoreObj.correct_ans = getCorrectAnswersCount();
         scoreObj.unans_count = getUnansweredCount();
-        //Debug.Log(scoreObj.correct_ans);
         return scoreObj;
     }
 
-    // to get report 
+    // Function to get report 
     public void getReport()
     {
         for (int i = 0; i < ans_arr.Count; i++)
@@ -68,7 +76,8 @@ public class ScoreCalculate : MonoBehaviour
             reporttext.Add("Question " + (i + 1).ToString() + " : " + ans_arr[i]["question_txt"].ToString() + "\n Correct Answer: " + ans_arr[i]["MyAns"].ToString() + "\n Your Answer: " + ans_arr[i]["YourAns"].ToString()); 
         }
     }
-
+    
+    // Function to show next report 
     public void nextReport()
     {
         if (index + 1 < reporttext.Count)
@@ -82,6 +91,7 @@ public class ScoreCalculate : MonoBehaviour
         report.text = reporttext[index];
     }
 
+    // Function to show previous report 
     public void prevReport()
     {
         if (index - 1 > 0) {
@@ -93,26 +103,29 @@ public class ScoreCalculate : MonoBehaviour
         report.text = reporttext[index];
     }
 
+    // Function to read from answers.json
     public JArray readAnswersFromJson()
     {
-        // read JSON directly from a file
+        // Read JSON directly from a file
+        // NOTE: Check out @Application.dataPath in Unity Documents.
         using (StreamReader file = File.OpenText(@Application.dataPath + "/GameData/answers.json"))
         using (JsonTextReader reader = new JsonTextReader(file))
         {
             ans_obj = (JObject)JToken.ReadFrom(reader);
         }
-        // ans_obj has all the data inside it now
+
         ans_arr = (JArray)ans_obj["Answers"];
         return ans_arr;
     }
 
+    // Function to get number of correct answers
     public int getCorrectAnswersCount()
     {
-        //to get data from json file
+        // Get data from json file
         int corr_count = 0;
         for (int i = 0; i < ans_arr.Count; i++)
         {
-            // to make sure that the question was answered
+            // Make sure the question was answered
             if ((ans_arr[i]["YourAns"].ToString()) != "NA")
             {
                 if (ans_arr[i]["YourAns"].ToString() == ans_arr[i]["MyAns"].ToString())
@@ -124,13 +137,12 @@ public class ScoreCalculate : MonoBehaviour
         return corr_count;
     }
 
-    // to getcount of questios not anseed
+    // Function to get number of unanswered questions
     public int getUnansweredCount()
     {
         int count = 0;
         for (int i = 0; i < ans_arr.Count; i++)
         {
-            // if the answer is equal to NA abbrevation for not answered
             if ((ans_arr[i]["YourAns"].ToString()) == "NA")
             {
                 count = count + 1;

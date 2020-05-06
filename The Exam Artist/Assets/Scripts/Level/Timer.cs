@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/************************
+Script for timer control
+************************/
+
 public class Timer : MonoBehaviour
 {
-    public Text timerText;
-    public float timeLeft;
-    private bool timesUp = false;
+    [HideInInspector]
+    public float timeLeft; // Time remaining
+
+    private bool timesUp = false, onPrepare = false;
+    private float offset;
+    private Text timerText;
     private TestPaperBehavior test;
     private LevelSetting setting;
     private TimeFreezeBehavior tf;
 
-    private float offset;
-    private bool onPrepare;
-
     void Start()
     {
+        timerText = gameObject.GetComponentInChildren<Text>();
+
         tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
         test = GameObject.FindGameObjectWithTag("MainSelectHandler").gameObject.GetComponent<TestPaperBehavior>();
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+
         offset = setting.offset;
         onPrepare = setting.onPrepare;
         if (setting.timeLeft > 0)
@@ -32,16 +39,20 @@ public class Timer : MonoBehaviour
         }
         timeLeft += 1;
     }
+
     void Update()
     {
+        // If ready for test
         if (!onPrepare)
         {
+            // If still talking
             if (offset > 0)
             {
                 offset -= Time.deltaTime;
             }
             else
             {
+                // Update text
                 if (timeLeft > 0)
                 {
                     if (!tf.isExisting())
@@ -56,6 +67,7 @@ public class Timer : MonoBehaviour
                 }
                 else if (timeLeft < 0 && !timesUp)
                 {
+                    // If time up, test end.
                     test.writeAnsToJson();
                     timesUp = true;
                 }
@@ -63,6 +75,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
+            // Keep track of onPrepare
             onPrepare = setting.onPrepare;
         }
     }

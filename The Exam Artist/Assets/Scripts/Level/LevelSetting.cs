@@ -7,61 +7,57 @@ using Newtonsoft.Json.Linq;
 
 public class LevelSetting : MonoBehaviour
 {
-    [Tooltip("This is used to store grabbed answer or not")]
-    public bool answerGrabbed = false;
-    [Tooltip("This is used to store talking and starting time")]
-    public float offset, initialTime = 300.0f;
-    [Tooltip("This is used to store remaining time")]
-    public float timeLeft = -1.0f;
-    [Tooltip("This is used to store answers")]
-    public string[] answer;
-    [Tooltip("This is used to determine if went to washroom")]
-    public bool washroomed = false;
+    [Tooltip("This is used to store time after prepare and before test start")]
+    public float offset;
     [Tooltip("Set time staying in washroom")]
     public float washroomDuration = 10.0f;
-    [Tooltip("This is used to store unanswered questions")]
-    public List<int> unansweredQues;
-    [Tooltip("This is used to store questions")]
-    public GetQuestion question;
-    [Tooltip("This is used to store current questions")]
-    public MultipleChoiceBehavior[] quesTrack;
-    [Tooltip("This is used to store score")]
-    public int[] scoreTrack;
-    [Tooltip("This is used to store hand and volume setting")]
-    public Settings setting;
-    [Tooltip("This is used to store subject")]
-    public string subject;
-    [Tooltip("This is used to store student positions")]
-    public List<Vector3> positions = new List<Vector3>();
+    [Tooltip("Set time for maximum freezing seconds")]
+    public float maxFreezeTime = 10.0f;
     [Tooltip("Set number of questions")]
     public int numQuestion = 5;
     [Tooltip("Check to enable random seats")]
     public bool randomseats = false;
-    [Tooltip("This is used for randomseats")]
-    public bool randomed = false;
-    [Tooltip("This is used to store hints")]
-    public List<JToken> hints = new List<JToken>();
     [Tooltip("Check to enable prepare page")]
     public bool onPrepare = true;
-    [Tooltip("This is used to store bribe list")]
-    public List<Sprite> bribeList = new List<Sprite>();
     [Tooltip("Check to enable illegal detection")]
     public bool illegalDetect = true;
-    [Tooltip("Used to know if got caught")]
-    public bool failed = false;
-    [Tooltip("Used to know which projectile")]
-    public GameObject projectile;
+
+    [HideInInspector]
+    public bool answerGrabbed = false; // Grabbed answer or not
+    [HideInInspector]
+    public float timeLeft = -1.0f, initialTime = 300.0f; // Remaining time and Test time
+    [HideInInspector]
+    public string[] answer; // Store all answers
+    [HideInInspector]
+    public GetQuestion question; // Store test questions
+    [HideInInspector]
+    public List<int> unansweredQues; // Store unanswered questions
+    [HideInInspector]
+    public Settings setting; // Store global setting
+    [HideInInspector]
+    public string subject; // Current sub
+    [HideInInspector]
+    public List<Sprite> bribeList = new List<Sprite>(); // Store bribe list
+    [HideInInspector]
+    public GameObject projectile; // Know which projectile
+    [HideInInspector]
+    public GameObject cheatsheet; // Know which sheet
+
+    private void Awake()
+    {
+        initialTime = numQuestion * 60;
+    }
 
     private void Start()
     {
         timeLeft = -1.0f;
         question = null;
-        DontDestroyOnLoad(gameObject);
         if (GameObject.Find("Settings"))
         {
             setting = GameObject.Find("Settings").GetComponent<Settings>();
         }
         projectile = GameObject.FindGameObjectWithTag("Projectile");
+        cheatsheet = GameObject.FindGameObjectWithTag("CheatSheet");
     }
 
     private void Update()
@@ -75,7 +71,6 @@ public class LevelSetting : MonoBehaviour
             if (!answerGrabbed)
             {
                 answer = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>().getAllAnswer();
-                //setQuestion();
                 answerGrabbed = true;
             }
         }
@@ -86,40 +81,13 @@ public class LevelSetting : MonoBehaviour
         timeLeft = GameObject.Find("Timer").GetComponent<Timer>().timeLeft;
     }
 
-    public void setWashroom()
-    {
-        washroomed = true;
-    }
-
     public void setQuestion()
     {
         TestPaperBehavior test = GameObject.FindGameObjectWithTag("MainSelectHandler").GetComponent<TestPaperBehavior>();
-        question = test.setQuestion();
-        quesTrack = test.setQuesTrack();
-        scoreTrack = test.setScoreTrack();
-        unansweredQues = test.setUnansweredQues();
-    }
-
-    public void setHint()
-    {
-        MagicCheatSheetBehavior test = GameObject.Find("SkillsScript").GetComponent<MagicCheatSheetBehavior>();
-        hints = test.setHints();
-    }
-
-    public void resetTemp()
-    {
-        //Debug.Log("reset");
-        answerGrabbed = false;
-        question = null;
-        quesTrack = null;
-        scoreTrack = null;
-        unansweredQues = null;
-        washroomed = false;
-        timeLeft = -1.0f;
-        offset = 15.0f;
-        onPrepare = true;
-        randomed = false;
-        bribeList = new List<Sprite>();
+        question = test.getQuestion();
+        /*quesTrack = test.setQuesTrack();
+        scoreTrack = test.setScoreTrack();*/
+        unansweredQues = test.getUnansweredQues();
     }
 
     public void setSubject(string s)
@@ -137,15 +105,4 @@ public class LevelSetting : MonoBehaviour
     {
         onPrepare = b;
     }
-
-    public void setPositions(List<Vector3> positions)
-    {
-        this.positions = positions;
-    }
-
-    public void setFailed(bool b)
-    {
-        failed = b;
-    }
-
 }

@@ -4,40 +4,59 @@ using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
 
+/******************************************************************* 
+Script for Meditation Skill:
+Meditate for a few seconds. Cost one minute of test time.
+A pair to MeditationHandler.cs
+*******************************************************************/
+
 public class MeditationBehavior : MonoBehaviour
 {
+    [Tooltip("Image for CD")]
     public Image imgCoolDown;
+    [Tooltip("Text for CD")]
     public Text textCoolDown;
-    public GameObject timer;
-    public GameObject testPaper;
-    private AudioSource[] sound;
+    [Tooltip("Audios for answers")]
     public AudioClip[] meditationAudioClips = new AudioClip[4];
-    private float coolDown = 15.0f;
-    private float coolDownCounter = 15.0f;
-    private bool used = false, enoughTime = true;
-    //private int limit = 5;
-    private float duration = 2.0f;
-    public GameObject wall, level, player, projectile;
+    [Tooltip("Meditation Object")]
+    public GameObject wall;
+    [Tooltip("Level Object (Contains Classroom)")]
+    public GameObject level;
+
+    [HideInInspector]
     public int correctAns;
+
+    private GameObject timer, testPaper;    // Select Handler and Timer Object
+    private GameObject projectile;          // Projectile object
+    private GameObject cheatsheet;          // Cheat sheet object
+
+    // Cooldown settings, Fade setting
+    private float coolDown = 15.0f, coolDownCounter = 15.0f, duration = 2.0f;
+    private bool used = false, enoughTime = true;
+
+    // Skill scripts
     private LevelSetting setting;
     private TimeFreezeBehavior tf;
 
     void Start()
     {
-        sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
-        level = GameObject.Find("Level");
-        player = GameObject.FindGameObjectWithTag("MainPlayer");
+        timer = GameObject.FindGameObjectWithTag("Timer");
+        testPaper = GameObject.FindGameObjectWithTag("MainSelectHandler");
+        
         imgCoolDown.fillAmount = 0.0f;
         textCoolDown.text = "";
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
 
         tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
+        cheatsheet = GameObject.FindGameObjectWithTag("CheatSheet");
     }
 
     void Update()
     {
+        // If not time freeze
         if (!tf.hold)
         {
+            // If not enough time, cannot use skill anymore.
             if (timer.GetComponent<Timer>().timeLeft < 60 && enoughTime)
             {
                 imgCoolDown.fillAmount = 1.0f;
@@ -47,12 +66,12 @@ public class MeditationBehavior : MonoBehaviour
             }
             else if (enoughTime)
             {
+                // Cooldown remains active
                 if (coolDownCounter > 0 && used == true)
                 {
                     coolDownCounter -= Time.deltaTime;
                     imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
                     textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-                    //Debug.Log(coolDownCounter[0]);
                 }
                 else if (coolDownCounter <= 0 && used == true)
                 {
@@ -65,6 +84,7 @@ public class MeditationBehavior : MonoBehaviour
         }
     }
 
+    // Function for skill (Main Function)
     public void Meditation()
     {
         if (!used && enoughTime)
@@ -72,6 +92,7 @@ public class MeditationBehavior : MonoBehaviour
             timer.GetComponent<Timer>().timeLeft -= (60 - duration);
             used = true;
 
+            // Reduce other skills' cooldown
             GameObject skills = GameObject.Find("SkillsScript");
             GodOfWashroomBehavior gow = skills.GetComponent<GodOfWashroomBehavior>();
             MagicCheatSheetBehavior mcs = skills.GetComponent<MagicCheatSheetBehavior>();
@@ -94,25 +115,33 @@ public class MeditationBehavior : MonoBehaviour
                 gbe.ReduceCoolDownCounter(60);
             }
 
+            // Get correct answer of current question
+            correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
+
+            // Set projectile to prevent falling
             projectile = setting.projectile;
 
-            FadeOut();
-            Invoke("FadeIn", duration);
-
-            correctAns = testPaper.GetComponent<TestPaperBehavior>().getCurrentQuesAns();
-            //sound[0].PlayOneShot(meditationAudioClips[correctAns], 1.0f);
+            // Fade and switch object
+            if (SteamVR.active)
+            {
+                FadeOut();
+                Invoke("FadeIn", duration);
+            }
+            else
+            {
+                Initiate.Fade("", Color.black, 0.5f);
+                Invoke("Change", duration);     // after 2 seconds, change object
+            }
         }
-        /*else
-        {
-            Debug.Log("The skill is cooling down.");
-        }*/
     }
 
+    // Function to fade out (SteamVR)
     private void FadeOut()
     {
         SteamVR_Fade.Start(Color.black, duration);
     }
 
+    // Function to fade in (SteamVR)
     private void FadeIn()
     {
         level.SetActive(false);
@@ -120,9 +149,19 @@ public class MeditationBehavior : MonoBehaviour
         projectile.SetActive(false);
         SteamVR_Fade.Start(Color.clear, duration);
     }
-
+    
+    // Function to know if skill activated
     public bool isTrigger()
     {
         return used;
+    }
+
+    // Function to swap active object
+    private void Change()
+    {
+        level.SetActive(false);
+        wall.SetActive(true);
+        projectile.SetActive(false);
+        cheatsheet.SetActive(false);
     }
 }

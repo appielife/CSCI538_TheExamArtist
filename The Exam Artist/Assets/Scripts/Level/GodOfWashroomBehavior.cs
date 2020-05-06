@@ -5,71 +5,75 @@ using UnityEngine.UI;
 using Valve.VR;
 using UnityEngine.SceneManagement;
 
+/******************************************************************* 
+Script for Washroom Skill:
+Go to the washroom for a few seconds. Cost one minute of test time.
+A pair to washroom.cs
+*******************************************************************/
+
 public class GodOfWashroomBehavior : MonoBehaviour
 {
+    [Tooltip("Image for CD")]
     public Image imgCoolDown;
-    public Text textCoolDown, limitText;
-    public GameObject timer;
-    public GameObject testPaper;
-    private AudioSource[] sound;
+    [Tooltip("Text for CD")]
+    public Text textCoolDown;
+    [Tooltip("Text for limitation")]
+    public Text limitText;
+    [Tooltip("Audios for skill")]
     public AudioClip[] washroomAudioClips = new AudioClip[7];
-    private float coolDown = 14.0f;
-    private float coolDownCounter = 14.0f;
+    [Tooltip("Washroom Object")]
+    public GameObject Washroom;
+    [Tooltip("Level Object (Contains Classroom)")]
+    public GameObject Level;
+
+    // Cooldown settings, Fade setting
+    private float coolDown = 14.0f, coolDownCounter = 14.0f, duration = 2.0f;
     private bool used = false, enoughTime = true;
-    private int limit = 5;
-    private float duration = 2.0f;
+    private int limit = 5;                  // Number of time to use skill
+
+    private GameObject testPaper, timer;    // Select Handler and Timer Object
+    private GameObject projectile;          // Projectile object
+    private GameObject cheatsheet;          // Cheat sheet object
+    private AudioSource[] sound;            // Audio for behavior
+
+    // Skill scripts
     private LevelSetting setting;
-    public GameObject LoadSceneHandler, Washroom, Level, projectile;
     private TimeFreezeBehavior tf;
-
-    private void loadResources()
-    {
-        GameObject table = GameObject.Find("PlayerTable");
-        GameObject SkillsOverlay = table.transform.Find("SkillsOverlay").gameObject;
-        GameObject SkillCoolDown = SkillsOverlay.transform.Find("SkillCoolDown").gameObject;
-        GameObject skill = SkillCoolDown.transform.Find("GodOfWashroom").gameObject;
-        GameObject resources = skill.transform.Find("Image").gameObject;
-
-        imgCoolDown = resources.transform.Find("CDImg").gameObject.GetComponent<Image>();
-        textCoolDown = resources.transform.Find("CDText").gameObject.GetComponent<Text>();
-
-        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
-    }
 
     void Start()
     {
-        loadResources();
+        timer = GameObject.FindGameObjectWithTag("Timer");
+        testPaper = GameObject.FindGameObjectWithTag("MainSelectHandler");
+        tf = GameObject.Find("SkillsScript").GetComponent<TimeFreezeBehavior>();
         sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
         imgCoolDown.fillAmount = 0.0f;
         textCoolDown.text = "";
         setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
-        if (setting.washroomed)
-        {
-            used = true;
-        }
         limitText.text = limit.ToString();
+        cheatsheet = GameObject.FindGameObjectWithTag("CheatSheet");
     }
 
     void Update()
     {
+        // If not time freeze
         if (!tf.hold)
         {
+            // If not enough time or limit reached, cannot use skill anymore.
             if (timer.GetComponent<Timer>().timeLeft < 60 && enoughTime || limit == 0)
             {
                 imgCoolDown.fillAmount = 1.0f;
                 imgCoolDown.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
                 textCoolDown.text = "";
                 enoughTime = false;
-                //Debug.Log("Not enough time to go to washroom!");
             }
             else
             {
+                // Cooldown remains active
                 if (coolDownCounter > 0 && used == true)
                 {
                     coolDownCounter -= Time.deltaTime;
                     imgCoolDown.fillAmount = 1 - coolDownCounter / coolDown;
                     textCoolDown.text = ((int)Mathf.Ceil(coolDownCounter)).ToString();
-                    //Debug.Log(coolDownCounter[0]);
                 }
                 else if (coolDownCounter <= 0 && used == true)
                 {
@@ -87,61 +91,72 @@ public class GodOfWashroomBehavior : MonoBehaviour
         }
     }
 
+    // Function for skill (Main Function)
     public void GodOfWashroom()
     {
         if (used == false && limit > 0)
         {
             if (timer.GetComponent<Timer>().timeLeft < 60)
             {
+                // Not enough time to go to washroom
                 sound[0].PlayOneShot(washroomAudioClips[6], 1.0f);
-                //Debug.Log("Not enough time to go to washroom!");
             }
             else
             {
+                // Reduce time
                 limitText.text = "";
                 limit--;
                 timer.GetComponent<Timer>().timeLeft -= (60 - duration);
                 used = true;
 
-                setting.timeLeft = timer.GetComponent<Timer>().timeLeft;
-                setting.setWashroom();
+                // Set settings to pass to washroom
                 setting.setQuestion();
-                setting.setHint();
-
+                setting.setTime();
+                // Set projectile to prevent falling
                 projectile = setting.projectile;
 
-                FadeOut();
-                Invoke("Change", duration);
-                Invoke("FadeIn", duration * 2);
-
-                //LoadSceneHandler.SetActive(true);
+                // Fade and switch object
+                if (SteamVR.active)
+                {
+                    FadeOut();                      // 2 seconds to fade out
+                    Invoke("Change", duration);     // after 2 seconds, change object
+                    Invoke("FadeIn", duration * 2); // after 4 seconds, fade in for 2 seconds (NOTE: BUGGY)
+                }
+                else
+                {
+                    Initiate.Fade("", Color.black, 0.5f);
+                    Invoke("Change", duration);     // after 2 seconds, change object
+                }
             }
         }
         else
         {
             if (limit == 0)
             {
+                // Limit reached
                 sound[0].PlayOneShot(washroomAudioClips[5], 1.0f);
-                //Debug.Log("You can just use this skill twice per test");
             }
             else
             {
+                // Skill is cooling down
                 sound[0].PlayOneShot(washroomAudioClips[4], 1.0f);
-                //Debug.Log("The skill is cooling down.");
             }
         }
     }
 
+    // Function to know if skill activated
     public bool isTrigger()
     {
         return used;
     }
 
+    // Function to get cooldown counter
     public float GetCoolDownCounter()
     {
         return coolDownCounter;
     }
 
+    // Function to reduce cooldown
     public void ReduceCoolDownCounter(float n)
     {
         if (n == -1)
@@ -154,20 +169,24 @@ public class GodOfWashroomBehavior : MonoBehaviour
         }
     }
 
+    // Function to fade out (SteamVR)
     private void FadeOut()
     {
         SteamVR_Fade.Start(Color.black, duration);
     }
 
+    // Function to fade in (SteamVR)
     private void FadeIn()
     {
         SteamVR_Fade.Start(Color.clear, duration);
     }
 
+    // Function to swap active object
     private void Change()
     {
         Washroom.SetActive(true);
         Level.SetActive(false);
         projectile.SetActive(false);
+        cheatsheet.SetActive(false);
     }
 }

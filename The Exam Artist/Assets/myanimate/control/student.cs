@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
-public class student : MonoBehaviour { 
 
-    public Animator ani;
+/****************************************************
+Script to control student
+Manually adust chair and position for each animation
+****************************************************/
 
+[RequireComponent(typeof(Animator))]
+public class student : MonoBehaviour {
+
+    private Animator ani;
     private TestPaperBehavior playerTest;
     private GameObject chair;
     private AudioSource[] source;
     private AudioSource[] teacher;
-    public Random ran = new Random();
-    //public GameObject character;
-    //private bool notMoved = true;
+    private Random ran = new Random();
     private float timeLeft = 15.0f, collideLeft = 0.5f;
     private int animationIndex = 2;
     private bool writing = false, collide = false, start = false;
@@ -34,10 +38,6 @@ public class student : MonoBehaviour {
         ani.SetInteger("animation_int", 7);
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
-        if (setting.washroomed)
-        {
-            timeLeft = -1.0f;
-        }
         original = gameObject.transform.localPosition;
         chair = gameObject.transform.parent.transform.Find("prop_sch_tablechair").transform.Find("prop_sch_chair").gameObject;
         chairOriginal = chair.transform.localPosition;
@@ -45,8 +45,6 @@ public class student : MonoBehaviour {
         setChairPosition(new Vector3(0.0f, -0.091f, -0.141f));
         setPosition(new Vector3(0.36f, 0.0f, 0.0f));
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (!playerTest.onPrepare)
@@ -62,6 +60,7 @@ public class student : MonoBehaviour {
                     resetPosition();
                     start = true;
                 }
+                // If hit by projectile, quicky move chair
                 if (collide)
                 {
                     if (collideLeft > 0)
@@ -74,6 +73,7 @@ public class student : MonoBehaviour {
                         collide = false;
                     }
                 }
+                // If to set normal writing
                 if (!writing && !collide)
                 {
                     setPosition(new Vector3(0.5f, -0.05f, 0.0f));
@@ -84,16 +84,20 @@ public class student : MonoBehaviour {
         }
     }
 
+    // Function to adjust position
     public void setPosition(Vector3 position)
     {
         gameObject.transform.localPosition += position;
     }
 
+
+    // Function to adjust chair position
     public void setChairPosition(Vector3 position)
     {
         chair.transform.localPosition += position;
     }
-
+    
+    // Function to reset positions
     public void resetPosition()
     {
         gameObject.transform.localPosition = original;

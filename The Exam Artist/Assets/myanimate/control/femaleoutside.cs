@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
+/*************************************************
+Script to control female who holds answer outside
+*************************************************/
+
+[RequireComponent(typeof(Animator))]
 public class femaleoutside : MonoBehaviour
 {
-    public Animator ani;
-    public Random ran = new Random();
+    private Animator ani;
+    private Random ran = new Random();
     float m_Speed;
+
+    private void Awake()
+    {
+        ani = gameObject.GetComponent<Animator>();
+    }
 
     void OnEnable()
     {

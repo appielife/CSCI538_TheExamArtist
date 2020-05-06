@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-
+/*DEPRECARTED USE TEACHER CONTROLLER*/
 public class PlayerController : MonoBehaviour
 {
     public float speed = 2.0f;
@@ -35,16 +35,7 @@ public class PlayerController : MonoBehaviour
         LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
         timeLeft = setting.offset;
         teacher.speed = speed;
-        if (setting.washroomed)
-        {
-            int i = Random.Range(1, 12);
-            target = GameObject.Find("target" + i.ToString());
-            teacher.transform.position = target.transform.position;
-        }
-        else
-        {
-            target = GameObject.Find("target1");
-        }
+        target = GameObject.Find("target1");
     }
 
     void Update()

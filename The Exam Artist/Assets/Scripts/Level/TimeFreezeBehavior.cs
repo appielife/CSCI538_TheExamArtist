@@ -5,20 +5,31 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using Valve.VR;
 
+/******************************************************************
+Script for Freeze Skill:
+Hold to freeze time for a maximum of N seconde for the whole test.
+******************************************************************/
+
 public class TimeFreezeBehavior : MonoBehaviour
 {
+    [Tooltip("Image for CD")]
     public Image imgCoolDown;
+    [Tooltip("Text for remaining seconds")]
     public Text limitNum;
+    [Tooltip("Audio for skill")]
+    public AudioClip timeFreezeAudioClip;
+
+    [HideInInspector]
+    public bool hold = false; // If holding freeze skill button/trigger
+
+    // All characters
     private GameObject teacherCharacter, joggingCharacter, outsideCharacter, hallwayCharacter;
     private GameObject[] studentCharacters;
-    private float teacherSpeed;
-   
-    private bool exist = false, used = false, wasRunning = false;
-    private float limit = 10.0f;
-    public bool hold = false;
 
-    private AudioSource[] sound;
-    public AudioClip timeFreezeAudioClip;
+    private float teacherSpeed;     // Teacher's walking speed
+    private float limit = 10.0f;    // Seconds remaining
+    private bool exist = false, used = false, wasRunning = false;
+    private AudioSource[] sound;    // Set sound
 
 
     void Start()
@@ -26,18 +37,24 @@ public class TimeFreezeBehavior : MonoBehaviour
         imgCoolDown.fillAmount = 0.0f;
         limitNum.text = limit.ToString();
 
+        // Set characters
         teacherCharacter = GameObject.FindGameObjectWithTag("TeacherAction");
         teacherSpeed = teacherCharacter.GetComponent<NavMeshAgent>().speed;
         studentCharacters = GameObject.FindGameObjectsWithTag("StudentCharacter");
-        sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
         joggingCharacter = GameObject.FindGameObjectWithTag("JoggingCharacter");
         outsideCharacter = GameObject.FindGameObjectWithTag("OutsideCharacter");
         hallwayCharacter = GameObject.FindGameObjectWithTag("HallwayCharacter");
+
+        sound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
         imgCoolDown.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
+
+        LevelSetting setting = GameObject.Find("LevelSetting").GetComponent<LevelSetting>();
+        limit = setting.maxFreezeTime;
     }
 
     void Update()
     {
+        // If holding and has remaining time, freeze
         if (hold && limit > 0)
         {
             TimeFreeze();
@@ -47,6 +64,7 @@ public class TimeFreezeBehavior : MonoBehaviour
         }
         else if ((!hold && exist) || limit < 0)
         {
+            // If no more time or not holding
             UnfreezeCharacters();
             exist = false;
             if (limit < 0)
@@ -57,11 +75,15 @@ public class TimeFreezeBehavior : MonoBehaviour
         }
     }
 
+    // Function for skill (Main Function)
     public void TimeFreeze()
     {
         if (exist == false && used == false)
         {
+            // Play freeze audio
             sound[0].PlayOneShot(timeFreezeAudioClip, 1.5f);
+
+            // Freeze all characters
             teacherCharacter.GetComponent<Animator>().enabled = false;
             teacherCharacter.GetComponent<NavMeshAgent>().speed = 0;
             teacherCharacter.GetComponent<NavMeshAgent>().angularSpeed = 0;
@@ -82,8 +104,10 @@ public class TimeFreezeBehavior : MonoBehaviour
         }
     }
 
+    // Function for skill (Main Function)
     private void UnfreezeCharacters()
     {
+        // Unfreeze all characters
         teacherCharacter.GetComponent<Animator>().enabled = true;
         teacherCharacter.GetComponent<NavMeshAgent>().speed = teacherSpeed;
         teacherCharacter.GetComponent<NavMeshAgent>().angularSpeed = 120;
@@ -101,6 +125,7 @@ public class TimeFreezeBehavior : MonoBehaviour
         }
     }
 
+    // Function to know if skill activated
     public bool isExisting()
     {
         return exist;
